@@ -1,0 +1,2233 @@
+<!-- STREAMING_CHUNK:Setting up document and metadata... -->
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>臻萃研 EssZenbio - 產品解析與技術壁壘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- STREAMING_CHUNK:Configuring Tailwind and styles... -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', '"Noto Sans TC"', 'sans-serif'],
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        mono: ['"Inter"', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fdfdfb',
+                            100: '#f9f8f4',
+                            200: '#f0ece1',
+                            300: '#e3d9c7',
+                            400: '#d2c0a5',
+                            500: '#c0a37e',
+                            600: '#b28e62',
+                            700: '#95724e',
+                            800: '#7a5d43',
+                            900: '#634c38',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- STREAMING_CHUNK:Defining custom CSS classes... -->
+    <style>
+        body {
+            background-color: #fcfbf9;
+            color: #333333;
+            -webkit-font-smoothing: antialiased;
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #95724e, #c0a37e);
+        }
+        .content-card {
+            background: #fff;
+            border-radius: 1.25rem;
+            border: 1px solid #f0ece1;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        @media (min-width: 768px) {
+            .content-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 16px 32px -5px rgba(149, 114, 78, 0.08);
+            }
+        }
+        .mobile-card {
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid rgba(227, 217, 199, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        @media (min-width: 768px) {
+            .mobile-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 12px 24px -5px rgba(149, 114, 78, 0.08);
+            }
+        }
+        .top-nav-container {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            right: 1rem;
+            z-index: 50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .back-btn {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e3d9c7;
+            color: #7a5d43;
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        .back-btn:hover {
+            background-color: #f9f8f4;
+            color: #634c38;
+            border-color: #c0a37e;
+        }
+        select.lang-select {
+            appearance: none;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e3d9c7;
+            color: #7a5d43;
+            padding: 0.4rem 2rem 0.4rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237a5d43' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.6rem center;
+            background-size: 1em;
+            transition: all 0.2s;
+        }
+        select.lang-select:focus {
+            outline: none;
+            border-color: #c0a37e;
+            box-shadow: 0 0 0 2px rgba(192, 163, 126, 0.2);
+        }
+        @keyframes fillBar {
+            from { width: 0; }
+        }
+        .animate-fill {
+            animation: fillBar 1.5s ease-out forwards;
+        }
+        .ai-glass-panel {
+            background: linear-gradient(145deg, #ffffff, #fdfdfb);
+            border: 1px solid rgba(227, 217, 199, 0.5);
+            box-shadow: 0 8px 32px rgba(149, 114, 78, 0.05);
+        }
+    </style>
+</head>
+<body class="transition-colors duration-300">
+
+    <audio id="aiAudioPlayer"></audio>
+
+    <!-- STREAMING_CHUNK:Structuring header and navigation... -->
+    <header class="relative py-16 md:py-28 px-5 text-center overflow-hidden bg-brand-50">
+        <div class="top-nav-container">
+            <a href="#" onclick="returnHome(event)" class="back-btn" id="backBtn">
+                <i class="fa-solid fa-house"></i>
+                <span data-i18n="n_home">首頁</span>
+            </a>
+            <select id="langSwitch" class="lang-select">
+                <option value="zh-TW">繁體中文</option>
+                <option value="zh-CN">简体中文</option>
+                <option value="en">English</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="vi">Tiếng Việt</option>
+            </select>
+        </div>
+
+        <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(#c0a37e 1px, transparent 1px); background-size: 24px 24px;"></div>
+        <div class="max-w-4xl mx-auto relative z-10 mt-6 md:mt-0">
+            <h2 class="text-brand-600 tracking-[0.2em] uppercase text-xs md:text-sm font-semibold mb-3 md:mb-5">EssZenbio</h2>
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 md:mb-6 text-gray-900 leading-tight">
+                <span data-i18n="main_title">臻萃研</span> <br class="md:hidden">
+                <span class="text-gradient block mt-1" data-i18n="sub_title">高階產品矩陣與仿生基底技術解析</span>
+            </h1>
+            <p class="text-sm md:text-xl text-gray-600 font-light tracking-wide max-w-2xl mx-auto" data-i18n="desc_title">
+                從科研提取到精準靶向：不可複製的技術壁壘
+            </p>
+        </div>
+    </header>
+
+    <!-- STREAMING_CHUNK:Rendering Biomimetic Delivery System section... -->
+    <section class="py-10 md:py-20 px-4 md:px-8 max-w-5xl mx-auto">
+        <div class="content-card p-6 md:p-12 text-left">
+            <div class="text-center md:text-left mb-8">
+                <h3 class="inline-block px-4 py-2 bg-brand-100 text-brand-800 rounded-full text-xs md:text-sm font-bold tracking-wider mb-4" data-i18n="tech_h3">高生物利用率載體技術 (Biomimetic Delivery System)</h3>
+            </div>
+
+            <div class="mb-10 p-5 md:p-8 rounded-2xl border-l-4 border-brand-500 bg-brand-50 shadow-sm">
+                <h4 class="font-bold text-brand-800 mb-3 text-sm md:text-lg flex items-center gap-2">
+                    <span class="text-xl md:text-2xl">🔬</span> <span data-i18n="sci_h4">科學敘事：為何「源」與「潤」必須在使用前一刻才融合？</span>
+                </h4>
+                <div class="text-sm text-gray-700 leading-relaxed space-y-4">
+                    <p data-i18n="sci_p1">
+                        在皮膚科學中，傳統保養品為了將水與油混合在同一個瓶子裡，往往依賴「化學界面活性劑（乳化劑）」。然而，強行破壞脂質結構的化學物質，長期使用會導致角質層受損、引發敏弱與慢性發炎。
+                    </p>
+                    <p data-i18n="sci_p2">
+                        突破傳統化學乳化劑的侷限。保養不應是繁瑣的疊加，而是根據環境與膚況，<strong class="text-brand-700">構築能被肌膚完全識別的仿生載體 (Biomimetic Carrier)。</strong>
+                    </p>
+                    <p data-i18n="sci_p3">
+                        我們堅持將提供水相浸潤通道的 <strong class="text-gray-900">[源]</strong> 與提供脂質重塑的 <strong class="text-gray-900">[潤]</strong> 分開。只有當您在掌心將兩者以 1:1 混合，並滴入高濃度靶向精華，<strong class="text-brand-700">利用體溫與物理性搓揉的瞬間</strong>，才會形成同時包覆親水性與親脂性活性成分的「微乳液 (Microemulsion)」。
+                    </p>
+                    <p data-i18n="sci_p4">
+                        這個瞬間生成的仿生載體，與人體天然的「皮脂膜」組成極度相似，能中和皮膚的防禦機制，保護脆弱的胜肽訊號不被降解，無阻礙地將高活性精華直送真皮層，實現 <strong class="text-brand-700 font-serif">1+1+1 > 3</strong> 的臨床級生物利用率。
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 text-left text-sm">
+                <div class="flex items-start gap-4 bg-white border border-gray-100 shadow-sm p-5 md:p-6 rounded-2xl hover:border-brand-200 transition-colors">
+                    <div class="text-2xl md:text-3xl flex-shrink-0 mt-1">💧</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-1.5" data-i18n="f1_title">仿生基底構築</h4>
+                        <p class="text-gray-600 leading-relaxed text-xs md:text-[13px]" data-i18n="f1_desc">以 [源] AQUA (水相) 與 [潤] OLEA (油相) 1:1 構建完美仿生皮脂膜，瞬間柔軟角質。</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 bg-white border border-gray-100 shadow-sm p-5 md:p-6 rounded-2xl hover:border-brand-200 transition-colors">
+                    <div class="text-2xl md:text-3xl flex-shrink-0 mt-1">🧬</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-1.5" data-i18n="f2_title">活性靶向精準滴入</h4>
+                        <p class="text-gray-600 leading-relaxed text-xs md:text-[13px]" data-i18n="f2_desc">依據 本公司 AI 檢測數據 提供參考 並可按個人 需求，滴入高純度 [丰]、[澤]、[炁]、[蘊] 活性精華。</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 bg-white border border-gray-100 shadow-sm p-5 md:p-6 rounded-2xl hover:border-brand-200 transition-colors">
+                    <div class="text-2xl md:text-3xl flex-shrink-0 mt-1">🤲</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-1.5" data-i18n="f3_title">物理微乳化破壁</h4>
+                        <p class="text-gray-600 leading-relaxed text-xs md:text-[13px]" data-i18n="f3_desc">利用掌心溫度的物理性摩擦，瞬間形成微乳液載體。</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 bg-white border border-gray-100 shadow-sm p-5 md:p-6 rounded-2xl hover:border-brand-200 transition-colors">
+                    <div class="text-2xl md:text-3xl flex-shrink-0 mt-1">✨</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-1.5" data-i18n="f4_title">高效直達真皮層</h4>
+                        <p class="text-gray-600 leading-relaxed text-xs md:text-[13px]" data-i18n="f4_desc">避開厚重化學乳化劑阻礙，使專利萃取成分使命必達直送肌底。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 text-center">
+                <span class="text-brand-600 font-serif text-xs md:text-sm font-semibold tracking-wider" data-i18n="core_ritual_title">✦ 核心儀式：油水物理性乳化技術 ✦</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- STREAMING_CHUNK:Rendering Technical Barriers section... -->
+    <section class="py-10 md:py-20 px-4 md:px-8 max-w-6xl mx-auto">
+        <div class="mb-8 md:mb-12 text-center md:text-left">
+            <h2 class="text-xl md:text-3xl font-serif font-bold text-gray-900 mb-2" data-i18n="p1_h2">壹、 建立技術壁壘：分子級精密轉化</h2>
+            <h3 class="text-sm md:text-lg text-brand-600 font-medium tracking-wide mb-3 md:mb-4" data-i18n="p1_h3">Technology Pillar : 突破傳統植萃極限</h3>
+            <p class="text-xs md:text-base text-gray-600 leading-relaxed max-w-3xl mx-auto md:mx-0" data-i18n="p1_desc">
+                臻萃研的核心競爭力在於高階「精準萃取與轉化技術」。我們解決了醫美與化妝品產業長久以來的痛點：大分子無法吸收、高活性易致敏。確保每一滴成分皆具備極高純度、精準滲透與臨床級生物利用率。
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
+            <div class="mobile-card bg-white p-6 md:p-8 flex flex-col h-full relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-brand-50 rounded-bl-full -z-10 opacity-60"></div>
+                
+                <div class="text-brand-600 font-bold mb-3 text-[10px] md:text-xs tracking-widest uppercase" data-i18n="b1_label">技術壁壘 01</div>
+                <h4 class="text-lg md:text-xl font-serif font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100" data-i18n="b1_title">人參皂苷精密水解轉化 (CK)</h4>
+                <div class="flex gap-2 mb-4 md:mb-5 flex-wrap">
+                    <span class="px-3 py-1 bg-brand-50 text-brand-700 border border-brand-100 rounded-full text-[10px] md:text-xs font-medium" data-i18n="b1_tag1">分子量極小化 <span class="font-serif">622 Da</span></span>
+                    <span class="px-3 py-1 bg-gray-50 text-gray-600 border border-gray-200 rounded-full text-[10px] md:text-xs font-medium" data-i18n="b1_tag2">黃金轉化濃度 <span class="font-serif">1.28 mg/g</span></span>
+                </div>
+                <p class="text-[13px] md:text-sm text-gray-700 leading-relaxed mb-6 flex-grow" data-i18n="b1_p">
+                    <strong class="text-gray-900">定向酵素切割：突破吸收極限</strong><br>
+                    傳統人參皂苷分子量龐大，塗抹僅能停留在表皮。臻萃研透過定向酵素水解技術，將大分子精準切割為極微小的 Compound K (CK)。我們達成了具備優異臨床有效性的黃金轉化率，建立極高仿製門檻：
+                </p>
+                <div class="bg-gray-50/80 border border-gray-100 p-4 md:p-5 rounded-2xl mt-auto">
+                    <h5 class="font-bold text-brand-800 text-[12px] md:text-sm mb-3" data-i18n="b1_h5">CK 皂苷臨床靶向與實證功效</h5>
+                    <ul class="text-[11px] md:text-[13px] text-gray-700 space-y-0 divide-y divide-gray-200/60 list-none">
+                        <li class="py-2.5 first:pt-0 last:pb-0 leading-relaxed" data-i18n="b1_l1"><strong class="text-gray-800">第一型膠原蛋白管理：</strong>靶向活化纖維母細胞，顯著減少皺紋深度，恢復基底回彈力。</li>
+                        <li class="py-2.5 first:pt-0 last:pb-0 leading-relaxed" data-i18n="b1_l2"><strong class="text-gray-800">內源性玻尿酸自體生成：</strong>精準上調表皮細胞 HAS2 基因表現，由內而外增加含水量。</li>
+                        <li class="py-2.5 first:pt-0 last:pb-0 leading-relaxed" data-i18n="b1_l3"><strong class="text-gray-800">酪氨酸酶源頭抑制：</strong>降低 Tyrosinase 活性，阻斷黑色素合成路徑。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mobile-card bg-white p-6 md:p-8 flex flex-col h-full relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-brand-50 rounded-bl-full -z-10 opacity-60"></div>
+                
+                <div class="text-brand-600 font-bold mb-3 text-[10px] md:text-xs tracking-widest uppercase" data-i18n="b2_label">技術壁壘 02</div>
+                <h4 class="text-lg md:text-xl font-serif font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100" data-i18n="b2_title">蜂王漿蛋白去敏與微分子化</h4>
+                <div class="flex gap-2 mb-4 md:mb-5 flex-wrap">
+                    <span class="px-3 py-1 bg-brand-50 text-brand-700 border border-brand-100 rounded-full text-[10px] md:text-xs font-medium" data-i18n="b2_tag1">微分子化 <span class="font-serif">< 3000 Da</span></span>
+                    <span class="px-3 py-1 bg-gray-50 text-gray-600 border border-gray-200 rounded-full text-[10px] md:text-xs font-medium" data-i18n="b2_tag2">去敏胜肽與 10-HDA 技術</span>
+                </div>
+                <p class="text-[13px] md:text-sm text-gray-700 leading-relaxed mb-6 flex-grow" data-i18n="b2_p">
+                    天然蜂王漿極具營養價值，但巨量蛋白難以吸收且易引發過敏，是業界痛點。<br><br>
+                    🛡️ <strong class="text-gray-900">專研水解去敏化：</strong>利用高倍數酵素切斷過敏原，極敏弱肌也能使用。<br>
+                    🚀 <strong class="text-gray-900">短鏈胜肽剪裁：</strong>巨量蛋白被精準剪裁為可輕易穿透脂質的極微分子胜肽。
+                </p>
+                <div class="bg-gray-50/80 border border-gray-100 p-4 md:p-5 rounded-2xl mt-auto">
+                    <h5 class="font-bold text-brand-800 text-[12px] md:text-sm mb-3" data-i18n="b2_h5">核心活性物質：王漿酸 (10-HDA)</h5>
+                    <ul class="text-[11px] md:text-[13px] text-gray-700 space-y-0 divide-y divide-gray-200/60 list-none">
+                        <li class="py-2.5 first:pt-0 last:pb-0 leading-relaxed" data-i18n="b2_l1"><strong class="text-gray-800">纖維母細胞靶點：</strong>促進分泌轉化生長因子強效刺激膠原新生。</li>
+                        <li class="py-2.5 first:pt-0 last:pb-0 leading-relaxed" data-i18n="b2_l2"><strong class="text-gray-800">屏障重塑靶點：</strong>上調絲聚蛋白 (Filaggrin) 表現，大幅強化保濕力。</li>
+                        <li class="py-2.5 first:pt-0 last:pb-0 leading-relaxed" data-i18n="b2_l3"><strong class="text-gray-800">廣譜抗菌：</strong>對引發痘痘的痤瘡丙酸桿菌具備優異抑制作用。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mobile-card bg-white p-6 md:p-8 flex flex-col h-full relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-brand-50 rounded-bl-full -z-10 opacity-60"></div>
+                
+                <div class="text-brand-600 font-bold mb-3 text-[10px] md:text-xs tracking-widest uppercase" data-i18n="b3_label">技術壁壘 03</div>
+                <h4 class="text-lg md:text-xl font-serif font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100" data-i18n="b3_title">沙棘脂質重構與雙相適應性</h4>
+                <div class="flex gap-2 mb-4 md:mb-5 flex-wrap">
+                    <span class="px-3 py-1 bg-brand-50 text-brand-700 border border-brand-100 rounded-full text-[10px] md:text-xs font-medium" data-i18n="b3_tag1">Omega-7 仿生修復機制</span>
+                </div>
+                <p class="text-[13px] md:text-sm text-gray-700 leading-relaxed mb-6 flex-grow" data-i18n="b3_p">
+                    <strong class="text-gray-900">皮脂膜同源脂質：</strong>沙棘果蘊含罕見的 Ω-7 (棕櫚油酸)，結構與原生皮脂高度重合，無縫接軌修護受損屏障。<br><br>
+                    <strong class="text-gray-900">水油雙相高利用率：</strong>同時具備親水性（維生素C、類黃酮）與親脂性（Ω-7）。
+                </p>
+                <div class="bg-gray-50/80 border border-gray-100 p-4 md:p-5 rounded-2xl mt-auto">
+                    <ul class="text-[11px] md:text-[13px] text-gray-700 space-y-0 divide-y divide-gray-200/60 list-none">
+                        <li class="py-2.5 first:pt-0 last:pb-0 leading-relaxed" data-i18n="b3_l1"><strong class="text-gray-800">完美契合雙導系統：</strong>親水多酚融入水相抗氧化，親脂 Ω-7 融入油相修護脂質，將生物利用率推向極限。</li>
+                        <li class="py-2.5 first:pt-0 last:pb-0 leading-relaxed" data-i18n="b3_l2"><strong class="text-gray-800">膠原協同：</strong>豐富維生素C作為膠原生成的關鍵輔酶，聯合抗擊 MMPs 降解酵素。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STREAMING_CHUNK:Rendering Essential Base section... -->
+    <section class="py-10 md:py-24 px-4 md:px-8 max-w-7xl mx-auto bg-brand-50/40 md:rounded-[2.5rem]">
+        <div class="mb-8 md:mb-12 text-center max-w-3xl mx-auto">
+            <h2 class="text-xl md:text-3xl font-serif font-bold text-gray-900 mb-2" data-i18n="p2_h2">貳、 必備基底：油水雙引領</h2>
+            <h3 class="text-sm md:text-lg text-brand-600 font-medium tracking-wide mb-3" data-i18n="p2_h3">開啟通道與仿生防禦</h3>
+            <p class="text-xs md:text-base text-gray-600 leading-relaxed px-2" data-i18n="p2_desc">
+                這是所有保養流程的起點，摒棄傳統增稠劑。由「源」提供水相浸潤通道，由「潤」提供油相雙層鎖水。
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 max-w-5xl mx-auto">
+            <div class="mobile-card bg-white flex flex-col overflow-hidden group">
+                <div class="aspect-square w-full overflow-hidden bg-gray-100 border-b border-gray-100 flex-shrink-0">
+                    <img src="源1.jpg" alt="[源] AQUA" class="w-full h-full object-cover transition-transform duration-700 md:group-hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/800x800/e3d9c7/634c38?text=AQUA';">
+                </div>
+                <div class="p-6 md:p-8 flex-grow flex flex-col">
+                    <h4 class="text-xl md:text-2xl font-serif font-bold text-gray-900 mb-3" data-i18n="a_title">[源] AQUA 前導精華液</h4>
+                    <div class="mb-5">
+                        <span class="inline-block px-3 py-1 bg-blue-50 text-blue-700 border border-blue-100 text-[10px] md:text-xs font-medium rounded-full" data-i18n="a_tag">仿生啟動技術</span>
+                    </div>
+                    <div class="flex flex-col gap-3 text-[12px] md:text-[14px] text-gray-700 leading-relaxed">
+                        <p class="bg-gray-50/80 p-3 md:p-4 rounded-xl border border-gray-100" data-i18n="a_p1"><strong class="text-gray-900">機制靶點：</strong>瞬間柔軟角質，開啟補水通道。作為高生物相容的水相載體，負責搭載後續水溶性成分引領深層滲透。</p>
+                        <p class="bg-gray-50/80 p-3 md:p-4 rounded-xl border border-gray-100" data-i18n="a_p2"><strong class="text-gray-900">科學成分：</strong>微分子玻尿酸、AQUALANCE 鎖水因子、甘草精粹。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mobile-card bg-white flex flex-col overflow-hidden group">
+                <div class="aspect-square w-full overflow-hidden bg-gray-100 border-b border-gray-100 flex-shrink-0">
+                    <img src="潤1.jpg" alt="[潤] OLEA" class="w-full h-full object-cover transition-transform duration-700 md:group-hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/800x800/e3d9c7/634c38?text=OLEA';">
+                </div>
+                <div class="p-6 md:p-8 flex-grow flex flex-col">
+                    <h4 class="text-xl md:text-2xl font-serif font-bold text-gray-900 mb-3" data-i18n="o_title">[潤] OLEA 前導精華油</h4>
+                    <div class="mb-5">
+                        <span class="inline-block px-3 py-1 bg-yellow-50 text-yellow-700 border border-yellow-100 text-[10px] md:text-xs font-medium rounded-full" data-i18n="o_tag">仿生重塑技術</span>
+                    </div>
+                    <div class="flex flex-col gap-3 text-[12px] md:text-[14px] text-gray-700 leading-relaxed">
+                        <p class="bg-gray-50/80 p-3 md:p-4 rounded-xl border border-gray-100" data-i18n="o_p1"><strong class="text-gray-900">機制靶點：</strong>精準模擬天然皮脂，填補角質間隙。作為「油相載體」包覆脂溶性活性物，並在肌膚表面形成防禦層封存營養。</p>
+                        <p class="bg-gray-50/80 p-3 md:p-4 rounded-xl border border-gray-100" data-i18n="o_p2"><strong class="text-gray-900">科學成分：</strong>原生橄欖油、神經醯胺 (Ceramides)。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-8 md:mt-12 text-center px-4">
+            <p class="inline-block w-full md:w-auto px-5 py-2.5 md:px-6 md:py-3 bg-brand-100 text-brand-800 rounded-xl text-xs md:text-sm font-serif font-medium shadow-sm" data-i18n="p2_bottom">
+                核心基底：1:1 的仿生平衡 &nbsp;✦&nbsp; 模擬皮脂膜關鍵結構
+            </p>
+        </div>
+    </section>
+
+    <!-- STREAMING_CHUNK:Rendering Targeted Active Serums section... -->
+    <section class="py-10 md:py-20 px-4 md:px-8 max-w-6xl mx-auto">
+        <div class="mb-8 md:mb-12 text-center md:text-left">
+            <h2 class="text-xl md:text-3xl font-serif font-bold text-gray-900 mb-2" data-i18n="p3_h2">參、 萃取活性精華：靶向導入分析</h2>
+            <h3 class="text-sm md:text-lg text-brand-600 font-medium tracking-wide mb-3" data-i18n="p3_h3">精準應對各類膚況的高階調配</h3>
+            <p class="text-xs md:text-base text-gray-600 leading-relaxed max-w-3xl" data-i18n="p3_desc">
+                依據 AI 檢測結果，在健康仿生基底上，加入特定純度極高的功效精華，發揮 1+1+1 > 3 的靶向修護加乘效果。
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+            <!-- Serum 1 -->
+            <div class="mobile-card bg-white flex flex-col h-full group overflow-hidden">
+                <div class="aspect-square w-full overflow-hidden bg-gray-50 flex-shrink-0 border-b border-gray-100">
+                    <img src="丰1.jpg" alt="[丰] PLENA" class="w-full h-full object-cover transition-transform duration-700 md:group-hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/800x800/e3d9c7/634c38?text=PLENA';">
+                </div>
+                <div class="p-6 md:p-8 flex-grow">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-lg md:text-xl text-brand-600 font-serif">✦</span>
+                        <h4 class="text-lg md:text-xl font-bold text-gray-900" data-i18n="p_title">[丰] PLENA 蜜潤精華露</h4>
+                    </div>
+                    <div class="flex gap-2 mb-4 flex-wrap">
+                        <span class="px-3 py-1 bg-brand-50 text-brand-700 rounded-full text-[10px] md:text-xs border border-brand-100 font-medium" data-i18n="p_tag1">修護 / 提亮</span>
+                        <span class="px-3 py-1 bg-gray-50 text-gray-600 rounded-full text-[10px] md:text-xs border border-gray-200 font-medium" data-i18n="p_tag2">結構性修護</span>
+                    </div>
+                    <h5 class="font-bold text-gray-800 text-[13px] md:text-[15px] mb-2" data-i18n="p_h5">醫美級去敏修護與透亮</h5>
+                    <p class="text-[12px] md:text-sm text-gray-600 mb-5 leading-relaxed" data-i18n="p_desc">針對環境壓力與疲憊導致的屏障受損，進行深層結構性補給，強效改善發炎與暗沈。</p>
+                    <div class="flex flex-col text-[11px] md:text-[13px] text-gray-700 leading-relaxed bg-gray-50/80 border border-gray-100 p-4 md:p-5 rounded-2xl divide-y divide-gray-200/60">
+                        <p class="py-2.5 first:pt-0 last:pb-0" data-i18n="p_l1"><strong class="text-gray-900">精粹成分：</strong>蜂王漿水解胜肽、全效沙棘果萃取、三效緊緻修護因子。</p>
+                        <p class="py-2.5 first:pt-0 last:pb-0" data-i18n="p_l2"><strong class="text-gray-900">獨家競爭力：</strong>利用極致溫和酵素切斷致敏醣基，解決敏感肌痛點。10-HDA 靶向刺激膠原合成。</p>
+                        <p class="py-2.5 first:pt-0 last:pb-0" data-i18n="p_l3"><strong class="text-gray-900">乳化機制：</strong>微分子胜肽在水油雙載體的包覆下，精準消退疲憊炎症。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Serum 2 -->
+            <div class="mobile-card bg-white flex flex-col h-full group overflow-hidden">
+                <div class="aspect-square w-full overflow-hidden bg-gray-50 flex-shrink-0 border-b border-gray-100">
+                    <img src="澤1.jpg" alt="[澤] ROSIDA" class="w-full h-full object-cover transition-transform duration-700 md:group-hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/800x800/e3d9c7/634c38?text=ROSIDA';">
+                </div>
+                <div class="p-6 md:p-8 flex-grow">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-lg md:text-xl text-brand-600 font-serif">✦</span>
+                        <h4 class="text-lg md:text-xl font-bold text-gray-900" data-i18n="r_title">[澤] ROSIDA 水漾精華露</h4>
+                    </div>
+                    <div class="flex gap-2 mb-4 flex-wrap">
+                        <span class="px-3 py-1 bg-brand-50 text-brand-700 rounded-full text-[10px] md:text-xs border border-brand-100 font-medium" data-i18n="r_tag1">亮白 / 澄淨</span>
+                        <span class="px-3 py-1 bg-gray-50 text-gray-600 rounded-full text-[10px] md:text-xs border border-gray-200 font-medium" data-i18n="r_tag2">淨白導航與水油平衡</span>
+                    </div>
+                    <h5 class="font-bold text-gray-800 text-[13px] md:text-[15px] mb-2" data-i18n="r_h5">突破美白致敏的雙效防禦</h5>
+                    <p class="text-[12px] md:text-sm text-gray-600 mb-5 leading-relaxed" data-i18n="r_desc">針對暗沈與屏障脆弱並存的亞洲膚況，提供「淨白+修護」不衝突的高效特調。</p>
+                    <div class="flex flex-col text-[11px] md:text-[13px] text-gray-700 leading-relaxed bg-gray-50/80 border border-gray-100 p-4 md:p-5 rounded-2xl divide-y divide-gray-200/60">
+                        <p class="py-2.5 first:pt-0 last:pb-0" data-i18n="r_l1"><strong class="text-gray-900">專利成分：</strong>傳明酸、水解蜂王漿微分子胜肽、水漾平衡因子。</p>
+                        <p class="py-2.5 first:pt-0 last:pb-0" data-i18n="r_l2"><strong class="text-gray-900">獨家競爭力：</strong>微分子胜肽提供營養，在傳明酸阻斷黑色素的同時，同步進行細胞級修復。</p>
+                        <p class="py-2.5 first:pt-0 last:pb-0" data-i18n="r_l3"><strong class="text-gray-900">乳化機制：</strong>與 [潤] 的神經醯胺結合修護角質層，使傳明酸溫和精準防禦暗沈。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Serum 3 -->
+            <div class="mobile-card bg-white flex flex-col h-full group overflow-hidden">
+                <div class="aspect-square w-full overflow-hidden bg-gray-50 flex-shrink-0 border-b border-gray-100">
+                    <img src="炁1.jpg" alt="[炁] Qi" class="w-full h-full object-cover transition-transform duration-700 md:group-hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/800x800/e3d9c7/634c38?text=Qi';">
+                </div>
+                <div class="p-6 md:p-8 flex-grow">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-lg md:text-xl text-brand-600 font-serif">✦</span>
+                        <h4 class="text-lg md:text-xl font-bold text-gray-900" data-i18n="q_title">[炁] Qi 臻萃精華露</h4>
+                    </div>
+                    <div class="flex gap-2 mb-4 flex-wrap">
+                        <span class="px-3 py-1 bg-brand-50 text-brand-700 rounded-full text-[10px] md:text-xs border border-brand-100 font-medium" data-i18n="q_tag1">緊緻 / 撫紋</span>
+                        <span class="px-3 py-1 bg-gray-50 text-gray-600 rounded-full text-[10px] md:text-xs border border-gray-200 font-medium" data-i18n="q_tag2">旗艦抗老貢獻</span>
+                    </div>
+                    <h5 class="font-bold text-gray-800 text-[13px] md:text-[15px] mb-2" data-i18n="q_h5">真皮層修護雷達與時光逆轉</h5>
+                    <p class="text-[12px] md:text-sm text-gray-600 mb-5 leading-relaxed" data-i18n="q_desc">延緩熟齡老化、強化基底彈韌度，結合草本頂尖萃取與現代胜肽醫學的顛峰之作。</p>
+                    <div class="flex flex-col text-[11px] md:text-[13px] text-gray-700 leading-relaxed bg-gray-50/80 border border-gray-100 p-4 md:p-5 rounded-2xl divide-y divide-gray-200/60">
+                        <p class="py-2.5 first:pt-0 last:pb-0" data-i18n="q_l1"><strong class="text-gray-900">精萃成分：</strong>水解人參皂苷精華、專利 Matrixyl 五胜肽、積雪草。</p>
+                        <p class="py-2.5 first:pt-0 last:pb-0" data-i18n="q_l2"><strong class="text-gray-900">獨家競爭力：</strong>高轉化 CK 皂苷直接上調 HAS2 生成玻尿酸。五胜肽靶向強化真皮表皮連接處 (DEJ)。</p>
+                        <p class="py-2.5 first:pt-0 last:pb-0" data-i18n="q_l3"><strong class="text-gray-900">乳化機制：</strong>油相基底精準保護脆弱胜肽訊號，順利抵達真皮層，由內而外撐起皺紋。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Serum 4 -->
+            <div class="mobile-card bg-white flex flex-col h-full group overflow-hidden">
+                <div class="aspect-square w-full overflow-hidden bg-gray-50 flex-shrink-0 border-b border-gray-100">
+                    <img src="蘊1.jpg" alt="[蘊] AUREA" class="w-full h-full object-cover transition-transform duration-700 md:group-hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/800x800/e3d9c7/634c38?text=AUREA';">
+                </div>
+                <div class="p-6 md:p-8 flex-grow">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-lg md:text-xl text-brand-600 font-serif">✦</span>
+                        <h4 class="text-lg md:text-xl font-bold text-gray-900" data-i18n="u_title">[蘊] AUREA 鎏光潤澤精華油</h4>
+                    </div>
+                    <div class="flex gap-2 mb-4 flex-wrap">
+                        <span class="px-3 py-1 bg-brand-50 text-brand-700 rounded-full text-[10px] md:text-xs border border-brand-100 font-medium" data-i18n="u_tag1">極潤 / 修護</span>
+                        <span class="px-3 py-1 bg-gray-50 text-gray-600 rounded-full text-[10px] md:text-xs border border-gray-200 font-medium" data-i18n="u_tag2">琥珀級脂質封存</span>
+                    </div>
+                    <h5 class="font-bold text-gray-800 text-[13px] md:text-[15px] mb-2" data-i18n="u_h5">深度脂質補給與屏障重塑</h5>
+                    <p class="text-[12px] md:text-sm text-gray-600 mb-5 leading-relaxed" data-i18n="u_desc">針對醫美術後、極乾與熟齡肌，提供最深層的結構性皮脂膜重建工程。</p>
+                    <div class="flex flex-col text-[11px] md:text-[13px] text-gray-700 leading-relaxed bg-gray-50/80 border border-gray-100 p-4 md:p-5 rounded-2xl divide-y divide-gray-200/60">
+                        <p class="py-2.5 first:pt-0 last:pb-0" data-i18n="u_l1"><strong class="text-gray-900">精萃成分：</strong>沙棘果油 (全果 Ω-7)、植物固醇 (Phytosterols)、神經醯胺。</p>
+                        <p class="py-2.5 first:pt-0 last:pb-0" data-i18n="u_l2"><strong class="text-gray-900">獨家競爭力：</strong>神經醯胺抓水，植物固醇穩定雙層膜，Ω-7 提供抗老底物，完全模擬複合脂質。</p>
+                        <p class="py-2.5 first:pt-0 last:pb-0" data-i18n="u_l3"><strong class="text-gray-900">乳化機制：</strong>與 [潤] 協同作用，在表皮形成微光屏障，完美封存脂質與水分。</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- STREAMING_CHUNK:Rendering AI Detection System section... -->
+    <section id="aiSection" class="py-16 md:py-24 px-4 md:px-8 max-w-7xl mx-auto relative">
+        <div class="absolute inset-0 bg-brand-50/20 -skew-y-2 z-0 transform origin-top-left"></div>
+        
+        <div class="relative z-10">
+            <div class="mb-12 md:mb-16 text-center max-w-4xl mx-auto">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-brand-800 text-white rounded-full text-[10px] md:text-xs font-bold tracking-widest mb-4 uppercase shadow-md">
+                    <i class="fa-solid fa-microchip"></i> <span data-i18n="ai_badge">System</span>
+                </div>
+                <h2 class="text-2xl md:text-4xl font-serif font-bold text-gray-900 mb-3" data-i18n="ai_sec_h2">臻萃研 AI 智能檢測系統</h2>
+                <div class="text-xs md:text-base text-gray-600 leading-relaxed px-2 text-left md:text-center space-y-2 mt-4">
+                    <p data-i18n="ai_sec_desc1">我們卓越的AI工程團隊以業界最高的隱私保護標準自建AI 檢測模型!</p>
+                    <p data-i18n="ai_sec_desc2">為因應 您所處環境因素 與 個人生理特質! 肌膚 , 及身體, 需要調整不同的保養策略, 來適應不同的狀態! 因此 我們結合產品配方特性, 以三維度的保養思維, 設計出 以AI 檢測為核心! 打造個人專屬的 [動態配方] , 完全滿足您 因時! 因地! 因個人特質的全方位呵護!</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 mb-12">
+                
+                <div class="flex flex-col gap-6">
+                    <div class="ai-glass-panel rounded-2xl p-6 md:p-8 flex flex-col h-full">
+                        <div class="flex items-center justify-between mb-6">
+                            <h4 class="text-brand-800 font-bold text-sm md:text-base flex items-center gap-2">
+                                <span class="bg-brand-100 text-brand-600 w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
+                                <span data-i18n="ai_step1_title">環境參數即時擷取</span>
+                            </h4>
+                            <span class="text-green-500 text-[10px] md:text-xs font-mono font-bold flex items-center gap-1">
+                                <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></span>
+                                GPS / IP Active
+                            </span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 md:gap-4 flex-grow">
+                            <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex flex-col justify-center items-center text-center">
+                                <i class="fa-solid fa-temperature-half text-brand-400 text-xl mb-2"></i>
+                                <span class="text-gray-400 text-[10px] md:text-xs font-medium uppercase mb-1" data-i18n="ai_env_temp">氣溫</span>
+                                <span class="text-gray-800 font-bold text-lg md:text-xl font-mono">24°C</span>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex flex-col justify-center items-center text-center">
+                                <i class="fa-solid fa-droplet text-blue-400 text-xl mb-2"></i>
+                                <span class="text-gray-400 text-[10px] md:text-xs font-medium uppercase mb-1" data-i18n="ai_env_hum">濕度</span>
+                                <span class="text-gray-800 font-bold text-lg md:text-xl font-mono">87%</span>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex flex-col justify-center items-center text-center">
+                                <i class="fa-solid fa-wind text-gray-400 text-xl mb-2"></i>
+                                <span class="text-gray-400 text-[10px] md:text-xs font-medium uppercase mb-1" data-i18n="ai_env_wind">風速</span>
+                                <span class="text-gray-800 font-bold text-lg md:text-xl font-mono">7 <span class="text-xs">km/h</span></span>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm flex flex-col justify-center items-center text-center">
+                                <i class="fa-solid fa-sun text-yellow-500 text-xl mb-2"></i>
+                                <span class="text-gray-400 text-[10px] md:text-xs font-medium uppercase mb-1" data-i18n="ai_env_uv">紫外線</span>
+                                <span class="text-gray-800 font-bold text-lg md:text-xl font-mono">0.1 <span class="text-xs text-gray-500 font-sans" data-i18n="ai_env_low">(低)</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ai-glass-panel rounded-2xl p-6 md:p-8 flex flex-col">
+                        <div class="flex items-center justify-between mb-6">
+                            <h4 class="text-brand-800 font-bold text-sm md:text-base flex items-center gap-2">
+                                <span class="bg-brand-100 text-brand-600 w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span>
+                                <span data-i18n="ai_step2_title">4D 面部 6大指標數據</span>
+                            </h4>
+                            <i class="fa-solid fa-expand text-brand-300"></i>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-[11px] md:text-xs font-medium mb-1">
+                                    <span class="text-gray-600" data-i18n="ai_m1">T區光澤度</span>
+                                    <span class="text-gray-800 font-mono">15.2%</span>
+                                </div>
+                                <div class="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+                                    <div class="bg-green-500 h-1.5 rounded-full animate-fill" style="width: 15.2%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[11px] md:text-xs font-medium mb-1">
+                                    <span class="text-gray-600" data-i18n="ai_m2">U區光澤度</span>
+                                    <span class="text-gray-800 font-mono">13.7%</span>
+                                </div>
+                                <div class="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+                                    <div class="bg-green-500 h-1.5 rounded-full animate-fill" style="width: 13.7%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[11px] md:text-xs font-medium mb-1">
+                                    <span class="text-gray-600" data-i18n="ai_m3">紋理粗糙度</span>
+                                    <span class="text-gray-800 font-mono">31.2</span>
+                                </div>
+                                <div class="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+                                    <div class="bg-orange-400 h-1.5 rounded-full animate-fill" style="width: 31.2%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[11px] md:text-xs font-medium mb-1">
+                                    <span class="text-gray-600" data-i18n="ai_m4">紅區面積比例</span>
+                                    <span class="text-gray-800 font-mono">31.2%</span>
+                                </div>
+                                <div class="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+                                    <div class="bg-red-400 h-1.5 rounded-full animate-fill" style="width: 31.2%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[11px] md:text-xs font-medium mb-1">
+                                    <span class="text-gray-600" data-i18n="ai_m5">毛孔密度</span>
+                                    <span class="text-gray-800 font-mono">27.2</span>
+                                </div>
+                                <div class="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+                                    <div class="bg-purple-500 h-1.5 rounded-full animate-fill" style="width: 27.2%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[11px] md:text-xs font-medium mb-1">
+                                    <span class="text-gray-600" data-i18n="ai_m6">細紋密度</span>
+                                    <span class="text-gray-800 font-mono">25.4</span>
+                                </div>
+                                <div class="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+                                    <div class="bg-yellow-400 h-1.5 rounded-full animate-fill" style="width: 25.4%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-6">
+                    <div class="ai-glass-panel rounded-2xl p-6 md:p-8 flex flex-col bg-gradient-to-b from-brand-50 to-white">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="text-brand-800 font-bold text-sm md:text-base flex items-center gap-2">
+                                <span class="bg-brand-100 text-brand-600 w-6 h-6 rounded-full flex items-center justify-center text-xs">3</span>
+                                <span data-i18n="ai_step3_title">腸-腦-皮膚 軸線深度分析</span>
+                            </h4>
+                        </div>
+                        
+                        <div class="text-center mb-6 py-4">
+                            <span class="text-gray-500 text-[10px] md:text-xs font-medium uppercase tracking-widest block mb-1" data-i18n="ai_age_title">AI 測得肌膚年齡</span>
+                            <div class="text-4xl md:text-5xl font-serif font-bold text-brand-800 mb-1">35</div>
+                            <div class="text-[11px] md:text-xs text-brand-600 bg-brand-100 inline-block px-3 py-1 rounded-full" data-i18n="ai_age_desc">實際年齡 40 / 狀態良好</div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-2 md:gap-4">
+                            <div class="bg-orange-50 rounded-xl p-3 md:p-4 text-center border border-orange-100">
+                                <span class="block text-orange-800 text-[10px] md:text-xs font-bold mb-1" data-i18n="ai_ax1">抗壓賦活值</span>
+                                <span class="block text-orange-600 text-xl md:text-2xl font-mono font-bold mb-1">64</span>
+                                <span class="block text-orange-400 text-[9px] md:text-[10px]" data-i18n="ai_ax_warn">需加強</span>
+                            </div>
+                            <div class="bg-orange-50 rounded-xl p-3 md:p-4 text-center border border-orange-100">
+                                <span class="block text-orange-800 text-[10px] md:text-xs font-bold mb-1" data-i18n="ai_ax2">腸道代謝力</span>
+                                <span class="block text-orange-600 text-xl md:text-2xl font-mono font-bold mb-1">57</span>
+                                <span class="block text-orange-400 text-[9px] md:text-[10px]" data-i18n="ai_ax_warn">需加強</span>
+                            </div>
+                            <div class="bg-orange-50 rounded-xl p-3 md:p-4 text-center border border-orange-100">
+                                <span class="block text-orange-800 text-[10px] md:text-xs font-bold mb-1" data-i18n="ai_ax3">肌膚防禦力</span>
+                                <span class="block text-orange-600 text-xl md:text-2xl font-mono font-bold mb-1">62</span>
+                                <span class="block text-orange-400 text-[9px] md:text-[10px]" data-i18n="ai_ax_warn">需加強</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-[#1a252c] to-[#2c3e50] rounded-2xl p-6 md:p-8 flex flex-col text-white shadow-xl relative overflow-hidden flex-grow">
+                        <div class="absolute -right-10 -bottom-10 opacity-10">
+                            <i class="fa-solid fa-dna text-[150px]"></i>
+                        </div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-start mb-6 border-b border-white/10 pb-4">
+                                <div>
+                                    <h4 class="font-bold text-sm md:text-base flex items-center gap-2 mb-1">
+                                        <span class="bg-white/20 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">4</span>
+                                        <span data-i18n="ai_step4_title">動態配方矩陣輸出</span>
+                                    </h4>
+                                    <p class="text-[10px] md:text-xs text-gray-300 font-mono">Formulation Matrix v4.86</p>
+                                </div>
+                                <div class="bg-white/10 px-3 py-1 rounded-md text-[10px] md:text-xs font-mono font-medium" data-i18n="ai_total_vol">
+                                    合量: 0.6ml
+                                </div>
+                            </div>
+
+                            <div class="space-y-4 font-mono text-[11px] md:text-[13px]">
+                                <div class="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/10 hover:bg-white/10 transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.6)]"></div>
+                                        <span>[源] AQUA <span class="text-gray-400 text-[10px] ml-1 hidden sm:inline" data-i18n="ai_r1_desc">水相基底</span></span>
+                                    </div>
+                                    <span class="font-bold text-cyan-200" data-i18n="ai_drop">1 滴</span>
+                                </div>
+
+                                <div class="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/10 hover:bg-white/10 transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-2.5 h-2.5 rounded-full bg-yellow-400 shadow-[0_0_8px_rgba(250,204,21,0.6)]"></div>
+                                        <span>[潤] OLEA <span class="text-gray-400 text-[10px] ml-1 hidden sm:inline" data-i18n="ai_r2_desc">油相基底</span></span>
+                                    </div>
+                                    <span class="font-bold text-yellow-200" data-i18n="ai_drop">1 滴</span>
+                                </div>
+
+                                <div class="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/10 hover:bg-white/10 transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-2.5 h-2.5 rounded-full bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.6)]"></div>
+                                        <span>[炁] Qi <span class="text-gray-400 text-[10px] ml-1 hidden sm:inline" data-i18n="ai_r3_desc">真皮修護</span></span>
+                                    </div>
+                                    <span class="font-bold text-red-200" data-i18n="ai_drop">1 滴</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 md:gap-10 mt-8">
+                <div class="w-full md:w-1/2 flex justify-center items-center">
+                    <img src="AI_7.jpg" alt="3D 動態空間標靶落點" class="w-1/2 h-auto rounded-xl shadow-md border border-gray-100" onerror="this.onerror=null; this.src='https://placehold.co/600x400/f0ece1/7a5d43?text=3D_Space';">
+                </div>
+                <div class="w-full md:w-1/2 text-left">
+                    <h4 class="text-brand-800 font-bold text-lg md:text-xl mb-3" data-i18n="ai_3d_title">3D 動態空間標靶落點</h4>
+                    <p class="text-gray-600 text-[13px] md:text-sm leading-relaxed mb-4" data-i18n="ai_3d_desc">
+                        我們構建了三維度的保養思維模型：<br>
+                        <strong>生理 (X軸)</strong> × <strong>環境 (Y軸)</strong> × <strong>配方 (Z軸)</strong>。<br><br>
+                        系統會將擷取到的個人生理指數與氣候環境數據，投射於這個 3D 空間矩陣中，精準定位出「本次標靶座標」。藉由這個空間座標，為您演算出當下最適切的專屬動態配方滴數，達成真正的多維度精準對位。
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-center">
+                            <div class="text-[10px] text-gray-500 font-medium mb-1" data-i18n="ai_3d_x">生理 (X)</div>
+                            <div class="text-lg font-bold text-gray-800">61</div>
+                        </div>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-center">
+                            <div class="text-[10px] text-gray-500 font-medium mb-1" data-i18n="ai_3d_y">環境 (Y)</div>
+                            <div class="text-lg font-bold text-gray-800">26°C</div>
+                        </div>
+                        <div class="bg-gray-50 border border-brand-200 rounded-lg px-4 py-2 text-center">
+                            <div class="text-[10px] text-brand-600 font-medium mb-1" data-i18n="ai_3d_z">配方 (Z)</div>
+                            <div class="text-lg font-bold text-brand-800" data-i18n="ai_3d_drops">3 滴</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center max-w-2xl mx-auto border-t border-gray-200 pt-10">
+                <h4 class="text-brand-800 font-bold text-lg md:text-xl mb-4" data-i18n="app_dl_title">啟動您的專屬智能管家</h4>
+                <p class="text-gray-600 text-sm mb-6" data-i18n="app_dl_desc">在此! 為您 提供 [iOS / Android App]! 歡迎您! 掃描 以下二維碼 並下載App ! 開始體驗 這個為您打造的 智能管家服務!</p>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                    <img src="App_Glendy.jpg" alt="掃碼下載" class="w-32 h-32 md:w-40 md:h-40 object-contain rounded-xl shadow-md border border-gray-100" onerror="this.onerror=null; this.src='https://placehold.co/200x200/fff/000?text=QR_Code';">
+                    <img src="app.png" alt="App Store & Google Play" class="h-24 md:h-28 object-contain" onerror="this.onerror=null; this.src='https://placehold.co/300x120/fff/333?text=App_Stores';">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- STREAMING_CHUNK:Rendering Professional Ritual section... -->
+    <section class="py-10 md:py-20 px-4 md:px-8 max-w-7xl mx-auto">
+        <div class="bg-brand-800 text-white rounded-3xl md:rounded-[2rem] p-6 md:p-16 relative overflow-hidden shadow-xl">
+            <div class="absolute inset-0 opacity-10" style="background-image: repeating-linear-gradient(45deg, #ffffff 0px, #ffffff 2px, transparent 2px, transparent 8px);"></div>
+            <div class="relative z-10">
+                <div class="text-left md:text-center mb-8 md:mb-14">
+                    <h2 class="text-2xl md:text-4xl font-serif font-bold mb-3 md:mb-4" data-i18n="ritual_h2">專業使用儀式</h2>
+                    <p class="text-sm md:text-xl text-brand-100 max-w-3xl mx-auto leading-relaxed" data-i18n="ritual_desc">
+                        摒棄化學增稠，根據 AI 演算建議，<br class="hidden md:block">
+                        將產品主導權交還給您，達成 1+1+1 > 3 的極致生物利用率。
+                    </p>
+                </div>
+
+                <div class="mb-10 md:mb-14 max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black/20">
+                    <video id="ritualVideo" class="w-full h-auto aspect-video object-cover" controls autoplay muted loop playsinline>
+                        <source src="按摩.mp4" type="video/mp4">
+                        您的瀏覽器不支援影片播放。
+                    </video>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 relative">
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/10 hover:bg-white/10 transition-all relative overflow-hidden group">
+                        <div class="absolute -right-2 -bottom-4 text-[100px] md:text-[120px] font-serif font-bold text-white/5 group-hover:text-white/10 transition-colors leading-none select-none">1</div>
+                        <div class="relative z-10">
+                            <div class="inline-block px-3 py-1 bg-brand-500/20 text-brand-200 border border-brand-400/30 rounded-full text-[10px] md:text-xs font-bold tracking-widest mb-4" data-i18n="s1_title">STEP 1 - 取量</div>
+                            <p class="text-[13px] md:text-base text-gray-100 leading-relaxed" data-i18n="s1_desc">依照 AI 報告於掌心倒入適量 [源] 與 [潤]，建立仿生載體。</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/10 hover:bg-white/10 transition-all relative overflow-hidden group">
+                        <div class="absolute -right-2 -bottom-4 text-[100px] md:text-[120px] font-serif font-bold text-white/5 group-hover:text-white/10 transition-colors leading-none select-none">2</div>
+                        <div class="relative z-10">
+                            <div class="inline-block px-3 py-1 bg-brand-500/20 text-brand-200 border border-brand-400/30 rounded-full text-[10px] md:text-xs font-bold tracking-widest mb-4" data-i18n="s2_title">STEP 2 - 加乘</div>
+                            <p class="text-[13px] md:text-base text-gray-100 leading-relaxed" data-i18n="s2_desc">滴入 AI 演算指定的高濃度靶向活性精華（如：[炁] 1滴）。</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/10 hover:bg-white/10 transition-all relative overflow-hidden group">
+                        <div class="absolute -right-2 -bottom-4 text-[100px] md:text-[120px] font-serif font-bold text-white/5 group-hover:text-white/10 transition-colors leading-none select-none">3</div>
+                        <div class="relative z-10">
+                            <div class="inline-block px-3 py-1 bg-brand-500/20 text-brand-200 border border-brand-400/30 rounded-full text-[10px] md:text-xs font-bold tracking-widest mb-4" data-i18n="s3_title">STEP 3 - 乳化</div>
+                            <p class="text-[13px] md:text-base text-gray-100 leading-relaxed" data-i18n="s3_desc">雙手合十搓揉，利用掌心溫度與物理性摩擦使油水瞬間微乳化。</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/5 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/10 hover:bg-white/10 transition-all relative overflow-hidden group">
+                        <div class="absolute -right-2 -bottom-4 text-[100px] md:text-[120px] font-serif font-bold text-white/5 group-hover:text-white/10 transition-colors leading-none select-none">4</div>
+                        <div class="relative z-10">
+                            <div class="inline-block px-3 py-1 bg-brand-500/20 text-brand-200 border border-brand-400/30 rounded-full text-[10px] md:text-xs font-bold tracking-widest mb-4" data-i18n="s4_title">STEP 4 - 敷按</div>
+                            <p class="text-[13px] md:text-base text-gray-100 leading-relaxed" data-i18n="s4_desc">輕壓於臉部，感受仿生載體保護下的活性胜肽無阻礙層層滲透。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STREAMING_CHUNK:Rendering Day and Night Powders section... -->
+    <!-- Updated Section: 內源基底調理：日夜節律雙效粉包 -->
+    <section class="py-10 md:py-20 px-4 md:px-8 max-w-7xl mx-auto bg-brand-50/20 md:rounded-[2.5rem] mb-10">
+        <div class="mb-10 md:mb-16 text-center">
+            <h2 class="text-xl md:text-3xl font-serif font-bold text-gray-900 mb-2" data-i18n="p4_h2">肆、 內源基底調理：日夜節律雙效粉包</h2>
+            <h3 class="text-sm md:text-lg text-brand-600 font-medium tracking-wide mb-8" data-i18n="p4_h3">由內而外的全效順暢與深層煥妍</h3>
+            
+            <!-- Gut-Brain-Skin Axis Intro Box -->
+            <div class="max-w-3xl mx-auto bg-white/70 backdrop-blur-sm border border-brand-100 rounded-2xl p-5 md:p-8 mb-10 shadow-sm text-left md:text-center">
+                <h4 class="text-brand-800 font-bold text-base md:text-lg mb-3 flex justify-center items-center gap-2">
+                    <span class="text-xl">🧬</span>
+                    <span data-i18n="sup_axis_title">科學實證：腸-腦-皮膚軸 (Gut-Brain-Skin Axis)</span>
+                </h4>
+                <p class="text-gray-700 text-sm md:text-base leading-relaxed" data-i18n="sup_axis_desc">
+                    近年科學研究指出，消化道微生態、內在情緒狀態與外在肌膚表現，存在著緊密的雙向溝通網絡。我們的日夜雙效配方，正是基於此「腸-腦-皮膚軸」的先進理念所設計。
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 max-w-6xl mx-auto">
+            
+            <!-- Day: AURORA -->
+            <div class="bg-white rounded-3xl p-6 md:p-10 flex flex-col h-full group relative overflow-hidden border border-gray-100 shadow-md hover:shadow-xl transition-shadow border-t-4 border-t-brand-500">
+                <div class="absolute top-0 right-0 w-40 h-40 bg-brand-50 rounded-bl-full -z-10 opacity-70"></div>
+                
+                <!-- 晞 Product Image -->
+                <div class="w-full aspect-[2478/3096] bg-gray-50 overflow-hidden mb-6 rounded-xl border border-gray-100">
+                    <img src="晞.jpg" alt="晞 AURORA" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" onerror="this.onerror=null; this.src='https://placehold.co/2478x3096/f9f8f4/95724e?text=AURORA';">
+                </div>
+
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-600 text-xl shadow-sm">☀️</div>
+                    <h4 class="text-xl md:text-2xl font-serif font-bold text-gray-900" data-i18n="sup_day_title">晞 AURORA</h4>
+                </div>
+                
+                <p class="text-[13px] md:text-sm text-gray-600 leading-relaxed mb-6 font-medium bg-brand-50/50 p-4 rounded-xl border border-brand-100/30" data-i18n="sup_day_intro">
+                    AURORA 日用配方透過人參與沙棘滋補強身；以洋車前子、難消化糊精與菊糖等膳食纖維促進腸道蠕動，使排便順暢；搭配消化酵素幫助消化；並藉由六大益生菌群改變細菌叢生態；最後佐以綜合維生素礦物質維持正常生理機能。達成幫助消化、精神旺盛、使排便順暢的日間全面保養。
+                </p>
+                
+                <div class="flex flex-col flex-grow">
+                    <div class="bg-brand-50/40 p-4 rounded-xl border border-brand-100/50 mb-3 hover:bg-brand-50 transition-colors">
+                        <h6 class="font-bold text-brand-800 text-[13px] md:text-[14px] mb-2" data-i18n="sup_day_f1_title">✨ 滋補強身 ｜ 5年紅蔘萃取精華 × 沙棘全果萃取</h6>
+                        <p class="text-[12px] md:text-[13px] text-gray-700 leading-relaxed" data-i18n="sup_day_f1_desc">精選5年紅蔘，透過低溫水解技術與益生菌的「生物轉化」協同作用，極致吸收珍貴皂苷CK，有助於滋補強身、增強體力。搭配珍貴極地沙棘果，全果低溫萃取完整保留天然維生素C與 Omega-7，促進新陳代謝，迎接活力早晨。</p>
+                    </div>
+                    <div class="bg-brand-50/40 p-4 rounded-xl border border-brand-100/50 mb-3 hover:bg-brand-50 transition-colors">
+                        <h6 class="font-bold text-brand-800 text-[13px] md:text-[14px] mb-2" data-i18n="sup_day_f2_title">🌿 順暢淨空 ｜ 黃金比例水溶性纖維 × 優質益生元</h6>
+                        <p class="text-[12px] md:text-[13px] text-gray-700 leading-relaxed" data-i18n="sup_day_f2_desc">採用黃金比例水溶性膳食纖維（洋車前子殼）、難消化糊精與優質益生元（菊糖）完美協同。膳食纖維可促進腸道蠕動，增加飽足感，使糞便比較柔軟而易於排出，讓您每日輕盈無負擔。</p>
+                    </div>
+                    <div class="bg-brand-50/40 p-4 rounded-xl border border-brand-100/50 mb-3 hover:bg-brand-50 transition-colors">
+                        <h6 class="font-bold text-brand-800 text-[13px] md:text-[14px] mb-2" data-i18n="sup_day_f3_title">🦠 體內環保 ｜ 6大複合益生菌群</h6>
+                        <p class="text-[12px] md:text-[13px] text-gray-700 leading-relaxed" data-i18n="sup_day_f3_desc">嚴選生命力強韌的芽孢乳酸菌(Bacillus coagulans)與長雙歧桿菌(B. longum)等6大強勢複合菌株。日夜協同定殖，幫助維持消化道機能，改變細菌叢生態，由內建立健康屏障。</p>
+                    </div>
+                    <div class="bg-brand-50/40 p-4 rounded-xl border border-brand-100/50 hover:bg-brand-50 transition-colors">
+                        <h6 class="font-bold text-brand-800 text-[13px] md:text-[14px] mb-2" data-i18n="sup_day_f4_title">⚡ 幫助消化 ｜ 綜合酵素 × 基礎營養</h6>
+                        <p class="text-[12px] md:text-[13px] text-gray-700 leading-relaxed" data-i18n="sup_day_f4_desc">多種優質消化酵素，幫助食物分解與消化，減輕消化道負擔。協同綜合維生素與礦物質，營養補給，補足一日所需的關鍵微量元素。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Night: VESPERA -->
+            <div class="bg-white rounded-3xl p-6 md:p-10 flex flex-col h-full group relative overflow-hidden border border-gray-100 shadow-md hover:shadow-xl transition-shadow border-t-4 border-t-[#2c3e50]">
+                <div class="absolute top-0 right-0 w-40 h-40 bg-slate-50 rounded-bl-full -z-10 opacity-70"></div>
+                
+                <!-- 沁 Product Image -->
+                <div class="w-full aspect-[2478/3096] bg-gray-50 overflow-hidden mb-6 rounded-xl border border-gray-100">
+                    <img src="沁.jpg" alt="沁 VESPERA" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" onerror="this.onerror=null; this.src='https://placehold.co/2478x3096/f8fafc/2c3e50?text=VESPERA';">
+                </div>
+
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 text-xl shadow-sm">🌙</div>
+                    <h4 class="text-xl md:text-2xl font-serif font-bold text-gray-900" data-i18n="sup_night_title">沁 VESPERA</h4>
+                </div>
+                
+                <p class="text-[13px] md:text-sm text-gray-600 leading-relaxed mb-6 font-medium bg-slate-50/50 p-4 rounded-xl border border-slate-100/50" data-i18n="sup_night_intro">
+                    VESPERA 夜用配方則完美落實了「睡得好，自然美」的保健邏輯。利用GABA、色胺酸與鎂幫助入睡；並在夜間黃金休息期，透過水解蜂王乳、膠原蛋白與維生素C（具抗氧化作用、促進膠原蛋白的形成）進行養顏美容；最後以六大益生菌群與益生質幫助維持消化道機能。是一款兼具幫助入睡與青春美麗的高規格複合配方。
+                </p>
+
+                <div class="flex flex-col flex-grow">
+                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100/80 mb-3 hover:bg-slate-100/50 transition-colors">
+                        <h6 class="font-bold text-slate-800 text-[13px] md:text-[14px] mb-2" data-i18n="sup_night_f1_title">✨ 青春無瑕 ｜ 蜂王漿微分子胜肽 × 頂級膠原蛋白</h6>
+                        <p class="text-[12px] md:text-[13px] text-gray-700 leading-relaxed" data-i18n="sup_night_f1_desc">採用生物科技酵素剪裁技術，將蜂王漿溫和水解為「精純微分子胜肽」，保留能滋養好菌的珍貴寡糖，並精準鎖住王漿酸 (10-HDA)。搭配優質膠原蛋白，調節生理機能，養顏美容，展現青春好氣色。</p>
+                    </div>
+                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100/80 mb-3 hover:bg-slate-100/50 transition-colors">
+                        <h6 class="font-bold text-slate-800 text-[13px] md:text-[14px] mb-2" data-i18n="sup_night_f2_title">🫐 晶亮煥活 ｜ 藍靛果全果萃取精華 × 維生素C</h6>
+                        <p class="text-[12px] md:text-[13px] text-gray-700 leading-relaxed" data-i18n="sup_night_f2_desc">嚴選高緯度極地珍貴果實藍靛果，完整封存豐沛的花青素(C3G)與植物多酚。結合「植萃益生」科學，多酚經腸道好菌發酵轉化，搭配足量維生素C，其中維生素C具抗氧化作用、促進膠原蛋白的形成，在夜間深層養護。</p>
+                    </div>
+                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100/80 mb-3 hover:bg-slate-100/50 transition-colors">
+                        <h6 class="font-bold text-slate-800 text-[13px] md:text-[14px] mb-2" data-i18n="sup_night_f3_title">🌙 寧靜舒緩 ｜ GABA × 色胺酸 × 鎂的科學金三角</h6>
+                        <p class="text-[12px] md:text-[13px] text-gray-700 leading-relaxed" data-i18n="sup_night_f3_desc">透過腸腦軸線的科學雙向溝通，高純度麩胺酸發酵物(含GABA)搭配人體必需胺基酸(色胺酸)與礦物質(鎂)。其中鎂有助於心臟、肌肉及神經的正常功能；配方完美協同運作，調節生理機能，幫助入睡，迎接晨起活力。</p>
+                    </div>
+                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100/80 hover:bg-slate-100/50 transition-colors">
+                        <h6 class="font-bold text-slate-800 text-[13px] md:text-[14px] mb-2" data-i18n="sup_night_f4_title">🌱 夜間養護 ｜ 6大舒眠益生菌 × 益生元</h6>
+                        <p class="text-[12px] md:text-[13px] text-gray-700 leading-relaxed" data-i18n="sup_night_f4_desc">精選長雙歧桿菌(Bifidobacterium longum)、植物乳桿菌(Lactobacillus plantarum)等6大優勢活菌，結合前沿微生態科學概念。搭配優質益生元，夜間持續改變細菌叢生態，幫助維持消化道機能，隔日順暢輕盈。</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- STREAMING_CHUNK:Rendering Academic Collaboration section... -->
+    <section class="py-6 md:py-10 px-4 md:px-8 max-w-6xl mx-auto mb-10">
+        <div class="bg-gradient-to-br from-white to-brand-50 border border-brand-200 rounded-3xl p-6 md:p-10 shadow-lg flex flex-col md:flex-row items-center gap-8 md:gap-12 transform hover:scale-[1.01] transition-transform duration-500">
+            <!-- Logo Side -->
+            <div class="w-32 md:w-48 flex-shrink-0 mx-auto md:mx-0">
+                <div class="aspect-square rounded-full bg-white shadow-md border border-brand-100 flex items-center justify-center overflow-hidden p-3 md:p-4">
+                    <img src="嘉大.jpg" alt="國立嘉義大學" class="w-full h-full object-contain">
+                </div>
+            </div>
+            
+            <!-- Text Side -->
+            <div class="flex-grow text-center md:text-left">
+                <h4 class="text-brand-800 font-bold text-lg md:text-2xl mb-4 flex items-center justify-center md:justify-start gap-2" data-i18n="sup_academic_title">
+                    【頂尖產學合作 ‧ 權威技術研發】
+                </h4>
+                <div class="text-gray-700 text-[13px] md:text-base leading-relaxed space-y-3 mb-5">
+                    <p data-i18n="sup_academic_p1">本系列產品結合前瞻微生態科學，其配方開發與低溫真空萃取製程技術，係由國立嘉義大學食品科學系 呂英震博士技術團隊進行產學合作研發。</p>
+                    <p data-i18n="sup_academic_p2">呂博士專精於微生物學、發酵技術與益生菌篩選鑑定。<br>本產品透過嚴謹的學術研發流程，確保配方菌株之穩定性與生理調節潛力，為您的日夜健康維持提供最安心的科學把關。</p>
+                </div>
+                <div class="inline-block bg-white p-4 rounded-xl border border-brand-200 shadow-sm text-left">
+                    <p class="font-bold text-brand-800 text-[12px] md:text-sm mb-2" data-i18n="sup_patent_desc">
+                        🛡️ 核心萃取製程榮獲國家專利認證：「多槽串連式超音波防高溫萃取結構」 (中華民國專利證號：M581002)
+                    </p>
+                    <p class="font-bold text-brand-800 text-[12px] md:text-sm" data-i18n="sup_patent_desc_2">
+                        &amp; 發明專利：[超聲波萃取系統及其設備] (發明第 I 783508 號)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STREAMING_CHUNK:Rendering footer and certifications... -->
+    <footer class="py-10 md:py-16 px-6 bg-white border-t border-gray-200 mt-8">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+            
+            <div class="bg-gray-50 p-5 md:p-8 rounded-2xl">
+                <h4 class="text-brand-800 text-sm md:text-lg font-bold mb-2 md:mb-3 flex items-center gap-2">
+                    <span class="text-xl md:text-2xl">📄</span> <span data-i18n="ft_1_title">產品屬性與宣稱聲明</span>
+                </h4>
+                <p class="text-[11px] md:text-sm text-gray-500 leading-relaxed" data-i18n="ft_1_desc">
+                    本系列產品依據法規分類為「一般化妝品與一般食品」，提及之核心成分機轉係基於科學文獻與數據，供參閱潛力。不具醫療效能。
+                </p>
+            </div>
+
+            <div class="bg-gray-50 p-5 md:p-8 rounded-2xl">
+                <h4 class="text-brand-800 text-sm md:text-lg font-bold mb-2 md:mb-3 flex items-center gap-2">
+                    <span class="text-xl md:text-2xl">🧪</span> <span data-i18n="ft_2_title">國際認證與製造保障</span>
+                </h4>
+                <p class="text-[11px] md:text-sm text-gray-500 leading-relaxed" data-i18n="ft_2_desc">
+                    由 ISO 22716 / GMP 國際認證廠生產。與經濟部嘉義產業創新研發中心合作，確保從源頭萃取至終端產品具備極高穩定性。
+                </p>
+            </div>
+
+            <div class="bg-gray-50 p-5 md:p-8 rounded-2xl">
+                <h4 class="text-brand-800 text-sm md:text-lg font-bold mb-2 md:mb-3 flex items-center gap-2">
+                    <span class="text-xl md:text-2xl">🛡️</span> <span data-i18n="ft_3_title">合規宣告與品質承諾</span>
+                </h4>
+                <p class="text-[11px] md:text-sm text-gray-500 leading-relaxed" data-i18n="ft_3_desc">
+                    雖採用高階去敏技術，仍建議首次使用於耳後進行測試。避開開放性傷口並存放於陰涼處，以維持活性胜肽與酵素效能。
+                </p>
+            </div>
+
+        </div>
+        
+        <div class="mt-12 md:mt-20 pt-8 md:pt-10 border-t border-gray-100 flex flex-col md:flex-row justify-center items-center gap-8 md:gap-14 max-w-5xl mx-auto">
+            <img src="logo.png" alt="經濟部嘉義產業創新研發中心" class="h-10 md:h-12 w-auto object-contain mix-blend-multiply" onerror="this.style.display='none'">
+            <div class="hidden md:block h-12 w-px bg-gray-200"></div>
+            <div class="flex items-center gap-6 md:gap-10">
+                <img src="ISO 22716.jpg" alt="ISO 22716" class="h-14 md:h-16 w-auto object-contain mix-blend-multiply" onerror="this.style.display='none'">
+                <img src="綠色工廠.jpg" alt="綠色工廠" class="h-14 md:h-16 w-auto object-contain mix-blend-multiply rounded-full" onerror="this.style.display='none'">
+                <img src="環保.jpg" alt="環保標章" class="h-14 md:h-16 w-auto object-contain mix-blend-multiply rounded-lg" onerror="this.style.display='none'">
+            </div>
+        </div>
+
+        <div class="mt-10 md:mt-12 text-center text-[10px] md:text-sm text-gray-400 font-serif tracking-widest leading-loose" data-i18n="ft_copy">
+            EssZenbio 臻萃研 <br>
+            高階科研萃取 × 仿生保養美學
+        </div>
+    </footer>
+
+    <!-- STREAMING_CHUNK:Initializing language translations (TW/CN/EN)... -->
+    <script>
+        const translations = {
+            "zh-TW": {
+                main_title: "臻萃研",
+                sub_title: "高階產品矩陣與仿生基底技術解析",
+                desc_title: "從科研提取到精準靶向：不可複製的技術壁壘",
+                n_home: "首頁",
+                tech_h3: "高生物利用率載體技術 (Biomimetic Delivery System)",
+                sci_h4: "科學敘事：為何「源」與「潤」必須在使用前一刻才融合？",
+                sci_p1: "在皮膚科學中，傳統保養品為了將水與油混合在同一個瓶子裡，往往依賴「化學界面活性劑（乳化劑）」。然而，強行破壞脂質結構的化學物質，長期使用會導致角質層受損、引發敏弱與慢性發炎。",
+                sci_p2: "突破傳統化學乳化劑的侷限。保養不應是繁瑣的疊加，而是根據環境與膚況，<strong class='text-brand-700'>構築能被肌膚完全識別的仿生載體 (Biomimetic Carrier)。</strong>",
+                sci_p3: "我們堅持將提供水相浸潤通道的 <strong class='text-gray-900'>[源]</strong> 與提供脂質重塑的 <strong class='text-gray-900'>[潤]</strong> 分開。只有當您在掌心將兩者以 1:1 混合，並滴入高濃度靶向精華，<strong class='text-brand-700'>利用體溫與物理性搓揉的瞬間</strong>，才會形成同時包覆親水性與親脂性活性成分的「微乳液 (Microemulsion)」。",
+                sci_p4: "這個瞬間生成的仿生載體，與人體天然的「皮脂膜」組成極度相似，能中和皮膚的防禦機制，保護脆弱的胜肽訊號不被降解，無阻礙地將高活性精華直送真皮層，實現 <strong class='text-brand-700 font-serif'>1+1+1 > 3</strong> 的臨床級生物利用率。",
+                f1_title: "仿生基底構築",
+                f1_desc: "以 [源] AQUA (水相) 與 [潤] OLEA (油相) 1:1 構建完美仿生皮脂膜，瞬間柔軟角質。",
+                f2_title: "活性靶向精準滴入",
+                f2_desc: "依據 本公司 AI 檢測數據 提供參考 並可按個人 需求，滴入高純度 [丰]、[澤]、[炁]、[蘊] 活性精華。",
+                f3_title: "物理微乳化破壁",
+                f3_desc: "利用掌心溫度的物理性摩擦，瞬間形成微乳液載體。",
+                f4_title: "高效直達真皮層",
+                f4_desc: "避開厚重化學乳化劑阻礙，使專利萃取成分使命必達直送肌底。",
+                core_ritual_title: "✦ 核心儀式：油水物理性乳化技術 ✦",
+                p1_h2: "壹、 建立技術壁壘：分子級精密轉化",
+                p1_h3: "Technology Pillar : 突破傳統植萃極限",
+                p1_desc: "臻萃研的核心競爭力在於高階「精準萃取與轉化技術」。我們解決了醫美與化妝品產業長久以來的痛點：大分子無法吸收、高活性易致敏。確保每一滴成分皆具備極高純度、精準滲透與臨床級生物利用率。",
+                b1_label: "技術壁壘 01",
+                b1_title: "人參皂苷精密水解轉化 (CK)",
+                b1_tag1: "分子量極小化 <span class='font-serif'>622 Da</span>",
+                b1_tag2: "黃金轉化濃度 <span class='font-serif'>1.28 mg/g</span>",
+                b1_p: "<strong class='text-gray-900'>定向酵素切割：突破吸收極限</strong><br>傳統人參皂苷分子量龐大，塗抹僅能停留在表皮。臻萃研透過定向酵素水解技術，將大分子精準切割為極微小的 Compound K (CK)。我們達成了具備優異臨床有效性的黃金轉化率，建立極高仿製門檻：",
+                b1_h5: "CK 皂苷臨床靶向與實證功效",
+                b1_l1: "<strong class='text-gray-800'>第一型膠原蛋白管理：</strong>靶向活化纖維母細胞，顯著減少皺紋深度，恢復基底回彈力。",
+                b1_l2: "<strong class='text-gray-800'>內源性玻尿酸自體生成：</strong>精準上調表皮細胞 HAS2 基因表現，由內而外增加含水量。",
+                b1_l3: "<strong class='text-gray-800'>酪氨酸酶源頭抑制：</strong>降低 Tyrosinase 活性，阻斷黑色素合成路徑。",
+                b2_label: "技術壁壘 02",
+                b2_title: "蜂王漿蛋白去敏與微分子化",
+                b2_tag1: "微分子化 <span class='font-serif'>< 3000 Da</span>",
+                b2_tag2: "去敏胜肽與 10-HDA 技術",
+                b2_p: "天然蜂王漿極具營養價值，但巨量蛋白難以吸收且易引發過敏，是業界痛點。<br><br>🛡️ <strong class='text-gray-900'>專研水解去敏化：</strong>利用高倍數酵素切斷過敏原，極敏弱肌也能使用。<br>🚀 <strong class='text-gray-900'>短鏈胜肽剪裁：</strong>巨量蛋白被精準剪裁為可輕易穿透脂質的極微分子胜肽。",
+                b2_h5: "核心活性物質：王漿酸 (10-HDA)",
+                b2_l1: "<strong class='text-gray-800'>纖維母細胞靶點：</strong>促進分泌轉化生長因子強效刺激膠原新生。",
+                b2_l2: "<strong class='text-gray-800'>屏障重塑靶點：</strong>上調絲聚蛋白 (Filaggrin) 表現，大幅強化保濕力。",
+                b2_l3: "<strong class='text-gray-800'>廣譜抗菌：</strong>對引發痘痘的痤瘡丙酸桿菌具備優異抑制作用。",
+                b3_label: "技術壁壘 03",
+                b3_title: "沙棘脂質重構與雙相適應性",
+                b3_tag1: "Omega-7 仿生修復機制",
+                b3_p: "<strong class='text-gray-900'>皮脂膜同源脂質：</strong>沙棘果蘊含罕見的 Ω-7 (棕櫚油酸)，結構與原生皮脂高度重合，無縫接軌修護受損屏障。<br><br><strong class='text-gray-900'>水油雙相高利用率：</strong>同時具備親水性（維生素C、類黃酮）與親脂性（Ω-7）。",
+                b3_l1: "<strong class='text-gray-800'>完美契合雙導系統：</strong>親水多酚融入水相抗氧化，親脂 Ω-7 融入油相修護脂質，將生物利用率推向極限。",
+                b3_l2: "<strong class='text-gray-800'>膠原協同：</strong>豐富維生素C作為膠原生成的關鍵輔酶，聯合抗擊 MMPs 降解酵素。",
+                p2_h2: "貳、 必備基底：油水雙引領",
+                p2_h3: "開啟通道與仿生防禦",
+                p2_desc: "這是所有保養流程的起點，摒棄傳統增稠劑。由「源」提供水相浸潤通道，由「潤」提供油相雙層鎖水。",
+                a_title: "[源] AQUA 前導精華液",
+                a_tag: "仿生啟動技術",
+                a_p1: "<strong class='text-gray-900'>機制靶點：</strong>瞬間柔軟角質，開啟補水通道。作為高生物相容的水相載體，負責搭載後續水溶性成分引領深層滲透。",
+                a_p2: "<strong class='text-gray-900'>科學成分：</strong>微分子玻尿酸、AQUALANCE 鎖水因子、甘草精粹。",
+                o_title: "[潤] OLEA 前導精華油",
+                o_tag: "仿生重塑技術",
+                o_p1: "<strong class='text-gray-900'>機制靶點：</strong>精準模擬天然皮脂，填補角質間隙。作為「油相載體」包覆脂溶性活性物，並在肌膚表面形成防禦層封存營養。",
+                o_p2: "<strong class='text-gray-900'>科學成分：</strong>原生橄欖油、神經醯胺 (Ceramides)。",
+                p2_bottom: "核心基底：1:1 的仿生平衡 &nbsp;✦&nbsp; 模擬皮脂膜關鍵結構",
+                
+                ai_badge: "AI 演算中樞",
+                ai_sec_h2: "臻萃研 AI 智能檢測系統",
+                ai_sec_desc1: "我們卓越的AI工程團隊以業界最高的隱私保護標準自建AI 檢測模型!",
+                ai_sec_desc2: "為因應 您所處環境因素 與 個人生理特質! 肌膚 , 及身體, 需要調整不同的保養策略, 來適應不同的狀態! 因此 我們結合產品配方特性, 以三維度的保養思維, 設計出 以AI 檢測為核心! 打造個人專屬的 [動態配方] , 完全滿足您 因時! 因地! 因個人特質的全方位呵護!",
+                ai_step1_title: "環境參數即時擷取",
+                ai_env_temp: "氣溫",
+                ai_env_hum: "濕度",
+                ai_env_wind: "風速",
+                ai_env_uv: "紫外線",
+                ai_env_low: "(低)",
+                ai_step2_title: "4D 面部 6大指標數據",
+                ai_m1: "T區光澤度",
+                ai_m2: "U區光澤度",
+                ai_m3: "紋理粗糙度",
+                ai_m4: "紅區面積比例",
+                ai_m5: "毛孔密度",
+                ai_m6: "細紋密度",
+                ai_step3_title: "腸-腦-皮膚 軸線深度分析",
+                ai_age_title: "AI 測得肌膚年齡",
+                ai_age_desc: "實際年齡 40 / 狀態良好",
+                ai_ax1: "抗壓賦活值",
+                ai_ax2: "腸道代謝力",
+                ai_ax3: "肌膚防禦力",
+                ai_ax_warn: "需加強",
+                ai_step4_title: "動態配方矩陣輸出",
+                ai_total_vol: "合量: 0.6ml",
+                ai_r1_desc: "水相基底",
+                ai_r2_desc: "油相基底",
+                ai_r3_desc: "真皮修護",
+                ai_drop: "1 滴",
+                ai_3d_title: "3D 動態空間標靶落點",
+                ai_3d_desc: "我們構建了三維度的保養思維模型：<br><strong>生理 (X軸)</strong> × <strong>環境 (Y軸)</strong> × <strong>配方 (Z軸)</strong>。<br><br>系統會將擷取到的個人生理指數與氣候環境數據，投射於這個 3D 空間矩陣中，精準定位出「本次標靶座標」。藉由這個空間座標，為您演算出當下最適切的專屬動態配方滴數，達成真正的多維度精準對位。",
+                ai_3d_x: "生理 (X)",
+                ai_3d_y: "環境 (Y)",
+                ai_3d_z: "配方 (Z)",
+                ai_3d_drops: "3 滴",
+                app_dl_title: "啟動您的專屬智能管家",
+                app_dl_desc: "在此! 為您 提供 [iOS / Android App]! 歡迎您! 掃描 以下二維碼 並下載App ! 開始體驗 這個為您打造的 智能管家服務!",
+
+                p3_h2: "參、 萃取活性精華：靶向導入分析",
+                p3_h3: "精準應對各類膚況的高階調配",
+                p3_desc: "依據 AI 檢測結果，在健康仿生基底上，加入特定純度極高的功效精華，發揮 1+1+1 > 3 的靶向修護加乘效果。",
+                p_title: "[丰] PLENA 蜜潤精華露",
+                p_tag1: "修護 / 提亮",
+                p_tag2: "結構性修護",
+                p_h5: "醫美級去敏修護與透亮",
+                p_desc: "針對環境壓力與疲憊導致的屏障受損，進行深層結構性補給，強效改善發炎與暗沈。",
+                p_l1: "<strong class='text-gray-900'>精粹成分：</strong>蜂王漿水解胜肽、全效沙棘果萃取、三效緊緻修護因子。",
+                p_l2: "<strong class='text-gray-900'>獨家競爭力：</strong>利用極致溫和酵素切斷致敏醣基，解決敏感肌痛點。10-HDA 靶向刺激膠原合成。",
+                p_l3: "<strong class='text-gray-900'>乳化機制：</strong>微分子胜肽在水油雙載體的包覆下，精準消退疲憊炎症。",
+                r_title: "[澤] ROSIDA 水漾精華露",
+                r_tag1: "亮白 / 澄淨",
+                r_tag2: "淨白導航與水油平衡",
+                r_h5: "突破美白致敏的雙效防禦",
+                r_desc: "針對暗沈與屏障脆弱並存的亞洲膚況，提供「淨白+修護」不衝突的高效特調。",
+                r_l1: "<strong class='text-gray-900'>專利成分：</strong>傳明酸、水解蜂王漿微分子胜肽、水漾平衡因子。",
+                r_l2: "<strong class='text-gray-900'>獨家競爭力：</strong>微分子胜肽提供營養，在傳明酸阻斷黑色素的同時，同步進行細胞級修復。",
+                r_l3: "<strong class='text-gray-900'>乳化機制：</strong>與 [潤] 的神經醯胺結合修護角質層，使傳明酸溫和精準防禦暗沈。",
+                q_title: "[炁] Qi 臻萃精華露",
+                q_tag1: "緊緻 / 撫紋",
+                q_tag2: "旗艦抗老貢獻",
+                q_h5: "真皮層修護雷達與時光逆轉",
+                q_desc: "延緩熟齡老化、強化基底彈韌度，結合草本頂尖萃取與現代胜肽醫學的顛峰之作。",
+                q_l1: "<strong class='text-gray-900'>精萃成分：</strong>水解人參皂苷精華、專利 Matrixyl 五胜肽、積雪草。",
+                q_l2: "<strong class='text-gray-900'>獨家競爭力：</strong>高轉化 CK 皂苷直接上調 HAS2 生成玻尿酸。五胜肽靶向強化真皮表皮連接處 (DEJ)。",
+                q_l3: "<strong class='text-gray-900'>乳化機制：</strong>油相基底精準保護脆弱胜肽訊號，順利抵達真皮層，由內而外撐起皺紋。",
+                u_title: "[蘊] AUREA 鎏光潤澤精華油",
+                u_tag1: "極潤 / 修護",
+                u_tag2: "琥珀級脂質封存",
+                u_h5: "深度脂質補給與屏障重塑",
+                u_desc: "針對醫美術後、極乾與熟齡肌，提供最深層的結構性皮脂膜重建工程。",
+                u_l1: "<strong class='text-gray-900'>精萃成分：</strong>沙棘果油 (全果 Ω-7)、植物固醇 (Phytosterols)、神經醯胺。",
+                u_l2: "<strong class='text-gray-900'>獨家競爭力：</strong>神經醯胺抓水，植物固醇穩定雙層膜，Ω-7 提供抗老底物，完全模擬複合脂質。",
+                u_l3: "<strong class='text-gray-900'>乳化機制：</strong>與 [潤] 協同作用，在表皮形成微光屏障，完美封存脂質與水分。",
+                ritual_h2: "專業使用儀式",
+                ritual_desc: "摒棄化學增稠，根據 AI 演算建議，<br class='hidden md:block'>將產品主導權交還給您，達成 1+1+1 > 3 的極致生物利用率。",
+                s1_title: "STEP 1 - 取量",
+                s1_desc: "依照 AI 報告於掌心倒入適量 [源] 與 [潤]，建立仿生載體。",
+                s2_title: "STEP 2 - 加乘",
+                s2_desc: "滴入 AI 演算指定的高濃度靶向活性精華（如：[炁] 1滴）。",
+                s3_title: "STEP 3 - 乳化",
+                s3_desc: "雙手合十搓揉，利用掌心溫度與物理性摩擦使油水瞬間微乳化。",
+                s4_title: "STEP 4 - 敷按",
+                s4_desc: "輕壓於臉部，感受仿生載體保護下的活性胜肽無阻礙層層滲透。",
+                
+                p4_h2: "肆、 內源基底調理：日夜節律雙效粉包",
+                p4_h3: "由內而外的全效順暢與深層煥妍",
+                
+                sup_academic_title: "【頂尖產學合作 ‧ 權威技術研發】",
+                sup_academic_p1: "本系列產品結合前瞻微生態科學，其配方開發與低溫真空萃取製程技術，係由國立嘉義大學食品科學系 呂英震博士技術團隊進行產學合作研發。",
+                sup_academic_p2: "呂博士專精於微生物學、發酵技術與益生菌篩選鑑定。<br>本產品透過嚴謹的學術研發流程，確保配方菌株之穩定性與生理調節潛力，為您的日夜健康維持提供最安心的科學把關。",
+                sup_patent_desc: "🛡️ 核心萃取製程榮獲國家專利認證：「多槽串連式超音波防高溫萃取結構」 (中華民國專利證號：M581002)",
+                sup_patent_desc_2: "& 發明專利：[超聲波萃取系統及其設備] (發明第 I 783508 號)",
+
+                sup_axis_title: "科學實證：腸-腦-皮膚軸 (Gut-Brain-Skin Axis)",
+                sup_axis_desc: "近年科學研究指出，消化道微生態、內在情緒狀態與外在肌膚表現，存在著緊密的雙向溝通網絡。我們的日夜雙效配方，正是基於此「腸-腦-皮膚軸」的先進理念所設計。",
+                
+                sup_day_title: "晞 AURORA",
+                sup_day_intro: "AURORA 日用配方透過人參與沙棘滋補強身；以洋車前子、難消化糊精與菊糖等膳食纖維促進腸道蠕動，使排便順暢；搭配消化酵素幫助消化；並藉由六大益生菌群改變細菌叢生態；最後佐以綜合維生素礦物質維持正常生理機能。達成幫助消化、精神旺盛、使排便順暢的日間全面保養。",
+                sup_day_f1_title: "✨ 滋補強身 ｜ 5年紅蔘萃取精華 × 沙棘全果萃取",
+                sup_day_f1_desc: "精選5年紅蔘，透過低溫水解技術與益生菌的「生物轉化」協同作用，極致吸收珍貴皂苷CK，有助於滋補強身、增強體力。搭配珍貴極地沙棘果，全果低溫萃取完整保留天然維生素C與 Omega-7，促進新陳代謝，迎接活力早晨。",
+                sup_day_f2_title: "🌿 順暢淨空 ｜ 黃金比例水溶性纖維 × 優質益生元",
+                sup_day_f2_desc: "採用黃金比例水溶性膳食纖維（洋車前子殼）、難消化糊精與優質益生元（菊糖）完美協同。膳食纖維可促進腸道蠕動，增加飽足感，使糞便比較柔軟而易於排出，讓您每日輕盈無負擔。",
+                sup_day_f3_title: "🦠 體內環保 ｜ 6大複合益生菌群",
+                sup_day_f3_desc: "嚴選生命力強韌的芽孢乳酸菌(Bacillus coagulans)與長雙歧桿菌(B. longum)等6大強勢複合菌株。日夜協同定殖，幫助維持消化道機能，改變細菌叢生態，由內建立健康屏障。",
+                sup_day_f4_title: "⚡ 幫助消化 ｜ 綜合酵素 × 基礎營養",
+                sup_day_f4_desc: "多種優質消化酵素，幫助食物分解與消化，減輕消化道負擔。協同綜合維生素與礦物質，營養補給，補足一日所需的關鍵微量元素。",
+                
+                sup_night_title: "沁 VESPERA",
+                sup_night_intro: "VESPERA 夜用配方則完美落實了「睡得好，自然美」的保健邏輯。利用GABA、色胺酸與鎂幫助入睡；並在夜間黃金休息期，透過水解蜂王乳、膠原蛋白與維生素C（具抗氧化作用、促進膠原蛋白的形成）進行養顏美容；最後以六大益生菌群與益生質幫助維持消化道機能。是一款兼具幫助入睡與青春美麗的高規格複合配方。",
+                sup_night_f1_title: "✨ 青春無瑕 ｜ 蜂王漿微分子胜肽 × 頂級膠原蛋白",
+                sup_night_f1_desc: "採用生物科技酵素剪裁技術，將蜂王漿溫和水解為「精純微分子胜肽」，保留能滋養好菌的珍貴寡糖，並精準鎖住王漿酸 (10-HDA)。搭配優質膠原蛋白，調節生理機能，養顏美容，展現青春好氣色。",
+                sup_night_f2_title: "🫐 晶亮煥活 ｜ 藍靛果全果萃取精華 × 維生素C",
+                sup_night_f2_desc: "嚴選高緯度極地珍貴果實藍靛果，完整封存豐沛的花青素(C3G)與植物多酚。結合「植萃益生」科學，多酚經腸道好菌發酵轉化，搭配足量維生素C，其中維生素C具抗氧化作用、促進膠原蛋白的形成，在夜間深層養護。",
+                sup_night_f3_title: "🌙 寧靜舒緩 ｜ GABA × 色胺酸 × 鎂的科學金三角",
+                sup_night_f3_desc: "透過腸腦軸線的科學雙向溝通，高純度麩胺酸發酵物(含GABA)搭配人體必需胺基酸(色胺酸)與礦物質(鎂)。其中鎂有助於心臟、肌肉及神經的正常功能；配方完美協同運作，調節生理機能，幫助入睡，迎接晨起活力。",
+                sup_night_f4_title: "🌱 夜間養護 ｜ 6大舒眠益生菌 × 益生元",
+                sup_night_f4_desc: "精選長雙歧桿菌(Bifidobacterium longum)、植物乳桿菌(Lactobacillus plantarum)等6大優勢活菌，結合前沿微生態科學概念。搭配優質益生元，夜間持續改變細菌叢生態，幫助維持消化道機能，隔日順暢輕盈。",
+
+                ft_1_title: "產品屬性與宣稱聲明",
+                ft_1_desc: "本系列產品依據法規分類為「一般化妝品與一般食品」，提及之核心成分機轉係基於科學文獻與數據，供參閱潛力。不具醫療效能。",
+                ft_2_title: "國際認證與製造保障",
+                ft_2_desc: "由 ISO 22716 / GMP 國際認證廠生產。與經濟部嘉義產業創新研發中心合作，確保從源頭萃取至終端產品具備極高穩定性。",
+                ft_3_title: "合規宣告與品質承諾",
+                ft_3_desc: "雖採用高階去敏技術，仍建議首次使用於耳後進行測試。避開開放性傷口並存放於陰涼處，以維持活性胜肽與酵素效能。",
+                ft_copy: "EssZenbio 臻萃研 <br>高階科研萃取 × 仿生保養美學"
+            },
+            
+            "zh-CN": {
+                main_title: "臻萃研",
+                sub_title: "高阶产品矩阵与仿生基底技术解析",
+                desc_title: "从科研提取到精准靶向：不可复制的技术壁垒",
+                n_home: "首页",
+                tech_h3: "高生物利用率载体技术 (Biomimetic Delivery System)",
+                sci_h4: "科学叙事：为何「源」与「润」必须在使用前一刻才融合？",
+                sci_p1: "在皮肤科学中，传统保养品为了将水与油混合在同一个瓶子里，往往依赖「化学界面活性剂（乳化剂）」。然而，强行破坏脂质结构的化学物质，长期使用会导致角质层受损、引发敏弱与慢性发炎。",
+                sci_p2: "突破传统化学乳化剂的局限。保养不应是繁琐的叠加，而是根据环境与肤况，<strong class='text-brand-700'>构筑能被肌肤完全识别的仿生载体 (Biomimetic Carrier)。</strong>",
+                sci_p3: "我们坚持将提供水相浸润通道的 <strong class='text-gray-900'>[源]</strong> 与提供脂质重塑的 <strong class='text-gray-900'>[润]</strong> 分开。只有当您在掌心将两者以 1:1 混合，并滴入高浓度靶向精华，<strong class='text-brand-700'>利用体温与物理性搓揉的瞬间</strong>，才会形成同时包覆亲水性与亲脂性活性成分的「微乳液 (Microemulsion)」。",
+                sci_p4: "这个瞬间生成的仿生载体，与人体天然的「皮脂膜」组成极度相似，能中和皮肤的防御机制，保护脆弱的胜肽信号不被降解，无阻碍地将高活性精华直送真皮层，实现 <strong class='text-brand-700 font-serif'>1+1+1 > 3</strong> 的临床级生物利用率。",
+                f1_title: "仿生基底构筑",
+                f1_desc: "以 [源] AQUA (水相) 与 [润] OLEA (油相) 1:1 构建完美仿生皮脂膜，瞬间柔软角质。",
+                f2_title: "活性靶向精准滴入",
+                f2_desc: "依据 本公司 AI 检测数据 提供参考 并可按个人 需求，滴入高纯度 [丰]、[泽]、[炁]、[蕴] 活性精华。",
+                f3_title: "物理微乳化破壁",
+                f3_desc: "利用掌心温度的物理性摩擦，瞬间形成微乳液载体。",
+                f4_title: "高效直达真皮层",
+                f4_desc: "避开厚重化学乳化剂阻碍，使专利萃取成分使命必达直送肌底。",
+                core_ritual_title: "✦ 核心仪式：油水物理性乳化技术 ✦",
+                p1_h2: "壹、 建立技术壁垒：分子级精密转化",
+                p1_h3: "Technology Pillar : 突破传统植萃极限",
+                p1_desc: "臻萃研的核心竞争力在于高阶「精准萃取与转化技术」。我们解决了医美与化妆品产业长久以来的痛点：大分子无法吸收、高活性易致敏。确保每一滴成分皆具备极高纯度、精准渗透与临床级生物利用率。",
+                b1_label: "技术壁垒 01",
+                b1_title: "人参皂苷精密水解转化 (CK)",
+                b1_tag1: "分子量极小化 <span class='font-serif'>622 Da</span>",
+                b1_tag2: "黄金转化浓度 <span class='font-serif'>1.28 mg/g</span>",
+                b1_p: "<strong class='text-gray-900'>定向酵素切割：突破吸收极限</strong><br>传统人参皂苷分子量庞大，涂抹仅能停留在表皮。臻萃研透过定向酵素水解技术，将大分子精准切割为极微小的 Compound K (CK)。我们达成了具备优异临床有效性的黄金转化率，建立极高仿制门槛：",
+                b1_h5: "CK 皂苷临床靶向与实证功效",
+                b1_l1: "<strong class='text-gray-800'>第一型胶原蛋白管理：</strong>靶向活化纤维母细胞，显著减少皱纹深度，恢复基底回弹力。",
+                b1_l2: "<strong class='text-gray-800'>内源性玻尿酸自体生成：</strong>精准上调表皮细胞 HAS2 基因表现，由内而外增加含水量。",
+                b1_l3: "<strong class='text-gray-800'>酪氨酸酶源头抑制：</strong>降低 Tyrosinase 活性，阻断黑色素合成路径。",
+                b2_label: "技术壁垒 02",
+                b2_title: "蜂王浆蛋白去敏与微分子化",
+                b2_tag1: "微分子化 <span class='font-serif'>< 3000 Da</span>",
+                b2_tag2: "去敏胜肽与 10-HDA 技术",
+                b2_p: "天然蜂王浆极具营养价值，但巨量蛋白难以吸收且易引发过敏，是业界痛点。<br><br>🛡️ <strong class='text-gray-900'>专研水解去敏化：</strong>利用高倍数酵素切断过敏原，极敏弱肌也能使用。<br>🚀 <strong class='text-gray-900'>短链胜肽剪裁：</strong>巨量蛋白被精准剪裁为可轻易穿透脂质的极微分子胜肽。",
+                b2_h5: "核心活性物质：王浆酸 (10-HDA)",
+                b2_l1: "<strong class='text-gray-800'>纤维母细胞靶点：</strong>促进分泌转化生长因子强效刺激胶原新生。",
+                b2_l2: "<strong class='text-gray-800'>屏障重塑靶点：</strong>上调丝聚蛋白 (Filaggrin) 表现，大幅强化保湿力。",
+                b2_l3: "<strong class='text-gray-800'>广谱抗菌：</strong>对引发痘痘的痤疮丙酸杆菌具备优异抑制作用。",
+                b3_label: "技术壁垒 03",
+                b3_title: "沙棘脂质重构与双相适应性",
+                b3_tag1: "Omega-7 仿生修复机制",
+                b3_p: "<strong class='text-gray-900'>皮脂膜同源脂质：</strong>沙棘果蕴含罕见的 Ω-7 (棕榈油酸)，结构与原生皮脂高度重合，无缝接轨修护受损屏障。<br><br><strong class='text-gray-900'>水油双相高利用率：</strong>同时具备亲水性（维生素C、类黄酮）与亲脂性（Ω-7）。",
+                b3_l1: "<strong class='text-gray-800'>完美契合双导系统：</strong>亲水多酚融入水相抗氧化，亲脂 Ω-7 融入油相修护脂质，将生物利用率推向极限。",
+                b3_l2: "<strong class='text-gray-800'>胶原协同：</strong>丰富维生素C作为胶原生成的关键辅酶，联合抗击 MMPs 降解酵素。",
+                p2_h2: "贰、 必备基底：油水双引领",
+                p2_h3: "开启通道与仿生防御",
+                p2_desc: "这是所有保养流程的起点，摒弃传统增稠剂。由「源」提供水相浸润通道，由「润」提供油相双层锁水。",
+                a_title: "[源] AQUA 前导精华液",
+                a_tag: "仿生启动技术",
+                a_p1: "<strong class='text-gray-900'>机制靶点：</strong>瞬间柔软角质，开启补水通道。作为高生物相容的水相载体，负责搭载后续水溶性成分引领深层渗透。",
+                a_p2: "<strong class='text-gray-900'>科学成分：</strong>微分子玻尿酸、AQUALANCE 锁水因子、甘草精粹。",
+                o_title: "[润] OLEA 前导精华油",
+                o_tag: "仿生重塑技术",
+                o_p1: "<strong class='text-gray-900'>机制靶点：</strong>精准模拟天然皮脂，填补角质间隙。作为「油相载体」包覆脂溶性活性物，并在肌肤表面形成防御层封存营养。",
+                o_p2: "<strong class='text-gray-900'>科学成分：</strong>原生橄榄油、神经酰胺 (Ceramides)。",
+                p2_bottom: "核心基底：1:1 的仿生平衡 &nbsp;✦&nbsp; 模拟皮脂膜关键结构",
+                
+                ai_badge: "AI 演算中枢",
+                ai_sec_h2: "臻萃研 AI 智能检测系统",
+                ai_sec_desc1: "我们卓越的AI工程团队以业界最高的隐私保护标准自建AI 检测模型!",
+                ai_sec_desc2: "为因应 您所处环境因素 与 个人生理特质! 肌肤 , 及身体, 需要调整不同的保养策略, 来适应不同的状态! 因此 我们结合产品配方特性, 以三维度的保养思维, 设计出 以AI 检测为核心! 打造个人专属的 [动态配方] , 完全满足您 因时! 因地! 因个人特质的全方位呵护!",
+                ai_step1_title: "环境参数即时撷取",
+                ai_env_temp: "气温",
+                ai_env_hum: "湿度",
+                ai_env_wind: "风速",
+                ai_env_uv: "紫外线",
+                ai_env_low: "(低)",
+                ai_step2_title: "4D 面部 6大指标数据",
+                ai_m1: "T区光泽度",
+                ai_m2: "U区光泽度",
+                ai_m3: "纹理粗糙度",
+                ai_m4: "红区面积比例",
+                ai_m5: "毛孔密度",
+                ai_m6: "细纹密度",
+                ai_step3_title: "肠-脑-皮肤 轴线深度分析",
+                ai_age_title: "AI 测得肌肤年龄",
+                ai_age_desc: "实际年龄 40 / 状态良好",
+                ai_ax1: "抗压赋活值",
+                ai_ax2: "肠道代谢力",
+                ai_ax3: "肌肤防御力",
+                ai_ax_warn: "需加强",
+                ai_step4_title: "动态配方矩阵输出",
+                ai_total_vol: "合量: 0.6ml",
+                ai_r1_desc: "水相基底",
+                ai_r2_desc: "油相基底",
+                ai_r3_desc: "真皮修护",
+                ai_drop: "1 滴",
+                ai_3d_title: "3D 动态空间靶向落点",
+                ai_3d_desc: "我们构建了三维度的保养思维模型：<br><strong>生理 (X轴)</strong> × <strong>环境 (Y轴)</strong> × <strong>配方 (Z轴)</strong>。<br><br>系统会将撷取到的个人生理指数与气候环境数据，投射于这个 3D 空间矩阵中，精准定位出「本次靶向坐标」。藉由这个空间坐标，为您演算出当下最适合的专属动态配方滴数，达成真正的多维度精准对位。",
+                ai_3d_x: "生理 (X)",
+                ai_3d_y: "环境 (Y)",
+                ai_3d_z: "配方 (Z)",
+                ai_3d_drops: "3 滴",
+                app_dl_title: "启动您的专属智能管家",
+                app_dl_desc: "在此! 为您 提供 [iOS / Android App]! 欢迎您! 扫描 以下二维码 并下载App ! 开始体验 这个为您打造的 智能管家服务!",
+
+                p3_h2: "参、 萃取活性精华：靶向导入分析",
+                p3_h3: "精准应对各类肤况的高阶调配",
+                p3_desc: "依据 AI 检测结果，在健康仿生基底上，加入特定纯度极高的功效精华，发挥 1+1+1 > 3 的靶向修护加乘效果。",
+                p_title: "[丰] PLENA 蜜润精华露",
+                p_tag1: "修护 / 提亮",
+                p_tag2: "结构性修护",
+                p_h5: "医美级去敏修护与透亮",
+                p_desc: "针对环境压力与疲惫导致的屏障受损，进行深层结构性补给，强效改善发炎与暗沈。",
+                p_l1: "<strong class='text-gray-900'>精粹成分：</strong>蜂王浆水解胜肽、全效沙棘果萃取、三效紧致修护因子。",
+                p_l2: "<strong class='text-gray-900'>独家竞争力：</strong>利用极致温和酵素切断致敏醣基，解决敏感肌痛点。10-HDA 靶向刺激胶原合成。",
+                p_l3: "<strong class='text-gray-900'>乳化机制：</strong>微分子胜肽在水油双载体的包覆下，精准消退疲惫炎症。",
+                r_title: "[泽] ROSIDA 水漾精华露",
+                r_tag1: "亮白 / 澄净",
+                r_tag2: "净白导航与水油平衡",
+                r_h5: "突破美白致敏的双效防御",
+                r_desc: "针对暗沈与屏障脆弱并存的亚洲肤况，提供「净白+修护」不冲突的高效特调。",
+                r_l1: "<strong class='text-gray-900'>专利成分：</strong>传明酸、水解蜂王浆微分子胜肽、水漾平衡因子。",
+                r_l2: "<strong class='text-gray-900'>独家竞争力：</strong>微分子胜肽提供营养，在传明酸阻断黑色素的同时，同步进行细胞级修复。",
+                r_l3: "<strong class='text-gray-900'>乳化机制：</strong>与 [润] 的神经酰胺结合修护角质层，使传明酸温和精准防御暗沈。",
+                q_title: "[炁] Qi 臻萃精华露",
+                q_tag1: "紧致 / 抚纹",
+                q_tag2: "旗舰抗老贡献",
+                q_h5: "真皮层修护雷达与时光逆转",
+                q_desc: "延缓熟龄老化、强化基底弹韧度，结合草本顶尖萃取与现代胜肽医学的颠峰之作。",
+                q_l1: "<strong class='text-gray-900'>精萃成分：</strong>水解人参皂苷精华、专利 Matrixyl 五胜肽、积雪草。",
+                q_l2: "<strong class='text-gray-900'>独家竞争力：</strong>高转化 CK 皂苷直接上调 HAS2 生成玻尿酸。五胜肽靶向强化真皮表皮连接处 (DEJ)。",
+                q_l3: "<strong class='text-gray-900'>乳化机制：</strong>油相基底精准保护脆弱胜肽信号，顺利抵达真皮层，由内而外撑起皱纹。",
+                u_title: "[蕴] AUREA 鎏光润泽精华油",
+                u_tag1: "极润 / 修护",
+                u_tag2: "琥珀级脂质封存",
+                u_h5: "深度脂质补给与屏障重塑",
+                u_desc: "针对医美术后、极干与熟龄肌，提供最深层的结构性皮脂膜重建工程。",
+                u_l1: "<strong class='text-gray-900'>精萃成分：</strong>沙棘果油 (全果 Ω-7)、植物固醇 (Phytosterols)、神经酰胺。",
+                u_l2: "<strong class='text-gray-900'>独家竞争力：</strong>神经酰胺抓水，植物固醇稳定双层膜，Ω-7 提供抗老底物，完全模拟复合脂质。",
+                u_l3: "<strong class='text-gray-900'>乳化机制：</strong>与 [润] 协同作用，在表皮形成微光屏障，完美封存脂质与水分。",
+                ritual_h2: "专业使用仪式",
+                ritual_desc: "摒弃化学增稠，根据 AI 演算建议，<br class='hidden md:block'>将产品主导权交还给您，达成 1+1+1 > 3 的极致生物利用率。",
+                s1_title: "STEP 1 - 取量",
+                s1_desc: "依照 AI 报告于掌心倒入适量 [源] 与 [润]，建立仿生载体。",
+                s2_title: "STEP 2 - 加乘",
+                s2_desc: "滴入 AI 演算指定的高浓度靶向活性精华（如：[炁] 1滴）。",
+                s3_title: "STEP 3 - 乳化",
+                s3_desc: "双手合十搓揉，利用掌心温度与物理性摩擦使油水瞬间微乳化。",
+                s4_title: "STEP 4 - 敷按",
+                s4_desc: "轻压于脸部，感受仿生载体保护下的活性胜肽无阻碍层层渗透。",
+                
+                p4_h2: "肆、 内源基底调理：日夜节律双效粉包",
+                p4_h3: "由内而外的全效顺畅与深层焕妍",
+                
+                sup_academic_title: "【顶尖产学合作 ‧ 权威技术研发】",
+                sup_academic_p1: "本系列产品结合前瞻微生态科学，其配方开发与低温真空萃取制程技术，系由国立嘉义大学食品科学系 吕英震博士技术团队进行产学合作研发。",
+                sup_academic_p2: "吕博士专精于微生物学、发酵技术与益生菌筛选鉴定。<br>本产品透过严谨的学术研发流程，确保配方菌株之稳定性与生理调节潜力，为您日夜健康维持提供最安心的科学把关。",
+                sup_patent_desc: "🛡️ 核心萃取制程荣获国家专利认证：「多槽串连式超音波防高温萃取结构」 (中华民国专利证号：M581002)",
+                sup_patent_desc_2: "& 发明专利：[超声波萃取系统及其设备] (发明第 I 783508 号)",
+
+                sup_axis_title: "科学实证：肠-脑-皮肤轴 (Gut-Brain-Skin Axis)",
+                sup_axis_desc: "近年科学研究指出，消化道微生态、内在情绪状态与外在肌肤表现，存在着紧密的双向沟通网络。我们的日夜双效配方，正是基于此「肠-脑-皮肤轴」的先进理念所设计。",
+                
+                sup_day_title: "晞 AURORA",
+                sup_day_intro: "AURORA 日用配方透过人参与沙棘滋补强身；以洋车前子、难消化糊精与菊糖等膳食纤维促进肠道蠕动，使排便顺畅；搭配消化酵素帮助消化；并藉由六大益生菌群改变细菌丛生态；最后佐以综合维生素矿物质维持正常生理机能。达成帮助消化、精神旺盛、使排便顺畅的日间全面保养。",
+                sup_day_f1_title: "✨ 滋补强身 ｜ 5年红蔘萃取精华 × 沙棘全果萃取",
+                sup_day_f1_desc: "精选5年红蔘，透过低温水解技术与益生菌的「生物转化」协同作用，极致吸收珍贵皂苷CK，有助于滋补强身、增强体力。搭配珍贵极地沙棘果，全果低温萃取完整保留天然维生素C与 Omega-7，促进新陈代谢，迎接活力早晨。",
+                sup_day_f2_title: "🌿 顺畅净空 ｜ 黄金比例水溶性纤维 × 优质益生元",
+                sup_day_f2_desc: "采用黄金比例水溶性膳食纤维（洋车前子壳）、难消化糊精与优质益生元（菊糖）完美协同。膳食纤维可促进肠道蠕动，增加饱足感，使粪便比较柔软而易于排出，让您每日轻盈无负担。",
+                sup_day_f3_title: "🦠 体内环保 ｜ 6大复合益生菌群",
+                sup_day_f3_desc: "严选生命力强韧的芽孢乳酸菌(Bacillus coagulans)与长双歧杆菌(B. longum)等6大强势复合菌株。日夜协同定殖，帮助维持消化道机能，改变细菌丛生态，由内建立健康屏障。",
+                sup_day_f4_title: "⚡ 帮助消化 ｜ 综合酵素 × 基础营养",
+                sup_day_f4_desc: "多种优质消化酵素，帮助食物分解与消化，减轻消化道负担。协同综合维生素与矿物质，营养补给，补足一日所需的关键微量元素。",
+                
+                sup_night_title: "沁 VESPERA",
+                sup_night_intro: "VESPERA 夜用配方则完美落实了「睡得好，自然美」的保健逻辑。利用GABA、色氨酸与镁帮助入睡；并在夜间黄金休息期，透过水解蜂王乳、胶原蛋白与维生素C（具抗氧化作用、促进胶原蛋白的形成）进行养颜美容；最后以六大益生菌群与益生质帮助维持消化道机能。是一款兼具帮助入睡与青春美丽的高规格复合配方。",
+                sup_night_f1_title: "✨ 青春无瑕 ｜ 蜂王浆微分子胜肽 × 顶级胶原蛋白",
+                sup_night_f1_desc: "采用生物科技酵素剪裁技术，将蜂王浆温和水解为「精纯微分子胜肽」，保留能滋养好菌的珍贵寡糖，并精准锁住王浆酸 (10-HDA)。搭配优质胶原蛋白，调节生理机能，养颜美容，展现青春好气色。",
+                sup_night_f2_title: "🫐 晶亮焕活 ｜ 蓝靛果全果萃取精华 × 维生素C",
+                sup_night_f2_desc: "严选高纬度极地珍贵果实蓝靛果，完整封存丰沛的花青素(C3G)与植物多酚。结合「植萃益生」科学，多酚经肠道好菌发酵转化，搭配足量维生素C，其中维生素C具抗氧化作用、促进胶原蛋白的形成，在夜间深层养护。",
+                sup_night_f3_title: "🌙 宁静舒缓 ｜ GABA × 色氨酸 × 镁的科学金三角",
+                sup_night_f3_desc: "透过肠脑轴线的科学双向沟通，高纯度麸氨酸发酵物(含GABA)搭配人体必需氨基酸(色氨酸)与矿物质(镁)。其中镁有助于心脏、肌肉及神经的正常功能；配方完美协同运作，调节生理机能，帮助入睡，迎接晨起活力。",
+                sup_night_f4_title: "🌱 夜间养护 ｜ 6大舒眠益生菌 × 益生元",
+                sup_night_f4_desc: "精选长双歧杆菌(Bifidobacterium longum)、植物乳杆菌(Lactobacillus plantarum)等6大优势活菌，结合前沿微生态科学概念。搭配优质益生元，夜间持续改变细菌丛生态，帮助维持消化道机能，隔日顺畅轻盈。",
+
+                ft_1_title: "产品属性与宣称声明",
+                ft_1_desc: "本系列产品依据法规分类为「一般化妆品与一般食品」，提及之核心成分机转系基于科学文献与数据，供参阅潜力。不具医疗效能。",
+                ft_2_title: "国际认证与制造保障",
+                ft_2_desc: "由 ISO 22716 / GMP 国际认证厂生产。与经济部嘉义产业创新研发中心合作，确保从源头萃取至终端产品具备极高稳定性。",
+                ft_3_title: "合规宣告与品质承诺",
+                ft_3_desc: "虽采用高阶去敏技术，仍建议首次使用于耳后进行测试。避开开放性伤口并存放于阴凉处，以维持活性胜肽与酵素效能。",
+                ft_copy: "EssZenbio 臻萃研 <br>高阶科研萃取 × 仿生保养美学"
+            },
+            
+            "en": {
+                main_title: "EssZenbio",
+                sub_title: "Advanced Matrix & Biomimetic Delivery Technology",
+                desc_title: "From Scientific Extraction to Precision Targeting: The Unreplicable Technical Barrier",
+                n_home: "Home",
+                tech_h3: "Biomimetic Delivery System",
+                sci_h4: "Scientific Narrative: Why Must 'AQUA' & 'OLEA' Fuse at the Last Second?",
+                sci_p1: "In dermatology, conventional skincare relies on chemical surfactants (emulsifiers) to mix water and oil. However, long-term use of these harsh chemicals disrupts the skin's lipid structure, compromising the Stratum Corneum and triggering sensitivity and chronic inflammation.",
+                sci_p2: "Breaking the limits of traditional emulsifiers. Skincare shouldn't be about cumbersome layering. It should construct a <strong class='text-brand-700'>Biomimetic Carrier</strong> fully recognized by the skin.",
+                sci_p3: "We insist on separating <strong class='text-gray-900'>[AQUA]</strong> (hydration channel) and <strong class='text-gray-900'>[OLEA]</strong> (lipid remodeling). Only when you mix them 1:1 in your palm, add targeted serums, and <strong class='text-brand-700'>utilize body heat and physical friction</strong>, does a 'Microemulsion' form, encapsulating both hydrophilic and lipophilic actives instantly.",
+                sci_p4: "This instantly generated biomimetic carrier mimics the human 'hydrolipid film'. It neutralizes skin defenses, protects fragile peptide signals from degradation, and seamlessly delivers high-activity serums to the dermis, achieving a <strong class='text-brand-700 font-serif'>1+1+1 > 3</strong> clinical-grade bioavailability.",
+                f1_title: "Biomimetic Base",
+                f1_desc: "Mix [AQUA] & [OLEA] 1:1 to build a perfect biomimetic sebum film, instantly softening the stratum corneum.",
+                f2_title: "Precision Targeted Infusion",
+                f2_desc: "Infuse high-purity [PLENA], [ROSIDA], [Qi], or [AUREA] serums based on AI analysis or personal needs.",
+                f3_title: "Physical Microemulsion",
+                f3_desc: "Utilize palm temperature and physical friction to instantly form a microemulsion carrier.",
+                f4_title: "High-Efficacy Dermal Delivery",
+                f4_desc: "Bypass heavy emulsifiers, ensuring patented extracts are delivered directly to the basal layer.",
+                core_ritual_title: "✦ Core Ritual: Physical Emulsification Technology ✦",
+                p1_h2: "I. Technical Barriers: Molecular Precision Transformation",
+                p1_h3: "Technology Pillar: Breaking Botanical Extraction Limits",
+                p1_desc: "EssZenbio's core strength lies in advanced 'Precision Extraction & Transformation Technology'. We resolve the long-standing industry pain points: poor absorption of macromolecules and high sensitization of potent actives, ensuring clinical-grade bioavailability.",
+                b1_label: "Barrier 01",
+                b1_title: "Precision Hydrolysis of Ginsenoside (CK)",
+                b1_tag1: "Micromolecularization <span class='font-serif'>622 Da</span>",
+                b1_tag2: "Golden Concentration <span class='font-serif'>1.28 mg/g</span>",
+                b1_p: "<strong class='text-gray-900'>Targeted Enzyme Cleavage:</strong> Traditional ginsenosides only sit on the epidermis. We use targeted enzymatic hydrolysis to precisely cleave them into minuscule Compound K (CK), establishing a high imitation barrier:",
+                b1_h5: "Clinical Targeting of CK Saponin",
+                b1_l1: "<strong class='text-gray-800'>Collagen Management:</strong> Targets fibroblasts, visibly reducing wrinkle depth.",
+                b1_l2: "<strong class='text-gray-800'>Endogenous HA:</strong> Upregulates the HAS2 gene to increase moisture from within.",
+                b1_l3: "<strong class='text-gray-800'>Tyrosinase Inhibition:</strong> Decreases tyrosinase activity to block melanin synthesis.",
+                b2_label: "Barrier 02",
+                b2_title: "Royal Jelly Desensitization & Micromolecularization",
+                b2_tag1: "Micromolecularization <span class='font-serif'>< 3000 Da</span>",
+                b2_tag2: "Desensitizing Peptides & 10-HDA",
+                b2_p: "Natural royal jelly is highly nutritious but highly allergenic and hard to absorb.<br><br>🛡️ <strong class='text-gray-900'>Desensitization:</strong> Enzymes cleave allergens, making it safe for post-procedure skin.<br>🚀 <strong class='text-gray-900'>Short-Chain Peptides:</strong> Tailored into micro-peptides that easily penetrate lipids.",
+                b2_h5: "Core Active: Royal Jelly Acid (10-HDA)",
+                b2_l1: "<strong class='text-gray-800'>Fibroblasts:</strong> Promotes TGF secretion to stimulate neocollagenesis.",
+                b2_l2: "<strong class='text-gray-800'>Barrier Remodeling:</strong> Upregulates Filaggrin expression to strengthen hydration.",
+                b2_l3: "<strong class='text-gray-800'>Antibacterial:</strong> Exhibits excellent inhibitory effects on C. acnes.",
+                b3_label: "Barrier 03",
+                b3_title: "Sea Buckthorn Restructuring & Biphasic Adaptability",
+                b3_tag1: "Omega-7 Biomimetic Repair",
+                b3_p: "<strong class='text-gray-900'>Hydrolipid Homologous:</strong> Contains rare Ω-7, highly overlapping with human sebum to seamlessly repair barriers.<br><br><strong class='text-gray-900'>Biphasic Utilization:</strong> Possesses both hydrophilic (Vit C, flavonoids) and lipophilic (Ω-7) properties.",
+                b3_l1: "<strong class='text-gray-800'>Dual-Delivery Synergy:</strong> Hydrophilic polyphenols blend into the water phase; lipophilic Ω-7 blends into the oil phase.",
+                b3_l2: "<strong class='text-gray-800'>Collagen Synergy:</strong> Vitamin C acts as a key coenzyme against MMP degrading enzymes.",
+                p2_h2: "II. Essential Base: Dual Navigation",
+                p2_h3: "Opening Channels and Biomimetic Defense",
+                p2_desc: "The starting point of all routines, abandoning chemical thickeners. 'AQUA' provides the hydration channel; 'OLEA' provides the lipid moisture lock.",
+                a_title: "[AQUA] HYDRA PRE-ESSENCE",
+                a_tag: "Biomimetic Activation",
+                a_p1: "<strong class='text-gray-900'>Mechanism:</strong> Instantly softens stratum corneum and opens hydration channels. Carries water-soluble ingredients for deep penetration.",
+                a_p2: "<strong class='text-gray-900'>Ingredients:</strong> Micro-molecular Hyaluronic Acid, AQUALANCE, Licorice Extract.",
+                o_title: "[OLEA] LIPID PRE-ESSENCE",
+                o_tag: "Biomimetic Remodeling",
+                o_p1: "<strong class='text-gray-900'>Mechanism:</strong> Precisely mimics natural sebum to fill intercellular gaps. Encapsulates lipophilic actives and forms a defense layer.",
+                o_p2: "<strong class='text-gray-900'>Ingredients:</strong> Virgin Olive Oil, Ceramides.",
+                p2_bottom: "Core Base: 1:1 Biomimetic Balance &nbsp;✦&nbsp; Hydrolipid Film Structure",
+
+                ai_badge: "AI Core",
+                ai_sec_h2: "EssZenbio AI Smart Detection System",
+                ai_sec_desc1: "Our outstanding AI engineering team has built an AI detection model with the industry's highest privacy protection standards!",
+                ai_sec_desc2: "To respond to environmental factors and personal physiological traits! Skin and body care require adjusting different strategies to adapt to different conditions! Therefore, combining our formulation characteristics and a 3D skincare mindset, we designed a 'Dynamic Formulation' centered on AI detection! It fully meets your all-around care tailored to time, place, and personal traits!",
+                ai_step1_title: "Real-time Env Data",
+                ai_env_temp: "Temp",
+                ai_env_hum: "Humidity",
+                ai_env_wind: "Wind",
+                ai_env_uv: "UV Index",
+                ai_env_low: "(Low)",
+                ai_step2_title: "4D Scan - 6 Core Metrics",
+                ai_m1: "T-Zone Radiance",
+                ai_m2: "U-Zone Radiance",
+                ai_m3: "Texture Roughness",
+                ai_m4: "Redness Ratio",
+                ai_m5: "Pore Density",
+                ai_m6: "Fine Line Density",
+                ai_step3_title: "Gut-Brain-Skin Axis Analysis",
+                ai_age_title: "AI Measured Skin Age",
+                ai_age_desc: "Actual: 40 / Good Condition",
+                ai_ax1: "Stress Vitality",
+                ai_ax2: "Gut Metabolism",
+                ai_ax3: "Skin Defense",
+                ai_ax_warn: "Needs Attention",
+                ai_step4_title: "Dynamic Matrix Output",
+                ai_total_vol: "Total: 0.6ml",
+                ai_r1_desc: "Water Base",
+                ai_r2_desc: "Oil Base",
+                ai_r3_desc: "Dermal Repair",
+                ai_drop: "1 Drop",
+                ai_3d_title: "3D Dynamic Space Target",
+                ai_3d_desc: "We built a 3D skincare model:<br><strong>Physiology (X)</strong> × <strong>Environment (Y)</strong> × <strong>Formula (Z)</strong>.<br><br>The system projects your physiological and climatic data into this 3D matrix to precisely locate the 'Target Coordinate'. Through this, it calculates the most appropriate dynamic formulation drops for you, achieving true multi-dimensional precision.",
+                ai_3d_x: "Physiology (X)",
+                ai_3d_y: "Environment (Y)",
+                ai_3d_z: "Formula (Z)",
+                ai_3d_drops: "3 Drops",
+                app_dl_title: "Start Your Smart Assistant",
+                app_dl_desc: "Here! We provide iOS / Android Apps! Welcome! Scan the QR code below to download the App! And start experiencing this smart assistant service built for you!",
+
+                p3_h2: "III. Targeted Active Serums",
+                p3_h3: "Advanced Blends for Various Skin Conditions",
+                p3_desc: "Based on the AI report, add specific high-purity serums to the biomimetic base to unleash a 1+1+1 > 3 synergistic repair effect.",
+                p_title: "[PLENA] RICH ESSENCE",
+                p_tag1: "Repair / Brightening",
+                p_tag2: "Structural Repair",
+                p_h5: "Medical-Grade Desensitizing Repair",
+                p_desc: "Provides deep structural replenishment for compromised skin barriers caused by stress, potently improving inflammation.",
+                p_l1: "<strong class='text-gray-900'>Ingredients:</strong> Royal Jelly Peptides, Sea Buckthorn Extract, Firming Factor.",
+                p_l2: "<strong class='text-gray-900'>Edge:</strong> Gentle enzymes cleave allergenic groups. 10-HDA targets collagen synthesis.",
+                p_l3: "<strong class='text-gray-900'>Mechanism:</strong> Encapsulated micro-peptides precisely subside fatigue-induced inflammation.",
+                r_title: "[ROSIDA] HYDRA ESSENCE",
+                r_tag1: "Brightening / Clarifying",
+                r_tag2: "Hydrolipid Balance",
+                r_h5: "Dual Defense Whitening Breakthrough",
+                r_desc: "Provides a non-conflicting, high-efficacy 'Whitening + Repair' blend for dull, fragile skin.",
+                r_l1: "<strong class='text-gray-900'>Ingredients:</strong> Tranexamic Acid, Royal Jelly Peptides, Watery Balance Factor.",
+                r_l2: "<strong class='text-gray-900'>Edge:</strong> Peptides provide nutrition while Tranexamic Acid blocks melanin and repairs at the cellular level.",
+                r_l3: "<strong class='text-gray-900'>Mechanism:</strong> Combines with [OLEA] ceramides to repair the stratum corneum, defending against dullness gently.",
+                q_title: "[Qi] SUPREME ESSENCE",
+                q_tag1: "Firming / Anti-Wrinkle",
+                q_tag2: "Flagship Anti-Aging",
+                q_h5: "Dermal Repair Radar & Age Reversal",
+                q_desc: "Delays mature aging and strengthens basal resilience. A masterpiece of botanical extracts and modern peptides.",
+                q_l1: "<strong class='text-gray-900'>Ingredients:</strong> Hydrolyzed Ginsenoside, Patented Matrixyl Pentapeptide, Centella.",
+                q_l2: "<strong class='text-gray-900'>Edge:</strong> CK saponin upregulates HAS2 for HA generation. Matrixyl targets and strengthens the DEJ.",
+                q_l3: "<strong class='text-gray-900'>Mechanism:</strong> Oil base protects fragile peptide signals, ensuring delivery to the dermis to plump wrinkles.",
+                u_title: "[AUREA] RADIANCE ESSENCE OIL",
+                u_tag1: "Intense Hydration",
+                u_tag2: "Amber-Grade Lipid Sealing",
+                u_h5: "Deep Lipid Replenishment",
+                u_desc: "Provides deep structural hydrolipid film reconstruction for post-procedure, extremely dry, and mature skin.",
+                u_l1: "<strong class='text-gray-900'>Ingredients:</strong> Sea Buckthorn Oil (Ω-7), Phytosterols, Ceramides.",
+                u_l2: "<strong class='text-gray-900'>Edge:</strong> Perfect complex lipid simulation. Ceramides capture water, phytosterols stabilize bilayers, Ω-7 provides anti-aging substrate.",
+                u_l3: "<strong class='text-gray-900'>Mechanism:</strong> Synergizes with [OLEA] to form a luminescent barrier, perfectly sealing in lipids and moisture.",
+                ritual_h2: "Professional Ritual",
+                ritual_desc: "Abandoning chemical thickeners, following AI guidance, <br class='hidden md:block'>achieving the ultimate 1+1+1 > 3 bioavailability.",
+                s1_title: "STEP 1 - Dispense",
+                s1_desc: "Dispense [AQUA] & [OLEA] based on AI ratio to establish the biomimetic carrier.",
+                s2_title: "STEP 2 - Synergize",
+                s2_desc: "Add targeted active serums recommended by the AI calculation (e.g., 1 drop of [Qi]).",
+                s3_title: "STEP 3 - Emulsify",
+                s3_desc: "Rub hands together, using body heat and friction to instantly micro-emulsify.",
+                s4_title: "STEP 4 - Press",
+                s4_desc: "Gently press onto the face, experiencing the unhindered penetration of protected peptides.",
+                
+                p4_h2: "IV. Internal Base Conditioning: Day & Night Powders",
+                p4_h3: "Comprehensive Smoothness and Deep Rejuvenation from Within",
+                
+                sup_academic_title: "[Top Industry-Academia Collaboration ‧ Authoritative R&D]",
+                sup_academic_p1: "This series combines forward-looking micro-ecological science. The formulation and low-temp vacuum extraction process are co-developed with Dr. Ying-Chen Lu's team from the Dept. of Food Science, NCYU.",
+                sup_academic_p2: "Dr. Lu specializes in microbiology, fermentation tech, and probiotic screening. Ensures strain stability and physiological regulation potential.",
+                sup_patent_desc: "🛡️ Core Extraction Process National Patent: 'Multi-tank Series Ultrasonic Anti-High Temp Extraction Structure' (Patent No.: M581002)",
+                sup_patent_desc_2: "& Invention Patent: [Ultrasonic Extraction System and Equipment] (Invention No. I 783508)",
+
+                sup_axis_title: "Scientific Evidence: Gut-Brain-Skin Axis",
+                sup_axis_desc: "Recent scientific research indicates a close two-way communication network between the digestive tract microbiome, internal emotional states, and external skin appearance. Our day and night dual-action formula is designed precisely based on this advanced 'Gut-Brain-Skin Axis' concept.",
+                
+                sup_day_title: "AURORA",
+                sup_day_intro: "The AURORA daytime formula uses ginseng and sea buckthorn to nourish and strengthen the body; utilizes dietary fibers like psyllium husk, indigestible dextrin, and inulin to promote intestinal peristalsis for smooth bowel movements; pairs with digestive enzymes to aid digestion; uses 7 major probiotic strains to balance the flora ecology; and finally, supplements with comprehensive vitamins and minerals to maintain normal physiological functions. It achieves comprehensive daytime care for digestion, vitality, and smoothness.",
+                sup_day_f1_title: "✨ Nourish & Strengthen ｜ 5-Year Red Ginseng × Sea Buckthorn",
+                sup_day_f1_desc: "Selected 5-year red ginseng, through low-temperature hydrolysis and probiotic 'biotransformation', maximizes absorption of precious saponin CK. Paired with precious polar sea buckthorn, fully retaining natural Vitamin C and Omega-7.",
+                sup_day_f2_title: "🌿 Smooth & Clear ｜ Golden Ratio Soluble Fiber × Premium Prebiotics",
+                sup_day_f2_desc: "Uses a golden ratio of soluble dietary fiber (psyllium husk), indigestible dextrin, and premium prebiotics (inulin) in perfect synergy to promote intestinal peristalsis.",
+                sup_day_f3_title: "🦠 Internal Eco-System ｜ 7 Major Complex Probiotics",
+                sup_day_f3_desc: "Strictly selected 7 dominant strains including Bacillus coagulans and B. longum. Day and night synergistic colonization.",
+                sup_day_f4_title: "⚡ Digestion Support ｜ Comprehensive Enzymes × Basic Nutrition",
+                sup_day_f4_desc: "Multiple high-quality digestive enzymes aid food breakdown. Synergistic vitamins and minerals.",
+                
+                sup_night_title: "VESPERA",
+                sup_night_intro: "The VESPERA nighttime formula perfectly implements the health logic of 'sleep well, naturally beautiful'. It uses GABA, tryptophan, and magnesium to aid sleep; during the golden nighttime resting period, it performs beauty care through hydrolyzed royal jelly, collagen, and Vitamin C (for antioxidant action and promoting collagen formation); finally, it helps maintain digestive tract function with 6 major probiotic strains and prebiotics. It is a high-spec complex formula combining sleep aid and youthful beauty.",
+                sup_night_f1_title: "✨ Flawless Youth ｜ Royal Jelly Micro-Peptides × Premium Collagen",
+                sup_night_f1_desc: "Uses biotech enzyme tailoring to gently hydrolyze royal jelly into 'pure micro-peptides', locking in 10-HDA. Paired with premium collagen.",
+                sup_night_f2_title: "🫐 Luminous Vitality ｜ Haskap Berry Extract × Vitamin C",
+                sup_night_f2_desc: "High-latitude precious Haskap berry, rich in anthocyanins (C3G). Combined with 'botanical probiotic' science, plus Vitamin C for overnight antioxidant care.",
+                sup_night_f3_title: "🌙 Tranquil Soothing ｜ Science Triangle of GABA × Tryptophan × Magnesium",
+                sup_night_f3_desc: "Via gut-brain axis communication, high-purity GABA, tryptophan, and magnesium synergize to regulate physiological functions and aid sleep.",
+                sup_night_f4_title: "🌱 Nighttime Nourishment ｜ 6 Major Sleep Probiotics × Prebiotics",
+                sup_night_f4_desc: "Selected B. longum, L. plantarum, and 6 dominant active strains combined with premium prebiotics for continuous nighttime flora conditioning.",
+
+                ft_1_title: "Product Attributes & Claims",
+                ft_1_desc: "Classified as 'General Cosmetics' and 'General Foods'. Mechanisms mentioned are based on scientific literature. Not intended to diagnose or treat.",
+                ft_2_title: "International Certification",
+                ft_2_desc: "Manufactured in an ISO 22716 / GMP certified facility in collaboration with industry R&D centers.",
+                ft_3_title: "Quality Commitment",
+                ft_3_desc: "Patch test recommended for first-time use. Store in a cool, dry place to maintain peptide efficacy.",
+                ft_copy: "EssZenbio <br>Advanced Cosmeceuticals × Biomimetic Skincare Aesthetics"
+            },
+            
+    <!-- STREAMING_CHUNK:Initializing language translations (JA/KO/VI)... -->
+            "ja": {
+                main_title: "エッセンス・ゼンバイオ (臻萃研)",
+                sub_title: "ハイエンド製品マトリックスと生体模倣技術",
+                desc_title: "科学的抽出から精密ターゲティングへ：模倣不可能な技術的障壁",
+                n_home: "ホーム",
+                tech_h3: "高バイオアベイラビリティ担体技術 (Biomimetic Delivery)",
+                sci_h4: "科学的視点：なぜ「源」と「潤」は直前に融合させるのか？",
+                sci_p1: "皮膚科学において、従来のスキンケア製品は水と油を混ぜるため「化学界面活性剤」に依存します。しかし、これらは脂質構造を破壊し、長期使用は角質層を傷つけ敏感肌を引き起こします。",
+                sci_p2: "化学乳化剤の限界を突破。<strong class='text-brand-700'>肌が完全に認識できる生体模倣担体 (Biomimetic Carrier) を構築します。</strong>",
+                sci_p3: "水性経路を開く <strong class='text-gray-900'>[源]</strong> と脂質を再構築する <strong class='text-gray-900'>[潤]</strong> は分けています。手のひらで1:1で混ぜ、エッセンスを加え、<strong class='text-brand-700'>体温と摩擦を利用した瞬間</strong>に、マイクロエマルジョンが形成されます。",
+                sci_p4: "この瞬時に生成される担体は、人間の皮脂膜に極めて似ています。防御機構を中解し、ペプチドを分解から守り、真皮層へ直接届け、<strong class='text-brand-700 font-serif'>1+1+1 > 3</strong> の臨床的バイオアベイラビリティを実現します。",
+                f1_title: "生体模倣ベース構築",
+                f1_desc: "[源]と[潤]を1:1で用い、完璧生体模倣皮脂膜を構築し、瞬時に角質を柔軟に。",
+                f2_title: "精密ターゲット注入",
+                f2_desc: "AIデータやニーズに応じ、高純度エッセンス [丰] [澤] [炁] [蘊] を数滴追加。",
+                f3_title: "物理的マイクロ乳化",
+                f3_desc: "手のひらの温度と摩擦を利用して、瞬時にマイクロエマルジョン担体を形成。",
+                f4_title: "真皮層への高効率到達",
+                f4_desc: "化学乳化剤の障害を避け、特許成分の一滴一滴を確実に肌の奥深くへ届けます。",
+                core_ritual_title: "✦ コアリチュアル：物理的乳化技術 ✦",
+                p1_h2: "壱. 技術的障壁：分子レベルの精密変換",
+                p1_h3: "Technology Pillar : 従来の植物抽出の限界を突破",
+                p1_desc: "当社の核心的な競争力は、ハイエンドな「精密抽出と変換技術」。大分子が吸収されない、高活性成分がアレルギーを起こすという業界の課題を解決し、臨床レベルのバイオアベイラビリティを確保します。",
+                b1_label: "技術的障壁 01",
+                b1_title: "ジンセノサイド精密加水分解 (CK)",
+                b1_tag1: "極小分子化 <span class='font-serif'>622 Da</span>",
+                b1_tag2: "黄金変換濃度 <span class='font-serif'>1.28 mg/g</span>",
+                b1_p: "<strong class='text-gray-900'>標的酵素切断：</strong>従来は表皮に留まるのみ。標的酵素により大分子を極小の Compound K (CK) に精密切断し、高い障壁を構築：",
+                b1_h5: "CKサポニンの臨床的ターゲット",
+                b1_l1: "<strong class='text-gray-800'>コラーゲン管理：</strong>線維芽細胞を標的とし、シワの深さを減少。",
+                b1_l2: "<strong class='text-gray-800'>内因性ヒアルロン酸：</strong>HAS2遺伝子発現を上げ水分量を増加。",
+                b1_l3: "<strong class='text-gray-800'>チロシナーゼ阻害：</strong>活性を低下させ、メラニン合成を遮断。",
+                b2_label: "技術的障壁 02",
+                b2_title: "ローヤルゼリー脱感作と微細分子化",
+                b2_tag1: "微細分子化 <span class='font-serif'>< 3000 Da</span>",
+                b2_tag2: "脱感作ペプチド & 10-HDA",
+                b2_p: "巨大なタンパク質は吸収されにくく、アレルギーを起こしやすい。<br><br>🛡️ <strong class='text-gray-900'>脱感作：</strong>酵素でアレルゲンを切断、敏感肌でも使用可能に。<br>🚀 <strong class='text-gray-900'>短鎖ペプチド：</strong>脂質バリアを通過できる極小分子に精密剪定。",
+                b2_h5: "核心活性物質：ロイヤルゼリー酸 (10-HDA)",
+                b2_l1: "<strong class='text-gray-800'>線維芽細胞：</strong>TGFの分泌を促進し、コラーゲン新生を刺激。",
+                b2_l2: "<strong class='text-gray-800'>バリア再構築：</strong>フィラグリン発現を上げ、自己保湿力を強化。",
+                b2_l3: "<strong class='text-gray-800'>広域抗菌：</strong>アクネ菌に対して優れた抑制作用。",
+                b3_label: "技術的障壁 03",
+                b3_title: "サジー脂質再構築と二相適応性",
+                b3_tag1: "Omega-7 生体模倣修復",
+                b3_p: "<strong class='text-gray-900'>皮脂膜同源：</strong>稀少なΩ-7を含み、人間の皮脂と構造が重なり、バリアをシームレスに修復。<br><br><strong class='text-gray-900'>水油二相利用：</strong>親水性（ビタミンC）と親油性（Ω-7）を併せ持つ。",
+                b3_l1: "<strong class='text-gray-800'>デュアルガイド：</strong>親水性ポリフェノールは水相で抗酸化、親油性Ω-7は油相で脂質を修復。",
+                b3_l2: "<strong class='text-gray-800'>コラーゲン相乗効果：</strong>豊富なビタミンCがMMP分解酵素に対抗。",
+                p2_h2: "弐. 必須ベース：オイルとウォーター",
+                p2_h3: "経路の開放と生体模倣防御",
+                p2_desc: "スキンケアの出発点。「源」が水相の浸透経路を提供し、「潤」が油相で水分を閉じ込めます。",
+                a_title: "[源] AQUA イドラプレエッセンス",
+                a_tag: "生体模倣活性化",
+                a_p1: "<strong class='text-gray-900'>メカニズム：</strong>角質を柔らかくし、水分補給の経路を開く。水溶性成分を深層まで導きます。",
+                a_p2: "<strong class='text-gray-900'>成分：</strong>微分子ヒアルロン酸、AQUALANCE、甘草エキス。",
+                o_title: "[潤] OLEA リピッドプレエッセンス",
+                o_tag: "生体模倣再構築",
+                o_p1: "<strong class='text-gray-900'>メカニズム：</strong>天然皮脂を精密に模倣し、角質の隙間を埋める。脂溶性成分を包み込み、防御層を形成。",
+                o_p2: "<strong class='text-gray-900'>成分：</strong>バージンオリーブオイル、セラミド。",
+                p2_bottom: "コアベース：1:1 生体模倣バランス &nbsp;✦&nbsp; 皮脂膜重要構造",
+
+                ai_badge: "AI コア",
+                ai_sec_h2: "臻萃研 AI スマート検出システム",
+                ai_sec_desc1: "当社の優れたAIエンジニアリングチームは、業界最高水準のプライバシー保護基準でAI検出モデルを自社構築しました！",
+                ai_sec_desc2: "環境要因や個人の生理的特性に対応するために！肌や体は、異なる状態に適応するようケア戦略を調整する必要があります！そのため、製品の処方特性を組み合わせ、3次元のスキンケア思考で、AI検出を核とした設計を行いました！個人専用の「ダイナミック処方」を作成し、時間、場所、個人の特性に応じた包括的なケアを完全に満たします！",
+                ai_step1_title: "環境データの取得",
+                ai_env_temp: "気温",
+                ai_env_hum: "湿度",
+                ai_env_wind: "風速",
+                ai_env_uv: "UV指数",
+                ai_env_low: "(低)",
+                ai_step2_title: "4D 顔面スキャン 6指標",
+                ai_m1: "Tゾーンのツヤ",
+                ai_m2: "Uゾーンのツヤ",
+                ai_m3: "キメの粗さ",
+                ai_m4: "赤みの割合",
+                ai_m5: "毛穴の密度",
+                ai_m6: "小ジワの密度",
+                ai_step3_title: "腸-脳-皮膚軸の深層分析",
+                ai_age_title: "AI 肌年齢",
+                ai_age_desc: "実年齢 40 / 良好",
+                ai_ax1: "ストレス耐性",
+                ai_ax2: "腸内代謝力",
+                ai_ax3: "肌の防御力",
+                ai_ax_warn: "要注意",
+                ai_step4_title: "ダイナミック処方出力",
+                ai_total_vol: "合計: 0.6ml",
+                ai_r1_desc: "水系ベース",
+                ai_r2_desc: "油系ベース",
+                ai_r3_desc: "真皮修復",
+                ai_drop: "1 滴",
+                ai_3d_title: "3D ダイナミック空間ターゲット",
+                ai_3d_desc: "3次元のスキンケアモデルを構築しました：<br><strong>生理 (X軸)</strong> × <strong>環境 (Y軸)</strong> × <strong>処方 (Z軸)</strong>。<br><br>システムは取得した生理データと気候データをこの3D空間に投影し、「ターゲット座標」を正確に特定。あなたに最適なエッセンスの滴数を計算します。",
+                ai_3d_x: "生理 (X)",
+                ai_3d_y: "環境 (Y)",
+                ai_3d_z: "処方 (Z)",
+                ai_3d_drops: "3 滴",
+                app_dl_title: "スマートアシスタントを起動",
+                app_dl_desc: "ここで！iOS / Androidアプリを提供しています！歓迎します！以下のQRコードをスキャンしてアプリをダウンロードしてください！そして、あなたのために作られたスマートアシスタントサービスを体験し始めてください！",
+
+                p3_h2: "参. ターゲット導入分析",
+                p3_h3: "肌状態に正確に対応するハイエンドブレンド",
+                p3_desc: "AI解析結果に基づき、生体模倣ベースの上に効能エッセンスを加え、1+1+1 > 3 の相乗的修復効果を発揮します。",
+                p_title: "[丰] PLENA リッチエッセンス",
+                p_tag1: "修復 / ブライトニング",
+                p_tag2: "構造的修復",
+                p_h5: "医療レベルの脱感作修復",
+                p_desc: "環境ストレスによるバリア損傷に対して深層から構造的な補給を行い、炎症とくすみを改善。",
+                p_l1: "<strong class='text-gray-900'>成分：</strong>ローヤルゼリー加水分解ペプチド、シーバックソーン、引き締め因子。",
+                p_l2: "<strong class='text-gray-900'>競争力：</strong>穏やかな酵素でアレルゲンを切断。10-HDAがコラーゲン合成を刺激。",
+                p_l3: "<strong class='text-gray-900'>メカニズム：</strong>担体に包まれた微細ペプチドが、疲労による炎症を正確に退かせます。",
+                r_title: "[澤] ROSIDA イドラエッセンス",
+                r_tag1: "美白 / クリア",
+                r_tag2: "水油バランス",
+                r_h5: "美白によるアレルギーを突破",
+                r_desc: "くすみとバリアの脆弱さが共存する肌に対し、「美白＋修復」の高効率ブレンドを提供。",
+                r_l1: "<strong class='text-gray-900'>成分：</strong>トラネキサム酸、ローヤルゼリー微細ペプチド、ウォータリーバランス因子。",
+                r_l2: "<strong class='text-gray-900'>競争力：</strong>ペプチドが栄養を提供し、トラネキサム酸がメラニンを遮断し細胞レベルで修復。",
+                r_l3: "<strong class='text-gray-900'>メカニズム：</strong>[潤]のセラミドと結合して角質層を修復し、穏やかにくすみを防御。",
+                q_title: "[炁] Qi スプリームエッセンス",
+                q_tag1: "引き締め / シワ改善",
+                q_tag2: "アンチエイジング",
+                q_h5: "真皮層修復レーダーと時間の逆転",
+                q_desc: "老化を遅らせ、基底の弾力を強化。植物抽出と現代ペプチド医学を組み合わせた傑作。",
+                q_l1: "<strong class='text-gray-900'>成分：</strong>加水分解ジンセノサイド、Matrixylペンタペプチド、ツボクサ。",
+                q_l2: "<strong class='text-gray-900'>競争力：</strong>CKサポニンがHAS2を上げヒアルロン酸を生成。Matrixylが真皮表皮接合部(DEJ)を強化。",
+                q_l3: "<strong class='text-gray-900'>メカニズム：</strong>油相がペプチドシグナルを分解から保護し、真皮層に到達させシワを押し上げます。",
+                u_title: "[蘊] AUREA ラディアンスエッセンスオイル",
+                u_tag1: "極潤 / 修復",
+                u_tag2: "脂質封印",
+                u_h5: "深い脂質補給とバリア再構築",
+                u_desc: "美容医療後、極度の乾燥、成熟肌に対し、最も深い構造的な皮脂膜再構築を提供。",
+                u_l1: "<strong class='text-gray-900'>成分：</strong>シーバックソーンオイル(Ω-7)、フィトステロール、セラミド。",
+                u_l2: "<strong class='text-gray-900'>競争力：</strong>複合脂質を模倣。セラミドが水分を掴み、フィトステロールが安定させ、Ω-7が抗老化。",
+                u_l3: "<strong class='text-gray-900'>メカニズム：</strong>[潤]との相乗効果により、表皮に微光のバリアを形成し、脂質と水分を完璧に封じ込めます。",
+                ritual_h2: "専門的な使用リチュアル",
+                ritual_desc: "化学的な増粘剤を排除し、AIの推奨に従い、<br class='hidden md:block'>1+1+1 > 3 の究極のバイオアベイラビリティを達成。",
+                s1_title: "STEP 1 - 適量",
+                s1_desc: "AIのレポートに基づき、手のひらに [源] と [潤] を注ぎ、生体模倣担体を構築。",
+                s2_title: "STEP 2 - 相乗",
+                s2_desc: "AIが指定した高濃度のターゲット活性エッセンス（例：[炁] 1滴）を追加。",
+                s3_title: "STEP 3 - 乳化",
+                s3_desc: "両手を合わせ、手のひらの温度と摩擦を利用して瞬時にマイクロ乳化。",
+                s4_title: "STEP 4 - プレス",
+                s4_desc: "顔に押し当てるようにし、保護されたペプチドが層々へと浸透するのを感じてください。",
+                
+                p4_h2: "四. デイ＆ナイト パウダー",
+                p4_h3: "内側からのスムーズな代謝と深い若返り",
+                
+                sup_academic_title: "【産学連携 ‧ 権威ある技術研究開発】",
+                sup_academic_p1: "本シリーズは最先端のマイクロ生態科学を組み合わせ、国立嘉義大学食品科学部の技術チームとの産学連携で開発されました。",
+                sup_academic_p2: "厳格な学術研究プロセスを通じて、処方の安定性と生理調整能力を確保しています。",
+                sup_patent_desc: "🛡️ コア抽出プロセス特許取得：「多槽直列式超音波防高温抽出構造」",
+                sup_patent_desc_2: "& 発明特許：[超音波抽出システムおよびその設備] (発明第 I 783508 号)",
+
+                sup_axis_title: "科学的実証：腸-脳-皮膚軸 (Gut-Brain-Skin Axis)",
+                sup_axis_desc: "近年の科学研究により、消化管のマイクロバイオーム、内なる感情状態、そして外見の肌の状態の間には、密接な双方向のコミュニケーションネットワークが存在することが指摘されています。私たちの昼夜デュアルアクション処方は、まさにこの「腸-脳-皮膚軸（Gut-Brain-Skin Axis）」という先進的な理念に基づいて設計されています。",
+                
+                sup_day_title: "晞 AURORA",
+                sup_day_intro: "AURORA（オーロラ）日用処方は、高麗人参とサジーにより滋養強壮を促します。サイリウム、難消化性デキストリン、イヌリンなどの食物繊維で腸のぜん動運動を促進し、スムーズな排便をサポートします。消化酵素を配合して消化を助け、6大プロバイオティクス群により腸内フローラを整えます。最後に総合ビタミンとミネラルを加え、正常な生理機能を維持します。消化を助け、活力を高め、スムーズな排便を促す、日中の総合的なケアを実現します。",
+                sup_day_f1_title: "✨ 滋養強壮 ｜ 5年根紅参 × サジー",
+                sup_day_f1_desc: "厳選された5年根紅参。低温加水分解とプロバイオティクスの協同作用で、貴重なサポニンCKの吸収を極限まで高めます。",
+                sup_day_f2_title: "🌿 スムーズな腸内 ｜ 黄金比水溶性食物繊維 × プレバイオティクス",
+                sup_day_f2_desc: "黄金比の水溶性食物繊維（サイリウム）とプレバイオティクス（イヌリン）が完全に相乗効果を発揮します。",
+                sup_day_f3_title: "🦠 体内環境 ｜ 6大複合プロバイオティクス",
+                sup_day_f3_desc: "生命力の強い7つの優勢菌株を厳選。昼夜の協同定着により、健康なバリアを構築します。",
+                sup_day_f4_title: "⚡ 消化サポート ｜ 総合酵素 × 基礎栄養",
+                sup_day_f4_desc: "多様な高品質消化酵素が食物の分解をサポート。総合ビタミンとミネラルも配合。",
+                
+                sup_night_title: "沁 VESPERA",
+                sup_night_intro: "VESPERA（ヴェスペラ）夜用処方は、「よく眠れば、自然に美しくなる」というヘルスケアの論理を完璧に体現しています。GABA、トリプトファン、マグネシウムを利用して入眠をサポートし、夜間のゴールデンタイムに加水分解ローヤルゼリー、コラーゲン、ビタミンC（抗酸化作用を持ち、コラーゲンの生成を促進）によって美容ケアを行います。最後に6大プロバイオティクス群とプレバイオティクスで消化管の機能を維持します。心地よい眠りと若々しい美しさを兼ね備えた、ハイスペックな複合処方です。",
+                sup_night_f1_title: "✨ 完璧な若さ ｜ ローヤルゼリーペプチド × 高級コラーゲン",
+                sup_night_f1_desc: "酵素技術でローヤルゼリーを「純粋な微分子ペプチド」に加水分解。高級コラーゲンと組み合わせています。",
+                sup_night_f2_title: "🫐 輝く活力 ｜ ハスカップエキス × ビタミンC",
+                sup_night_f2_desc: "高緯度地域の貴重なハスカップ。アントシアニン(C3G)を豊富に含み、ビタミンCとともに夜間の抗酸化をサポート。",
+                sup_night_f3_title: "🌙 静かな安らぎ ｜ GABA × トリプトファン × マグネシウム",
+                sup_night_f3_desc: "腸脳軸の科学的コミュニケーションを通じ、GABA、トリプトファン、マグネシウムが相乗して生理機能を調整し、睡眠を助けます。",
+                sup_night_f4_title: "🌱 夜間養護 ｜ 6大睡眠プロバイオティクス × プレバイオティクス",
+                sup_night_f4_desc: "B. longumなどの6大優勢活菌を厳選。プレバイオティクスと組み合わせ、夜間継続して腸内環境を整えます。",
+
+                ft_1_title: "製品の属性",
+                ft_1_desc: "本製品は「一般化粧品および食品」に分類されます。成分のメカニズムは科学文献と実験データに基づきます。",
+                ft_2_title: "国際認証と保証",
+                ft_2_desc: "ISO 22716 / GMP 認証工場で生産。研究開発センターと協力し、極めて高い品質と安定性を保証。",
+                ft_3_title: "品質の約束",
+                ft_3_desc: "初めて使用する際はパッチテストをお勧めします。涼しく乾燥した場所に保管してください。",
+                ft_copy: "EssZenbio (臻萃研) <br>ハイエンド科学抽出 × 生体模倣スキンケア"
+            },
+            
+            "ko": {
+                main_title: "에센젠바이오 (臻萃研)",
+                sub_title: "하이엔드 제품 매트릭스 및 생체 모방 기술",
+                desc_title: "과학적 추출에서 정밀 타겟팅까지: 복제 불가능한 기술 장벽",
+                n_home: "홈",
+                tech_h3: "높은 생체 이용률 전달 기술 (Biomimetic Delivery)",
+                sci_h4: "과학적 관점: 'AQUA'와 'OLEA'가 사용 직전에 융합되어야 하는 이유?",
+                sci_p1: "피부 과학에서 기존 스킨케어는 물과 기름을 섞기 위해 '화학 계면활성제(유화제)'에 의존합니다. 하지만 지질 구조를 파괴하는 화학 물질의 장기 사용은 각질층을 손상시키고 민감성과 만성 염증을 유발합니다.",
+                sci_p2: "전통적인 화학 유화제의 한계를 돌파했습니다. 스킨케어는 번거로운 덧바름이 아니라, <strong class='text-brand-700'>피부가 완전히 인식할 수 있는 생체 모방 담체(Biomimetic Carrier)를 구축하는 것</strong>이어야 합니다.",
+                sci_p3: "우리는 수분 통로를 제공하는 <strong class='text-gray-900'>[AQUA]</strong>와 지질을 재구성하는 <strong class='text-gray-900'>[OLEA]</strong>를 분리합니다. 손바닥에서 1:1로 섞고, 타겟 에센 세를 더해 <strong class='text-brand-700'>체온과 물리적 마찰을 이용하는 순간</strong> 친수성 및 친유성 활성 성분을 모두 감싸는 '마이크로 에멀젼'이 형성됩니다.",
+                sci_p4: "순식간에 생성된 이 담체는 인체의 천연 '피지막'과 극도로 유사합니다. 피부의 방어 기제를 중화하고, 펩타이드 신호를 분해로부터 보호하며, 고활성 에센스를 진피층으로 안전하게 전달하여 <strong class='text-brand-700 font-serif'>1+1+1 > 3</strong>의 임상급 생체 이용률을 실현합니다.",
+                f1_title: "생체 모방 베이스 구축",
+                f1_desc: "[AQUA]와 [OLEA]를 1:1로 사용하여 완벽한 생체 모방 피지막을 구축하고 각질을 유연하게 합니다.",
+                f2_title: "활성 타겟 정밀 주입",
+                f2_desc: "AI 데이터 또는 개인의 필요에 따라 고순도 [PLENA], [ROSIDA], [Qi], [AUREA] 에센스를 주입합니다.",
+                f3_title: "물리적 미세 유화",
+                f3_desc: "손바닥 온도의 물리적 마찰을 이용하여 순식간에 미세 에멀젼 담체를 형성합니다.",
+                f4_title: "진피층 고효율 전달",
+                f4_desc: "화학 유화제의 방해를 피해 특허 받은 추출 성분 한 방울 한 방울을 피부 깊숙이 전달합니다.",
+                core_ritual_title: "✦ 핵심 리추얼: 물리적 유화 기술 ✦",
+                p1_h2: "Ⅰ. 기술 장벽 구축: 분자 단위 정밀 변환",
+                p1_h3: "Technology Pillar: 식물 추출의 한계 돌파",
+                p1_desc: "당사의 핵심경쟁력은 하이엔드 '정밀 추출 및 변환 기술'에 있습니다. 고분자 흡수 불가, 고활성 알레르기 유발이라는 업계의 오랜 과제를 해결하여 임상급 생체 이용률을 보장합니다.",
+                b1_label: "기술 장벽 01",
+                b1_title: "진세노사이드 정밀 가수분해 변환 (CK)",
+                b1_tag1: "분자량 극소화 <span class='font-serif'>622 Da</span>",
+                b1_tag2: "황금 변환 농도 <span class='font-serif'>1.28 mg/g</span>",
+                b1_p: "<strong class='text-gray-900'>표적 효소 절단:</strong> 기존 진세노사이드는 표피에만 머물렀습니다. 표적 효소 기술을 통해 거대 분자를 극소형 Compound K (CK)로 정밀하게 절단하여 높은 장벽을 구축합니다:",
+                b1_h5: "CK 사포닌 임상 타겟팅",
+                b1_l1: "<strong class='text-gray-800'>콜라겐 관리:</strong> 섬유아세포를 표적으로 활성화하여 주름 깊이를 줄입니다.",
+                b1_l2: "<strong class='text-gray-800'>내인성 히알루론산:</strong> HAS2 유전자 발현을 상향 조절하여 수분량을 증가시킵니다.",
+                b1_l3: "<strong class='text-gray-800'>티로시나아제 억제:</strong> 멜라닌 합성 경로를 차단합니다.",
+                b2_label: "기술 장벽 02",
+                b2_title: "로열젤리 단백질 둔감화 및 미세 분자화",
+                b2_tag1: "미세 분자화 <span class='font-serif'>< 3000 Da</span>",
+                b2_tag2: "둔감화 펩타이드 및 10-HDA",
+                b2_p: "천연 로열젤리는 거대 단백질로 인해 흡수하기 어렵고 알레르기를 유발하기 쉽습니다.<br><br>🛡️ <strong class='text-gray-900'>전문 둔감화:</strong> 효소로 알레르겐을 차단하여 민감한 피부도 사용 가능합니다.<br>🚀 <strong class='text-gray-900'>단쇄 펩타이드:</strong> 지질 장벽을 통과할 수 있는 극소 분자 펩타이드로 정밀하게 재단합니다.",
+                b2_h5: "핵심 활성: 로열젤리산 (10-HDA)",
+                b2_l1: "<strong class='text-gray-800'>섬유아세포 표적:</strong> TGF 분비를 촉진하여 콜라겐 신생을 강력하게 자극합니다.",
+                b2_l2: "<strong class='text-gray-800'>장벽 재건 표적:</strong> 필라그린 발현을 상향 조절하여 보습력을 강화합니다.",
+                b2_l3: "<strong class='text-gray-800'>광범위 항균:</strong> 여드름 유발균에 대한 억제 효과가 뛰어납니다.",
+                b3_label: "기술 장벽 03",
+                b3_title: "씨벅톤 지질 재구성 및 이상 적응성",
+                b3_tag1: "Omega-7 생체 모방 복구",
+                b3_p: "<strong class='text-gray-900'>피지막 상동 지질:</strong> 희귀한 Ω-7을 함유하여 인간 피지와 구조적으로 겹치며 손상된 장벽을 완벽하게 복구합니다.<br><br><strong class='text-gray-900'>이상 높은 이용률:</strong> 친수성(비타민C)과 친유성(Ω-7)을 동시에 갖추고 있습니다.",
+                b3_l1: "<strong class='text-gray-800'>듀얼 가이드 시너지:</strong> 친수성 폴리페놀은 수분상에서 항산화 작용을 하고, 친유성 Ω-7은 유분상에서 지질을 복구합니다.",
+                b3_l2: "<strong class='text-gray-800'>콜라겐 시너지:</strong> 풍부한 비타민 C가 MMP 분해 효소에 대항하는 조효소로 작용합니다.",
+                p2_h2: "Ⅱ. 필수 베이스: 오일과 수분의 듀얼 리드",
+                p2_h3: "통로 개방 및 생체 모방 방어",
+                p2_desc: "화학 증점제를 배제한 스킨케어의 출발점. [AQUA]가 수분 침투 통로를 제공하고, [OLEA]가 유분으로 수분을 잠급니다.",
+                a_title: "[AQUA] 하이드라 프리 에센스",
+                a_tag: "생체 모방 활성화",
+                a_p1: "<strong class='text-gray-900'>작용 타겟:</strong> 즉각적으로 각질을 부드럽게 하여 수분 통로를 엽니다. 수용성 성분의 깊은 침투를 유도합니다.",
+                a_p2: "<strong class='text-gray-900'>성분:</strong> 저분자 히알루론산, AQUALANCE, 감초 추출물.",
+                o_title: "[OLEA] 리피드 프리 에센스",
+                o_tag: "생체 모방 재구성",
+                o_p1: "<strong class='text-gray-900'>작용 타겟:</strong> 천연 피지를 모방하여 각질 틈을 메웁니다. 지용성 활성 물질을 감싸고 방어막을 형성합니다.",
+                o_p2: "<strong class='text-gray-900'>성분:</strong> 엑스트라 버진 올리브 오일, 세라마이드.",
+                p2_bottom: "핵심 베이스: 1:1 생체 모방 균형 &nbsp;✦&nbsp; 피지막 주요 구조",
+
+                ai_badge: "AI 시스템",
+                ai_sec_h2: "臻萃研 AI 스마트 진단 시스템",
+                ai_sec_desc1: "우리의 뛰어난 AI 엔지니어링 팀은 업계 최고 수준의 개인정보 보호 기준으로 AI 진단 모델을 자체 구축했습니다!",
+                ai_sec_desc2: "환경적 요인과 개인의 생리적 특성에 대응하기 위해! 피부와 신체는 다양한 상태에 적응하도록 관리 전략을 조정해야 합니다! 따라서 우리는 제품 포뮬러 특성을 결합하여 3차원적 관리 사고로 AI 진단을 핵심으로 설계했습니다! 개인 전용의 [동적 포뮬러]를 구축하여 시간, 장소, 개인의 특성에 따른 모든 요구를 완벽하게 충족시킵니다!",
+                ai_step1_title: "환경 데이터 실시간 추출",
+                ai_env_temp: "기온",
+                ai_env_hum: "습도",
+                ai_env_wind: "풍속",
+                ai_env_uv: "자외선",
+                ai_env_low: "(낮음)",
+                ai_step2_title: "4D 안면 6대 지표",
+                ai_m1: "T존 광채",
+                ai_m2: "U존 광채",
+                ai_m3: "피부결 거칠기",
+                ai_m4: "홍조 비율",
+                ai_m5: "모공 밀도",
+                ai_m6: "잔주름 밀도",
+                ai_step3_title: "장-뇌-피부 축 분석",
+                ai_age_title: "AI 피부 나이",
+                ai_age_desc: "실제 40 / 상태 양호",
+                ai_ax1: "스트레스 저항성",
+                ai_ax2: "장 대사력",
+                ai_ax3: "피부 방어력",
+                ai_ax_warn: "주의 필요",
+                ai_step4_title: "동적 포뮬러 출력",
+                ai_total_vol: "총량: 0.6ml",
+                ai_r1_desc: "수분 베이스",
+                ai_r2_desc: "유분 베이스",
+                ai_r3_desc: "진피 복구",
+                ai_drop: "1 방울",
+                ai_3d_title: "3D 동적 공간 타겟",
+                ai_3d_desc: "우리는 3차원 스킨케어 모델을 구축했습니다:<br><strong>생리 (X)</strong> × <strong>환경 (Y)</strong> × <strong>포뮬러 (Z)</strong>.<br><br>시스템은 추출된 생리 지수와 기후 데이터를 이 3D 공간에 투영하여 '타겟 좌표'를 정확히 찾아냅니다. 이를 통해 지금 가장 적합한 동적 포뮬러 방울 수를 계산합니다.",
+                ai_3d_x: "생리 (X)",
+                ai_3d_y: "환경 (Y)",
+                ai_3d_z: "포뮬러 (Z)",
+                ai_3d_drops: "3 방울",
+                app_dl_title: "스마트 어시스턴트 시작하기",
+                app_dl_desc: "여기서! 우리는 iOS / Android 앱을 제공합니다! 환영합니다! 아래 QR 코드를 스캔하여 앱을 다운로드하세요! 그리고 당신을 위해 만들어진 이 스마트 어시스턴트 서비스를 경험해 보세요!",
+
+                p3_h2: "Ⅲ. 표적 도입 분석",
+                p3_h3: "다양한 피부 상태에 대응하는 하이엔드 블렌드",
+                p3_desc: "AI 진단 결과를 바탕으로 건강한 생체 모방 베이스에 고순도 효능 에센 정를 더해 1+1+1 > 3의 시너지 효과를 발휘합니다.",
+                p_title: "[PLENA] 리치 에센스",
+                p_tag1: "복구 / 브라이트닝",
+                p_tag2: "구조적 복구",
+                p_h5: "메디컬 등급 둔감화 복구",
+                p_desc: "스트레스로 인한 피부 장벽 손상에 대한 심층 구조적 보충을 통해 염증을 개선합니다.",
+                p_l1: "<strong class='text-gray-900'>주요 성분:</strong> 로열젤리 펩타이드, 씨벅톤 추출물, 3중 탄력 인자.",
+                p_l2: "<strong class='text-gray-900'>경쟁력:</strong> 순한 효소로 알레르겐을 절단. 10-HDA가 콜라겐 합성을 타겟팅합니다.",
+                p_l3: "<strong class='text-gray-900'>유화 메커니즘:</strong> 담체에 감싸인 미세 펩타이드가 피로 염증을 정확히 퇴치합니다.",
+                r_title: "[ROSIDA] 하이드라 에센스",
+                r_tag1: "맑음 / 브라이트닝",
+                r_tag2: "유수분 균형",
+                r_h5: "미백 알레르기를 돌파하는 이중 방어",
+                r_desc: "칙칙함과 장벽의 취약성이 공존하는 피부에 '미백+복구'의 충돌 없는 블렌드를 제공합니다.",
+                r_l1: "<strong class='text-gray-900'>주요 성분:</strong> 트라넥삼산, 로열젤리 미세 펩타이드, 워터리 밸런스 인자.",
+                r_l2: "<strong class='text-gray-900'>경쟁력:</strong> 펩타이드가 영양을 제공하고 트라넥삼산이 멜라닌을 차단하며 세포 복구를 진행합니다.",
+                r_l3: "<strong class='text-gray-900'>유화 메커니즘:</strong> [OLEA]의 세라마이드와 결합하여 각질층을 복구하며 칙칙함을 방어합니다.",
+                q_title: "[Qi] 슈프림 에센스",
+                q_tag1: "탄력 / 주름 개선",
+                q_tag2: "플래그십 안티에이징",
+                q_h5: "진피층 복구 레이더와 시간 역전",
+                q_desc: "노화를 늦추고 탄력을 강화하는 최고급 허브 추출물과 현대 펩타이드 의학의 결합.",
+                q_l1: "<strong class='text-gray-900'>주요 성분:</strong> 가수분해 진세노사이드, 특허 Matrixyl 펜타펩타이드, 병풀.",
+                q_l2: "<strong class='text-gray-900'>경쟁력:</strong> CK 사포닌이 HAS2를 상향 조절. Matrixyl이 진피-표피 접합부(DEJ)를 강화합니다.",
+                q_l3: "<strong class='text-gray-900'>유화 메커니즘:</strong> 오일 베이스가 펩타이드 신호를 보호하여 진피층까지 도달하게 하고 주름을 채워줍니다.",
+                u_title: "[AUREA] 래디언스 에센스 오일",
+                u_tag1: "극강 보습 / 복구",
+                u_tag2: "앰버 등급 지질 봉인",
+                u_h5: "심층 지질 보충 및 장벽 재구성",
+                u_desc: "미용 시술 후, 극건성 및 성숙한 피부에 가장 깊은 구조적 피지막 재건을 제공합니다.",
+                u_l1: "<strong class='text-gray-900'>주요 성분:</strong> 씨벅톤 오일(Ω-7), 피토스테롤, 세라마이드.",
+                u_l2: "<strong class='text-gray-900'>경쟁력:</strong> 복합 지질 완벽 모방. 세라마이드가 수분을 잡고, 피토스테롤이 이중막을 안정시키며, Ω-7이 안티에이징을 지원.",
+                u_l3: "<strong class='text-gray-900'>유화 메커니즘:</strong> [OLEA]와 협력하여 표피에 장벽을 형성하고 지질과 수분을 완벽하게 봉인합니다.",
+                ritual_h2: "전문적인 사용 리추얼",
+                ritual_desc: "화학 증점제를 배제하고 AI의 제안에 따라<br class='hidden md:block'>1+1+1 > 3의 궁극적인 생체 이용률을 달성합니다.",
+                s1_title: "STEP 1 - 적량",
+                s1_desc: "AI 리포트에 따라 손바닥에 [AQUA]와 [OLEA]를 덜어 생체 모방 담체를 만듭니다.",
+                s2_title: "STEP 2 - 시너지",
+                s2_desc: "AI 연산이 지정한 고농축 타겟 활성 에센스를 추가합니다 (예: [Qi] 1방울).",
+                s3_title: "STEP 3 - 유화",
+                s3_desc: "양손을 비벼 손바닥 온도와 마찰로 즉시 미세 유화시킵니다.",
+                s4_title: "STEP 4 - 프레스",
+                s4_desc: "얼굴에 누르듯이 발라 보호된 펩타이드가 장애물 없이 침투하는 것을 느낍니다.",
+                
+                p4_h2: "Ⅳ. 데이&나이트 파우더",
+                p4_h3: "내면부터 완벽한 신진대사와 깊은 생기",
+                
+                sup_academic_title: "【산학 협력 ‧ 권위 있는 기술 연구 개발】",
+                sup_academic_p1: "이 시리즈는 최첨단 미세 생태 과학을 결합하였으며, 국립 가의 대학 식품과학부 기술팀과 산학 협력으로 연구 개발되었습니다.",
+                sup_academic_p2: "엄격한 학술 연구 과정을 통해 배합의 안정성과 생리 조절 능력을 보장합니다.",
+                sup_patent_desc: "🛡️ 핵심 추출 공정 특허 획득: '다조 직렬식 초음파 방고온 추출 구조'",
+                sup_patent_desc_2: "& 발명 특허: [초음파 추출 시스템 및 그 설비] (발명 제 I 783508 호)",
+
+                sup_axis_title: "과학적 입증: 장-뇌-피부 축 (Gut-Brain-Skin Axis)",
+                sup_axis_desc: "최근 과학 연구에 따르면 소화기 미생물 생태계, 내면의 감정 상태, 그리고 외적인 피부 상태 사이에는 긴밀한 양방향 커뮤니케이션 네트워크가 존재한다고 합니다. 우리의 낮밤 이중 효과 포뮬러는 바로 이 '장-뇌-피부 축(Gut-Brain-Skin Axis)'이라는 선진적인 이념을 바탕으로 설계되었습니다.",
+                
+                sup_day_title: "晞 AURORA",
+                sup_day_intro: "AURORA(오로라) 낮용 포뮬러는 인삼과 씨벅톤을 통해 자양 강장을 돕습니다. 차전자피, 난소화성 말토덱스트린, 이눌린 등 식이섬유로 장의 연동 운동을 촉진하여 배변 활동을 원활하게 하며, 소화 효소를 배합하여 소화를 돕고, 7대 프로바이오틱스 군을 통해 장내 세균총 생태계를 개선합니다. 마지막으로 종합 비타민과 미네랄을 더해 정상적인 생리 기능을 유지합니다. 소화 촉진, 활력 증진, 원활한 배변을 돕는 낮 시간의 전면적인 관리를 달성합니다.",
+                sup_day_f1_title: "✨ 자양 강장 ｜ 5년근 홍삼 × 씨벅톤",
+                sup_day_f1_desc: "엄선된 5년근 홍삼. 저온 가수분해 기술과 프로바이오틱스 시너지로 귀한 사포닌 CK 흡수를 극대화합니다.",
+                sup_day_f2_title: "🌿 원활한 장 ｜ 황금비 수용성 섬유 × 프리바이오틱스",
+                sup_day_f2_desc: "황금 비율의 수용성 식이섬유(차전자피)와 프리바이오틱스(이눌린)가 완벽한 시너지를 냅니다.",
+                sup_day_f3_title: "🦠 체내 환경 ｜ 7대 복합 프로바이오틱스",
+                sup_day_f3_desc: "생명력이 강한 7가지 우세 균주를 엄선하여 밤낮으로 건강한 장벽을 구축합니다.",
+                sup_day_f4_title: "⚡ 소화 지원 ｜ 종합 효소 × 기초 영양",
+                sup_day_f4_desc: "다양한 고품질 소화 효소가 음식 분해를 돕습니다. 종합 비타민과 미네랄도 시너지를 냅니다.",
+                
+                sup_night_title: "沁 VESPERA",
+                sup_night_intro: "VESPERA(베스페라) 밤용 포뮬러는 '잘 자야 자연스럽게 아름다워진다'는 헬스케어 논리를 완벽하게 구현했습니다. GABA, 트립토판, 마그네슘을 이용하여 숙면을 돕고, 밤사이 황금 휴식기에 가수분해 로열젤리, 콜라겐, 비타민 C(항산화 작용을 하며 콜라겐 형성을 촉진)를 통해 피부 미용을 가꿉니다. 마지막으로 6대 프로바이오틱스 군과 프리바이오틱스로 소화기 기능 유지를 돕습니다. 숙면과 젊음의 아름다움을 동시에 챙길 수 있는 고사양 복합 포뮬러입니다.",
+                sup_night_f1_title: "✨ 무결점 젊음 ｜ 로열젤리 펩타이드 × 최고급 콜라겐",
+                sup_night_f1_desc: "효소 기술로 로열젤리를 '순수 미세 분자 펩타이드'로 부드럽게 가수분해. 최고급 콜라겐과 매치합니다.",
+                sup_night_f2_title: "🫐 빛나는 활력 ｜ 하스카프 추출물 × 비타민 C",
+                sup_night_f2_desc: "고위도 지역의 귀한 하스카프 열매. 안토시아닌(C3G)이 풍부하여 비타민 C와 함께 밤사이 항산화 케어를 제공합니다.",
+                sup_night_f3_title: "🌙 고요한 진정 ｜ GABA × 트립토판 × 마그네슘",
+                sup_night_f3_desc: "장-뇌 축 통신을 통해 GABA, 트립토판, 마그네슘이 시너지를 내어 생리 기능을 조절하고 수면을 돕습니다.",
+                sup_night_f4_title: "🌱 야간 양호 ｜ 6대 수면 프로바이오틱스 × 프리바이오틱스",
+                sup_night_f4_desc: "B. longum 등 6대 우세 활성균을 엄선. 프리바이오틱스와 결합하여 야간에 지속적으로 장내 환경을 조절합니다.",
+
+                ft_1_title: "제품 속성 성명",
+                ft_1_desc: "본 제품은 '일반 화장품 및 일반 식품'으로 분류됩니다. 핵심 성분의 메커니즘은 과학 문헌을 기반으로 합니다.",
+                ft_2_title: "국제 인증",
+                ft_2_desc: "ISO 22716 / GMP 인증 공장에서 생산. 연구 센터와 협력하여 최고의 품질과 안정성을 보장합니다.",
+                ft_3_title: "품질 약속",
+                ft_3_desc: "처음 사용 시 귀 뒤에 테스트하는 것을 권장합니다. 상처 부위를 피하고 서늘하고 건조한 곳에 보관하십시오.",
+                ft_copy: "에센젠바이오 (臻萃研) <br>하이엔드 과학 추출 × 생체 모방 스킨케어"
+            },
+            
+            "vi": {
+                main_title: "EssZenbio (臻萃研)",
+                sub_title: "Ma trận sản phẩm cao cấp & Công nghệ mô phỏng sinh học",
+                desc_title: "Từ chiết xuất khoa học đến mục tiêu chính xác: Rào cản công nghệ không thể sao chép",
+                n_home: "Trang chủ",
+                tech_h3: "Hệ thống dẫn truyền sinh khả dụng cao (Biomimetic Delivery)",
+                sci_h4: "Khoa học: Tại sao 'AQUA' & 'OLEA' phải kết hợp vào giây cuối cùng?",
+                sci_p1: "Trong da liễu, các sản phẩm chăm sóc da thông thường dựa vào 'chất nhũ hóa hóa học' để trộn nước và dầu. Việc sử dụng lâu dài các hóa chất khắc nghiệt này sẽ phá vỡ cấu trúc lipid, làm hỏng lớp sừng và gây viêm mãn tính.",
+                sci_p2: "Vượt qua giới hạn của chất nhũ hóa truyền thống. Chăm sóc da không nên là sự xếp lớp cồng kềnh. Nó nên xây dựng một <strong class='text-brand-700'>Hệ thống dẫn truyền mô phỏng sinh học (Biomimetic Carrier)</strong> được da nhận diện hoàn toàn.",
+                sci_p3: "Chúng tôi kiên quyết tách biệt <strong class='text-gray-900'>[AQUA]</strong> (kênh nước) và <strong class='text-gray-900'>[OLEA]</strong> (tái tạo lipid). Chỉ khi bạn trộn chúng 1:1 trong lòng bàn tay, thêm tinh chất, và <strong class='text-brand-700'>sử dụng nhiệt độ cơ thể cùng ma sát vật lý</strong>, một 'Nhũ tương vi mô' (Microemulsion) mới được hình thành.",
+                sci_p4: "Hệ thống mô phỏng sinh học được tạo ra ngay lập tức này bắt chước lớp 'màng hydrolipid' của con người. Nó trung hòa lớp phòng thủ của da, bảo vệ các peptide dễ vỡ và đưa tinh chất hoạt tính cao đến lớp hạ bì một cách liền mạch, đạt sinh khả dụng lâm sàng <strong class='text-brand-700 font-serif'>1+1+1 > 3</strong>.",
+                f1_title: "Nền tảng mô phỏng sinh học",
+                f1_desc: "Trộn [AQUA] & [OLEA] 1:1 để xây dựng màng bã nhờn hoàn hảo, làm mềm lớp sừng tức thì.",
+                f2_title: "Truyền tinh chất mục tiêu",
+                f2_desc: "Dựa trên dữ liệu AI hoặc nhu cầu cá nhân, nhỏ thêm 1-2 giọt tinh chất [PLENA], [ROSIDA], [Qi], [AUREA].",
+                f3_title: "Nhũ hóa vi mô vật lý",
+                f3_desc: "Sử dụng nhiệt độ lòng bàn tay và ma sát để tạo thành nhũ tương vi mô ngay lập tức.",
+                f4_title: "Tiến sâu trực tiếp vào hạ bì",
+                f4_desc: "Bỏ qua chất nhũ hóa nặng, đảm bảo chiết xuất độc quyền tiến thẳng vào đáy da.",
+                core_ritual_title: "✦ Nghi thức cốt lõi: Công nghệ nhũ hóa vật lý ✦",
+                p1_h2: "I. Rào cản công nghệ: Chuyển đổi chính xác phân tử",
+                p1_h3: "Technology Pillar: Đột phá giới hạn chiết xuất thực vật",
+                p1_desc: "Sức mạnh cốt lõi của EssZenbio nằm ở 'Công nghệ chiết xuất & chuyển đổi chính xác'. Giải quyết các điểm yếu của ngành: phân tử lớn khó hấp thụ và hoạt chất mạnh dễ gây dị ứng, đảm bảo sinh khả dụng cấp lâm sàng.",
+                b1_label: "Rào cản 01",
+                b1_title: "Thủy phân chính xác Ginsenoside (CK)",
+                b1_tag1: "Vi phân tử hóa <span class='font-serif'>622 Da</span>",
+                b1_tag2: "Nồng độ vàng <span class='font-serif'>1.28 mg/g</span>",
+                b1_p: "<strong class='text-gray-900'>Cắt enzyme nhắm mục tiêu:</strong> Ginsenoside truyền thống chỉ ở biểu bì. Chúng tôi sử dụng thủy phân enzyme để cắt chính xác chúng thành Compound K (CK) cực nhỏ:",
+                b1_h5: "Mục tiêu lâm sàng của CK Saponin",
+                b1_l1: "<strong class='text-gray-800'>Quản lý Collagen:</strong> Nhắm mục tiêu nguyên bào sợi, giảm độ sâu nếp nhăn.",
+                b1_l2: "<strong class='text-gray-800'>HA nội sinh:</strong> Tăng biểu hiện gen HAS2 để tăng độ ẩm từ bên trong.",
+                b1_l3: "<strong class='text-gray-800'>Ức chế Tyrosinase:</strong> Giảm hoạt tính để chặn tổng hợp melanin.",
+                b2_label: "Rào cản 02",
+                b2_title: "Khử mẫn cảm Sữa ong chúa & Vi phân tử hóa",
+                b2_tag1: "Vi phân tử hóa <span class='font-serif'>< 3000 Da</span>",
+                b2_tag2: "Peptide khử mẫn cảm & 10-HDA",
+                b2_p: "Sữa ong chúa tự nhiên rất bổ dưỡng nhưng dễ gây dị ứng và khó hấp thụ.<br><br>🛡️ <strong class='text-gray-900'>Khử mẫn cảm:</strong> Enzyme cắt chất gây dị ứng, an toàn cho da sau thẩm mỹ y tế.<br>🚀 <strong class='text-gray-900'>Peptide chuỗi ngắn:</strong> Vi peptide dễ dàng xuyên qua màng lipid.",
+                b2_h5: "Hoạt chất cốt lõi: Axit Sữa ong chúa (10-HDA)",
+                b2_l1: "<strong class='text-gray-800'>Nguyên bào sợi:</strong> Thúc đẩy tiết TGF kích thích tăng sinh collagen.",
+                b2_l2: "<strong class='text-gray-800'>Tái tạo hàng rào:</strong> Tăng biểu hiện Filaggrin để củng cố dưỡng ẩm.",
+                b2_l3: "<strong class='text-gray-800'>Kháng khuẩn:</strong> Ức chế vi khuẩn gây mụn (C. acnes) tuyệt vời.",
+                b3_label: "Rào cản 03",
+                b3_title: "Tái cấu trúc Hắc mai biển & Khả năng thích ứng hai pha",
+                b3_tag1: "Phục hồi mô phỏng sinh học Omega-7",
+                b3_p: "<strong class='text-gray-900'>Tương đồng Hydrolipid:</strong> Chứa Ω-7 hiếm, cấu trúc trùng khớp với bã nhờn con người để phục hồi hàng rào liền mạch.<br><br><strong class='text-gray-900'>Sử dụng hai pha:</strong> Có cả tính ưa nước (Vit C) và tính ưa mỡ (Ω-7).",
+                b3_l1: "<strong class='text-gray-800'>Hệ thống dẫn truyền kép:</strong> Polyphenol ưa nước hòa vào pha nước; Ω-7 ưa mỡ hòa vào pha dầu.",
+                b3_l2: "<strong class='text-gray-800'>Hiệp đồng Collagen:</strong> Vitamin C hoạt động như coenzyme chính chống lại enzyme MMPs.",
+                p2_h2: "II. Nền tảng bắt buộc: Điều hướng kép",
+                p2_h3: "Mở kênh và Phòng thủ mô phỏng sinh học",
+                p2_desc: "Điểm khởi đầu của mọi quy trình, loại bỏ chất làm đặc hóa học. [AQUA] cung cấp kênh hydrat hóa; [OLEA] cung cấp lớp khóa ẩm lipid.",
+                a_title: "[AQUA] Tinh chất tiền đạo",
+                a_tag: "Kích hoạt mô phỏng sinh học",
+                a_p1: "<strong class='text-gray-900'>Cơ chế:</strong> Làm mềm lớp sừng tức thì và mở kênh nước. Mang các thành phần ưa nước thâm nhập sâu.",
+                a_p2: "<strong class='text-gray-900'>Thành phần:</strong> Axit Hyaluronic vi phân tử, AQUALANCE, Chiết xuất cam thảo.",
+                o_title: "[OLEA] Dầu tinh chất tiền đạo",
+                o_tag: "Tái tạo mô phỏng sinh học",
+                o_p1: "<strong class='text-gray-900'>Cơ chế:</strong> Mô phỏng chính xác bã nhờn tự nhiên lấp đầy khoảng trống tế bào. Bao bọc hoạt chất ưa mỡ và tạo lớp phòng thủ.",
+                o_p2: "<strong class='text-gray-900'>Thành phần:</strong> Dầu Oliu nguyên sinh, Ceramides.",
+                p2_bottom: "Nền tảng cốt lõi: Cân bằng 1:1 &nbsp;✦&nbsp; Cấu trúc màng Hydrolipid",
+
+                ai_badge: "Hệ thống AI",
+                ai_sec_h2: "Hệ thống kiểm tra AI 臻萃研",
+                ai_sec_desc1: "Đội ngũ kỹ thuật AI xuất sắc của chúng tôi đã tự xây dựng mô hình kiểm tra AI với tiêu chuẩn bảo mật quyền riêng tư cao nhất ngành!",
+                ai_sec_desc2: "Để ứng phó với các yếu tố môi trường và đặc điểm sinh lý cá nhân! Làn da và cơ thể cần điều chỉnh các chiến lược chăm sóc khác nhau để thích ứng với các trạng thái khác nhau! Do đó, chúng tôi kết hợp đặc tính công thức sản phẩm, với tư duy chăm sóc 3 chiều, thiết kế lấy kiểm tra AI làm cốt lõi! Tạo ra 'Công thức động' dành riêng cho cá nhân, hoàn toàn đáp ứng sự chăm sóc toàn diện của bạn theo thời gian! Theo địa điểm! Theo đặc điểm cá nhân!",
+                ai_step1_title: "Dữ liệu Môi trường",
+                ai_env_temp: "Nhiệt độ",
+                ai_env_hum: "Độ ẩm",
+                ai_env_wind: "Gió",
+                ai_env_uv: "UV",
+                ai_env_low: "(Thấp)",
+                ai_step2_title: "6 Chỉ số Khuôn mặt 4D",
+                ai_m1: "Độ bóng vùng T",
+                ai_m2: "Độ bóng vùng U",
+                ai_m3: "Độ nhám",
+                ai_m4: "Tỷ lệ mẩn đỏ",
+                ai_m5: "Mật độ lỗ chân lông",
+                ai_m6: "Mật độ nếp nhăn",
+                ai_step3_title: "Phân tích trục Ruột-Não-Da",
+                ai_age_title: "Tuổi Da AI",
+                ai_age_desc: "Thực tế 40 / Tốt",
+                ai_ax1: "Sức đề kháng",
+                ai_ax2: "Chuyển hóa ruột",
+                ai_ax3: "Phòng thủ da",
+                ai_ax_warn: "Cần chú ý",
+                ai_step4_title: "Đầu ra Ma trận",
+                ai_total_vol: "Tổng: 0.6ml",
+                ai_r1_desc: "Nền nước",
+                ai_r2_desc: "Nền dầu",
+                ai_r3_desc: "Phục hồi hạ bì",
+                ai_drop: "1 Giọt",
+                ai_3d_title: "Mục tiêu không gian động 3D",
+                ai_3d_desc: "Chúng tôi đã xây dựng mô hình ba chiều:<br><strong>Sinh lý (X)</strong> × <strong>Môi trường (Y)</strong> × <strong>Công thức (Z)</strong>.<br><br>Hệ thống chiếu dữ liệu sinh lý và khí hậu vào không gian 3D này để xác định chính xác 'Tọa độ mục tiêu'. Qua đó, nó tính toán số giọt công thức động thích hợp nhất cho bạn.",
+                ai_3d_x: "Sinh lý (X)",
+                ai_3d_y: "Môi trường (Y)",
+                ai_3d_z: "Công thức (Z)",
+                ai_3d_drops: "3 Giọt",
+                app_dl_title: "Khởi động Trợ lý Thông minh",
+                app_dl_desc: "Tại đây! Chúng tôi cung cấp Ứng dụng iOS / Android! Chào mừng bạn! Quét mã QR bên dưới để tải Ứng dụng! Và bắt đầu trải nghiệm dịch vụ quản gia thông minh được tạo ra cho bạn!",
+
+                p3_h2: "III. Tinh chất mục tiêu",
+                p3_h3: "Pha trộn cao cấp cho các tình trạng da khác nhau",
+                p3_desc: "Dựa trên kết quả AI, trên lớp nền mô phỏng sinh học, thêm tinh chất siêu tinh khiết để giải phóng hiệu quả sửa chữa hiệp đồng 1+1+1 > 3.",
+                p_title: "[PLENA] Tinh chất dưỡng ẩm",
+                p_tag1: "Phục hồi / Làm sáng",
+                p_tag2: "Phục hồi cấu trúc",
+                p_h5: "Phục hồi khử mẫn cảm cấp y tế",
+                p_desc: "Bổ sung cấu trúc sâu cho hàng rào da tổn thương do căng thẳng, cải thiện mạnh mẽ tình trạng viêm.",
+                p_l1: "<strong class='text-gray-900'>Thành phần:</strong> Peptide sữa ong chúa, Chiết xuất hắc mai biển, Yếu tố săn chắc.",
+                p_l2: "<strong class='text-gray-900'>Độc quyền:</strong> Enzyme dịu nhẹ cắt nhóm gây dị ứng. 10-HDA nhắm mục tiêu tổng hợp collagen.",
+                p_l3: "<strong class='text-gray-900'>Cơ chế:</strong> Vi peptide được bao bọc triệt tiêu chính xác chứng viêm do mệt mỏi.",
+                r_title: "[ROSIDA] Tinh chất nước",
+                r_tag1: "Làm sáng / Trong trẻo",
+                r_tag2: "Cân bằng Hydrolipid",
+                r_h5: "Phòng thủ kép đột phá làm trắng",
+                r_desc: "Cung cấp công thức 'Làm trắng + Phục hồi' không xung đột cho làn da xỉn màu, mỏng manh.",
+                r_l1: "<strong class='text-gray-900'>Thành phần:</strong> Axit Tranexamic, Vi peptide sữa ong chúa, Yếu tố cân bằng nước.",
+                r_l2: "<strong class='text-gray-900'>Độc quyền:</strong> Peptide cung cấp dinh dưỡng trong khi Axit Tranexamic chặn hắc tố và sửa chữa ở cấp độ tế bào.",
+                r_l3: "<strong class='text-gray-900'>Cơ chế:</strong> Kết hợp với ceramide của [OLEA] để phục hồi lớp sừng, bảo vệ khỏi sự xỉn màu một cách nhẹ nhàng.",
+                q_title: "[Qi] Tinh chất săn chắc",
+                q_tag1: "Săn chắc / Xóa nhăn",
+                q_tag2: "Chống lão hóa hàng đầu",
+                q_h5: "Radar phục hồi hạ bì & Đảo ngược thời gian",
+                q_desc: "Trì hoãn lão hóa trưởng thành và củng cố khả năng phục hồi. Một kiệt tác của chiết xuất thực vật và peptide hiện đại.",
+                q_l1: "<strong class='text-gray-900'>Thành phần:</strong> Ginsenoside thủy phân, Matrixyl Pentapeptide cấp bằng sáng chế, Rau má.",
+                q_l2: "<strong class='text-gray-900'>Độc quyền:</strong> Saponin CK điều chỉnh tăng HAS2 tạo HA. Matrixyl nhắm mục tiêu và củng cố vùng nối DEJ.",
+                q_l3: "<strong class='text-gray-900'>Cơ chế:</strong> Nền dầu bảo vệ tín hiệu peptide mỏng manh, đảm bảo truyền đến hạ bì để làm đầy nếp nhăn.",
+                u_title: "[AUREA] Dầu tinh chất dưỡng sáng",
+                u_tag1: "Dưỡng ẩm sâu",
+                u_tag2: "Khóa lipid cấp độ hổ phách",
+                u_h5: "Bổ sung lipid sâu",
+                u_desc: "Cung cấp khả năng tái tạo màng hydrolipid cấu trúc sâu nhất cho da sau quá trình thẩm mỹ, cực khô và trưởng thành.",
+                u_l1: "<strong class='text-gray-900'>Thành phần:</strong> Dầu hắc mai biển (Ω-7), Phytosterol, Ceramides.",
+                u_l2: "<strong class='text-gray-900'>Độc quyền:</strong> Mô phỏng hoàn hảo lipid phức hợp. Ceramides giữ nước, phytosterol ổn định màng kép, Ω-7 chống lão hóa.",
+                u_l3: "<strong class='text-gray-900'>Cơ chế:</strong> Phối hợp với [OLEA] tạo thành một hàng rào phát quang, khóa hoàn hảo lipid và độ ẩm.",
+                ritual_h2: "Nghi thức chuyên nghiệp",
+                ritual_desc: "Từ bỏ chất làm đặc hóa học, làm theo hướng dẫn của AI, <br class='hidden md:block'>đạt được sinh khả dụng 1+1+1 > 3 tối thượng.",
+                s1_title: "BƯỚC 1 - Lấy lượng",
+                s1_desc: "Dựa trên báo cáo AI, cho [AQUA] & [OLEA] vào lòng bàn tay để thiết lập chất mang.",
+                s2_title: "BƯỚC 2 - Cộng hưởng",
+                s2_desc: "Thêm tinh chất hoạt tính mục tiêu do AI chỉ định (ví dụ: 1 giọt [Qi]).",
+                s3_title: "BƯỚC 3 - Nhũ hóa",
+                s3_desc: "Xoa hai bàn tay vào nhau, sử dụng nhiệt độ cơ thể và ma sát để tạo nhũ tương vi mô ngay lập tức.",
+                s4_title: "BƯỚC 4 - Áp nhẹ",
+                s4_desc: "Ấn nhẹ lên mặt, trải nghiệm sự thẩm thấu không bị cản trở của các peptide được bảo vệ.",
+                
+                p4_h2: "IV. Bột Uống Ngày & Đêm",
+                p4_h3: "Điều hòa cơ thể, trẻ hóa từ bên trong",
+                
+                sup_academic_title: "【Hợp tác Công nghiệp-Học thuật hàng đầu】",
+                sup_academic_p1: "Sản phẩm kết hợp khoa học vi sinh tiên tiến, được đồng phát triển với nhóm của Tiến sĩ Lã Anh Chấn từ Đại học Quốc gia Gia Nghĩa.",
+                sup_academic_p2: "Thông qua quy trình nghiên cứu nghiêm ngặt, đảm bảo tính ổn định và khả năng điều chỉnh sinh lý an toàn nhất.",
+                sup_patent_desc: "🛡️ Bằng sáng chế Quốc gia: Cấu trúc chiết xuất chống nhiệt độ cao siêu âm nối tiếp",
+                sup_patent_desc_2: "& Phát minh bằng sáng chế: [Hệ thống chiết xuất siêu âm và thiết bị của nó] (Phát minh số I 783508)",
+
+                sup_axis_title: "Bằng chứng Khoa học: Trục Ruột-Não-Da",
+                sup_axis_desc: "Nghiên cứu khoa học trong những năm gần đây đã chỉ ra rằng, hệ vi sinh vật đường ruột, trạng thái cảm xúc bên trong và biểu hiện của làn da bên ngoài có một mạng lưới giao tiếp hai chiều chặt chẽ. Công thức tác động kép ngày và đêm của chúng tôi được thiết kế chính xác dựa trên khái niệm tiên tiến của 'Trục ruột - não - da' này.",
+                
+                sup_day_title: "晞 AURORA",
+                sup_day_intro: "Công thức ban ngày AURORA nuôi dưỡng và bồi bổ cơ thể thông qua nhân sâm và hắc mai biển; thúc đẩy nhu động ruột với chất xơ như vỏ hạt mã đề, dextrin khó tiêu và inulin để đi tiêu trơn tru; kết hợp với các enzym tiêu hóa để hỗ trợ tiêu hóa; và thông qua bảy nhóm men vi sinh lớn để thay đổi hệ sinh thái vi khuẩn; cuối cùng, nó được bổ sung một lượng vitamin và khoáng chất toàn diện để duy trì các chức năng sinh lý bình thường. Đạt được sự chăm sóc toàn diện vào ban ngày giúp hỗ trợ tiêu hóa, tăng cường tinh thần và đi tiêu trơn tru.",
+                sup_day_f1_title: "✨ Bồi bổ cốt lõi ｜ Nhân sâm đỏ 5 năm × Hắc mai biển",
+                sup_day_f1_desc: "Nhân sâm đỏ 5 năm được thủy phân ở nhiệt độ thấp hấp thụ tối đa saponin CK. Hắc mai biển giữ lại lượng Vitamin C và Omega-7 tự nhiên.",
+                sup_day_f2_title: "🌿 Đường ruột trơn tru ｜ Chất xơ hòa tan tỷ lệ vàng",
+                sup_day_f2_desc: "Sử dụng tỷ lệ vàng của chất xơ hòa tan (psyllium husk), dextrin khó tiêu và inulin để thúc đẩy nhu động ruột hoàn hảo.",
+                sup_day_f3_title: "🦠 Hệ sinh thái ｜ 7 Probiotic phức hợp",
+                sup_day_f3_desc: "7 chủng vượt trội bao gồm Bacillus coagulans. Xây dựng hàng rào bảo vệ vững chắc cả ngày lẫn đêm.",
+                sup_day_f4_title: "⚡ Hỗ trợ tiêu hóa ｜ Enzym & Dinh dưỡng",
+                sup_day_f4_desc: "Nhiều enzym tiêu hóa chất lượng cao giúp phân hủy thức ăn. Vitamin và khoáng chất đồng bộ.",
+                
+                sup_night_title: "沁 VESPERA",
+                sup_night_intro: "Công thức ban đêm VESPERA thực hiện hoàn hảo logic chăm sóc sức khỏe 'ngủ ngon, đẹp tự nhiên'. Sử dụng GABA, tryptophan và magiê để giúp chìm vào giấc ngủ; và trong khoảng thời gian nghỉ ngơi vàng vào ban đêm, thông qua sữa ong chúa thủy phân, collagen và vitamin C (có tác dụng chống oxy hóa và thúc đẩy sự hình thành collagen) để làm đẹp và nuôi dưỡng làn da; cuối cùng, với sáu nhóm men vi sinh lớn và prebiotic, nó giúp duy trì chức năng của đường tiêu hóa. Nó là một công thức phức hợp đặc điểm kỹ thuật cao kết hợp cả hai để giúp chìm vào giấc ngủ và vẻ đẹp trẻ trung.",
+                sup_night_f1_title: "✨ Vẻ đẹp tươi trẻ ｜ Vi peptide Sữa ong chúa × Collagen",
+                sup_night_f1_desc: "Sử dụng công nghệ enzyme sinh học để thủy phân nhẹ nhàng sữa ong chúa, khóa 10-HDA. Phối hợp với collagen cao cấp.",
+                sup_night_f2_title: "🫐 Sức sống rạng rỡ ｜ Chiết xuất Haskap × Vitamin C",
+                sup_night_f2_desc: "Quả Haskap quý giá ở vĩ độ cao, giàu anthocyanins (C3G) và Vitamin C bảo vệ chống oxy hóa qua đêm.",
+                sup_night_f3_title: "🌙 Yên tĩnh dịu nhẹ ｜ Tam giác khoa học GABA × Tryptophan",
+                sup_night_f3_desc: "GABA, tryptophan và magiê hiệp đồng điều chỉnh các chức năng sinh lý và hỗ trợ giấc ngủ sâu.",
+                sup_night_f4_title: "🌱 Nuôi dưỡng ban đêm ｜ 6 Probiotic giấc ngủ",
+                sup_night_f4_desc: "Đã chọn B. longum, L. plantarum và 6 chủng hoạt tính kết hợp với prebiotic cao cấp để điều hòa hệ vi sinh liên tục.",
+
+                ft_1_title: "Thuộc tính sản phẩm",
+                ft_1_desc: "Được phân loại là 'Mỹ phẩm và Thực phẩm chung'. Cơ chế được đề cập dựa trên tài liệu khoa học.",
+                ft_2_title: "Chứng nhận quốc tế",
+                ft_2_desc: "Sản xuất tại cơ sở đạt chứng nhận ISO 22716 / GMP hợp tác với các trung tâm R&D của ngành.",
+                ft_3_title: "Cam kết chất lượng",
+                ft_3_desc: "Nên thử áp dụng ở một vùng nhỏ cho lần sử dụng đầu tiên. Bảo quản nơi khô ráo, thoáng mát.",
+                ft_copy: "EssZenbio (臻萃研) <br>Dược mỹ phẩm cao cấp × Thẩm mỹ chăm sóc da mô phỏng sinh học"
+            }
+        };
+
+        const videoMap = {
+            "zh-TW": "按摩.mp4",
+            "zh-CN": "按摩.mp4",
+            "en": "按摩.mp4",
+            "ja": "揉搓_JP.mp4",
+            "ko": "按摩.mp4",
+            "vi": "按摩.mp4"
+        };
+
+        const audioMap = {
+            "zh-TW": "AI_CN.mp3",
+            "zh-CN": "AI_CN.mp3",
+            "en": "AI_EN.mp3",
+            "ja": "AI_JP.mp3",
+            "ko": "AI_KO.mp3",
+            "vi": "AI_VN.mp3"
+        };
+
+        <!-- STREAMING_CHUNK:Setting up language toggle logic... -->
+        const langSwitch = document.getElementById('langSwitch');
+        const aiAudioPlayer = document.getElementById('aiAudioPlayer');
+        let hasPlayedAudio = false;
+
+        function updateContent(lang) {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            document.documentElement.lang = lang;
+
+            const ritualVideo = document.getElementById('ritualVideo');
+            if (ritualVideo && videoMap[lang]) {
+                const sourceTag = ritualVideo.querySelector('source');
+                const currentSrc = sourceTag.getAttribute('src');
+                if (currentSrc !== videoMap[lang]) {
+                    sourceTag.setAttribute('src', videoMap[lang]);
+                    ritualVideo.load();
+                    ritualVideo.play().catch(e => console.log("Auto-play prevented:", e));
+                }
+            }
+            
+            if (aiAudioPlayer && audioMap[lang]) {
+                aiAudioPlayer.src = audioMap[lang];
+                hasPlayedAudio = false; 
+            }
+        }
+
+        langSwitch.addEventListener('change', (e) => {
+            updateContent(e.target.value);
+            
+            const animatedBars = document.querySelectorAll('.animate-fill');
+            animatedBars.forEach(bar => {
+                bar.classList.remove('animate-fill');
+                void bar.offsetWidth; 
+                bar.classList.add('animate-fill');
+            });
+        });
+
+        <!-- STREAMING_CHUNK:Setting up interaction functions... -->
+        function returnHome(event) {
+            event.preventDefault();
+            const currentLang = document.documentElement.lang || 'zh-TW';
+            const targetUrl = encodeURI('index.html') + '?lang=' + encodeURIComponent(currentLang);
+            
+            try {
+                window.location.href = targetUrl;
+            } catch (e) {
+                console.error("跳轉失敗:", e);
+                alert("目前為預覽模式，請手動切換至「index.html」");
+            }
+        }
+
+        function setupAudioObserver() {
+            const aiSection = document.getElementById('aiSection');
+            if (!aiSection || !aiAudioPlayer) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !hasPlayedAudio) {
+                        const currentLang = document.documentElement.lang || 'zh-TW';
+                        if (audioMap[currentLang]) {
+                            aiAudioPlayer.src = audioMap[currentLang];
+                            aiAudioPlayer.play().then(() => {
+                                hasPlayedAudio = true;
+                            }).catch(error => {
+                                console.log("Auto-play audio prevented by browser. User interaction needed first.", error);
+                            });
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.3 
+            });
+
+            observer.observe(aiSection);
+            
+            document.body.addEventListener('click', function unlockAudio() {
+                if (aiAudioPlayer.src) return;
+                aiAudioPlayer.play().then(() => {
+                    aiAudioPlayer.pause();
+                    aiAudioPlayer.currentTime = 0;
+                }).catch(() => {});
+                document.body.removeEventListener('click', unlockAudio);
+            }, { once: true });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const langParam = urlParams.get('lang');
+
+            // Set to default zh-TW, or URL parameter if valid
+            if (langParam && translations[langParam]) {
+                const langSwitch = document.getElementById('langSwitch');
+                if (langSwitch) {
+                    langSwitch.value = langParam; 
+                }
+                updateContent(langParam);
+            } else {
+                updateContent('zh-TW');
+            }
+            
+            setupAudioObserver();
+        });
+
+    </script>
+</body>
+</html>
+```eof
